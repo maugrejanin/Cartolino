@@ -1,0 +1,8 @@
+{
+  "name": "Cartolino",
+  "app_id": "0fb128c4",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

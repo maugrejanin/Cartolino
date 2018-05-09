@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Cartolando
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row justify-content-center>
+    <ion-img width="240px" height="180px" src="assets/imgs/malandro.jpg"></ion-img>
+  </ion-row>
+
+  <ion-row justify-content-center padding-top>
+    <button ion-button outline color="light" (click)="escolherEmoji()">Escolher Emoji</button>
+  </ion-row>
+</ion-content>
+
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar color="primary" id='menu_header'>
+      <!-- <img width="64px" src="assets/imgs/malandro.jpg"> -->
+      <ion-title postion="bottom">Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item (click)="openPage('LoginPage')">
+        Login
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-nav #content></ion-nav>

@@ -11,7 +11,9 @@
 
 <ion-content padding>
   <ion-row justify-content-center>
-    <ion-img width="240px" height="180px" src="assets/imgs/malandro.jpg"></ion-img>
+<ion-img width="240px" height="180px" *ngIf='userData.teamInfo' src="{{userData.teamInfo.url_escudo_svg}}"></ion-img>
+
+
   </ion-row>
 
   <ion-row justify-content-center padding-top>

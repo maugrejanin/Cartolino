@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser';
 import { NavController, IonicPage } from 'ionic-angular';
 import { HomePage } from '../home/home';
+import { IUserData } from '../../models/iUserData';
 
 @IonicPage()
 @Component({
@@ -12,22 +13,12 @@ import { HomePage } from '../home/home';
   providers: [InAppBrowser]
 })
 export class LoginPage {
-  GLBID: string;
-  browser: any;
-  constructor(private http: Http, private iab: InAppBrowser, private storage: Storage, private navCtrl: NavController) {
+  browser:any;
+  constructor(private http: Http, private iab: InAppBrowser, private storage: Storage, private navCtrl: NavController, private userData: IUserData) {
   }
 
   ionViewDidLoad() {
-    this.storage.ready().then(() => {
-      this.storage.get('GLBID').then(GLBID => {
-        if (GLBID) {
-          this.navCtrl.pop();
-          this.navCtrl.push(HomePage, { data: GLBID });
-        } else {
-          this.startLoginGlobo();
-        }
-      })
-    })
+    this.startLoginGlobo();
   }
 
   startLoginGlobo() {
@@ -38,11 +29,12 @@ export class LoginPage {
   }
 
   private handleOnExit(event: InAppBrowserEvent) {
-    this.getCartolaData();
+    // this.getCartolaData();
+    this.navCtrl.pop();
   }
 
   private handleOnLoadStart(event: InAppBrowserEvent) {
-    console.log("handleOnLoadStart");
+    // console.log("handleOnLoadStart");
   }
 
   private handleOnLoadStop(event: InAppBrowserEvent) {
@@ -62,8 +54,8 @@ export class LoginPage {
                 c = c.substring(1);
               }
               if (c.indexOf(name) == 0) {
-                this.GLBID = c.substring(name.length, c.length);
-                this.storage.set('GLBID', this.GLBID);
+                this.userData.GLBID = c.substring(name.length, c.length);
+                this.storage.set('GLBID', this.userData.GLBID);
                 this.browser.close();
               }
             }
@@ -72,19 +64,19 @@ export class LoginPage {
     }, 1000);
   }
 
-  getCartolaData() {
-    var headers = new Headers();
-    headers.append("X-GLB-Token", this.GLBID);
+  // getCartolaData() {
+  //   var headers = new Headers();
+  //   headers.append("X-GLB-Token", this.GLBID);
 
-    let options = new RequestOptions({ headers: headers });
+  //   let options = new RequestOptions({ headers: headers });
 
-    this.http.get("https://api.cartolafc.globo.com/auth/time", options)
-      .subscribe(data => {
-        this.navCtrl.pop();
-        this.navCtrl.push(HomePage, {data:data['_body']});
-      }, error => {
-        console.log("erro");
-        console.log(error);// Error getting the data
-      });
-  }
+  //   this.http.get("https://api.cartolafc.globo.com/auth/time", options)
+  //     .subscribe(data => {
+  //       this.navCtrl.pop();
+  //       this.navCtrl.push(HomePage, { data: data['_body'] });
+  //     }, error => {
+  //       console.log("erro");
+  //       console.log(error);// Error getting the data
+  //     });
+  // }
 }

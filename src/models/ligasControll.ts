@@ -24,16 +24,16 @@ export class LigaControll implements ILigasControll {
     loadLigas() {
         console.log(this.userDataControll.getGLBID());
         
-        // return new Promise((resolve, reject) => {
-        //     this.api.getWithAuth(get_ligas_info_api, { GLBID: this.userDataControll.getGLBID() })
-        //         .toPromise()
-        //         .then(
-        //             res => {
-        //                 this.setLigas(res.json().ligas);
-        //                 resolve(true);
-        //             }
-        //         );
-        // });
+        return new Promise((resolve, reject) => {
+            this.api.getWithAuth(get_ligas_info_api, { GLBID: this.userDataControll.getGLBID() })
+                .toPromise()
+                .then(
+                    res => {
+                        this.setLigas(res.json().ligas);
+                        resolve(true);
+                    }
+                );
+        });
         
     };
     getLigas() { return this.ligas };

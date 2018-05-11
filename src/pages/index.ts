@@ -7,5 +7,8 @@ export const MainPage = 'TabsPage';
 
 // The initial root pages for our tabs (remove if not using tabs)
 export const Tab1Root = 'HomePage';
-export const Tab2Root = 'SearchPage';
-export const Tab3Root = 'SettingsPage';
+export const Tab2Root = 'LigasPage';
+export const Tab3Root = 'JogosPage';
+export const get_team_info_api = "https://api.cartolafc.globo.com/auth/time";
+export const get_ligas_info_api = "https://api.cartolafc.globo.com/auth/ligas";
+    

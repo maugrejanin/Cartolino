@@ -4,21 +4,22 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-      Cartolando
+      Cartolino
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding *ngIf="teamInfo">
   <ion-row justify-content-center>
-<ion-img width="240px" height="180px" *ngIf='userData.teamInfo' src="{{userData.teamInfo.url_escudo_svg}}"></ion-img>
-
-
+    <ion-img id="escudo_svg" src="{{teamInfo.url_escudo_svg}}"></ion-img>
   </ion-row>
 
-  <ion-row justify-content-center padding-top>
-    <button ion-button outline color="light" (click)="escolherEmoji()">Escolher Emoji</button>
+  <ion-row>
+    <ion-item id="nm-time">
+      <h2>{{teamInfo.nome}}</h2>
+    </ion-item>
   </ion-row>
+
 </ion-content>
 
 <ion-menu [content]="content">
@@ -30,8 +31,11 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <button ion-item (click)="openPage('LoginPage')">
+      <button *ngIf="!teamInfo" ion-item (click)="openPage('LoginPage')">
         Login
+      </button>
+      <button ion-item (click)="openPage('LigasPage')">
+        Ligas
       </button>
     </ion-list>
   </ion-content>

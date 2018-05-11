@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage';
 import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser';
 import { NavController, IonicPage } from 'ionic-angular';
 import { HomePage } from '../home/home';
-import { IUserData } from '../../models/iUserData';
+import { UserDataControll, UserDataControllFake } from '../../models/iUserData';
 
 @IonicPage()
 @Component({
@@ -14,7 +14,7 @@ import { IUserData } from '../../models/iUserData';
 })
 export class LoginPage {
   browser:any;
-  constructor(private http: Http, private iab: InAppBrowser, private storage: Storage, private navCtrl: NavController, private userData: IUserData) {
+  constructor(private http: Http, private iab: InAppBrowser, private storage: Storage, private navCtrl: NavController, private userData: UserDataControllFake) {
   }
 
   ionViewDidLoad() {
@@ -54,9 +54,9 @@ export class LoginPage {
                 c = c.substring(1);
               }
               if (c.indexOf(name) == 0) {
-                this.userData.GLBID = c.substring(name.length, c.length);
-                this.storage.set('GLBID', this.userData.GLBID);
-                this.browser.close();
+                this.userData.setGLBID(c.substring(name.length, c.length));
+                // this.storage.set('GLBID', this.userData.GLBID);
+                // this.browser.close();
               }
             }
           }

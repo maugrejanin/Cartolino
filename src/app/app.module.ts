@@ -13,7 +13,7 @@ import { Items } from '../mocks/providers/items';
 import { Settings, User, Api } from '../providers';
 import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
-import { IUserData } from '../models/iUserData';
+import { UserDataControll, UserDataControllFake } from '../models/iUserData';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -61,9 +61,11 @@ export function provideSettings(storage: Storage) {
     MyApp
   ],
   providers: [
-    IUserData,
+    UserDataControll,
+    UserDataControllFake,
     SplashScreen,
     StatusBar,
+    Api,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }

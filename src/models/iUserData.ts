@@ -21,7 +21,10 @@ export interface IUserDataControll {
     providers: [Api]
 })
 export class UserDataControll implements IUserDataControll {
-    private userData: UserData;
+    private userData: UserData = {
+        GLBID: '',
+        teamInfo: {}
+    };
 
     constructor(public api: Api) { };
 

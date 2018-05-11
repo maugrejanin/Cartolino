@@ -8,11 +8,11 @@ import { Inject } from '@angular/core';
 @Component({
   selector: 'home',
   templateUrl: 'home.html',
-  providers: [{ provide: 'IUserDataControll', useClass: UserDataControllFake }]
+  providers: [{ provide: 'IUserDataControll', useClass: UserDataControll }]
 })
 export class HomePage {
   teamInfo = {};
-  fakeMode = true;
+  fakeMode = false;
 
   constructor(private navCtrl: NavController, private navParams: NavParams, @Inject('IUserDataControll') private userDataControll: IUserDataControll, private storage: Storage) {
   }

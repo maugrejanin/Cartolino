@@ -1,18 +1,20 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage } from 'ionic-angular';
-import { UserDataControll, UserDataControllFake } from '../../models/iUserData';
+import { UserDataControll, UserDataControllFake, IUserDataControll } from '../../models/iUserData';
 import { Storage } from '@ionic/storage';
+import { Inject } from '@angular/core';
 
 @IonicPage()
 @Component({
   selector: 'home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  providers: [{ provide: 'IUserDataControll', useClass: UserDataControllFake }]
 })
 export class HomePage {
   teamInfo = {};
   fakeMode = true;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private userDataControll: UserDataControllFake, private storage: Storage) {
+  constructor(private navCtrl: NavController, private navParams: NavParams, @Inject('IUserDataControll') private userDataControll: IUserDataControll, private storage: Storage) {
   }
 
   ionViewDidLoad() {

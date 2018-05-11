@@ -1,10 +1,10 @@
-import { Injectable, Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { Api } from "../providers";
 import { get_team_info_api, get_ligas_info_api } from "../pages";
-import { UserDataControllFake } from "./iUserData";
+import { UserDataControllFake, IUserDataControll } from "./iUserData";
 
 export interface Ligas {
-    ligas: [];
+    ligas: any;
 }
 
 export interface ILigasControll {
@@ -13,30 +13,31 @@ export interface ILigasControll {
     setLigas(ligas: any);
 }
 
-@Injectable()
 @Component({
     providers: [Api]
 })
 export class LigaControll implements ILigasControll {
     private ligas: Ligas;
 
-    constructor(public api: Api, public userDataControll: UserDataControllFake) { };
+    constructor(public api: Api, @Inject('IUserDataControll') public userDataControll: IUserDataControll) { };
 
     loadLigas() {
-        return new Promise((resolve, reject) => {
-            this.api.getWithAuth(get_ligas_info_api, { GLBID: this.userDataControll.getGLBID() })
-                .toPromise()
-                .then(
-                    res => {
-                        this.setLigas(res.json().ligas);
-                        resolve(true);
-                    }
-                );
-        });
+        console.log(this.userDataControll.getGLBID());
+        
+        // return new Promise((resolve, reject) => {
+        //     this.api.getWithAuth(get_ligas_info_api, { GLBID: this.userDataControll.getGLBID() })
+        //         .toPromise()
+        //         .then(
+        //             res => {
+        //                 this.setLigas(res.json().ligas);
+        //                 resolve(true);
+        //             }
+        //         );
+        // });
         
     };
     getLigas() { return this.ligas };
-    setLigas(ligas: any) { };
-
-
+    setLigas(ligas: any) { 
+        this.ligas = ligas;
+    };
 }

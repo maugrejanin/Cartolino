@@ -6,17 +6,40 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding *ngIf="ligas">
-  <ion-row>
-    <ion-item id="nm-time">
-      <h3>Ligas clássicas</h3>
-    </ion-item>
-  </ion-row>
+<ion-content>
+  <ion-content>
+    <ion-row>
+      <ion-item id="nm-time-container">
+        <h3 id="nm-time">Ligas clássicas</h3>
+      </ion-item>
+    </ion-row>
 
-  <!-- <ion-row justify-content-center>
-    <ion-img id="escudo_svg" src="{{teamInfo.url_escudo_svg}}"></ion-img>
-  </ion-row> -->
+    <ion-row *ngFor="let liga of ligas">
+      <ion-item *ngIf="liga.time_dono_id" id="liga-container">
+        <ion-avatar item-start>
+          <img src="{{liga.url_flamula_svg}}">
+        </ion-avatar>
+
+        <h3 id="nm-liga">{{liga.nome}}</h3>
+      </ion-item>
+    </ion-row>
+
+    <ion-row>
+      <ion-item id="nm-time-container">
+        <h3 id="nm-time">Ligas do cartola</h3>
+      </ion-item>
+    </ion-row>
+
+    <ion-row *ngFor="let liga of ligas">
+      <ion-item *ngIf="!liga.time_dono_id" id="liga-container">
+        <ion-avatar item-start>
+          <img src="{{liga.url_flamula_svg}}">
+        </ion-avatar>
+
+        <h3 id="nm-liga">{{liga.nome}}</h3>
+      </ion-item>
+    </ion-row>
 
 
 
-</ion-content>
+  </ion-content>

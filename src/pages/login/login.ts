@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser';
 import { NavController, IonicPage } from 'ionic-angular';
 import { HomePage } from '../home/home';
-import { UserDataControll, UserDataControllFake } from '../../models/iUserData';
+import { UserDataControll, UserDataControllFake, IUserDataControll } from '../../models/iUserData';
 
 @IonicPage()
 @Component({
@@ -13,8 +13,8 @@ import { UserDataControll, UserDataControllFake } from '../../models/iUserData';
   providers: [InAppBrowser]
 })
 export class LoginPage {
-  browser:any;
-  constructor(private http: Http, private iab: InAppBrowser, private storage: Storage, private navCtrl: NavController, private userData: UserDataControllFake) {
+  browser: any;
+  constructor(private http: Http, private iab: InAppBrowser, private storage: Storage, private navCtrl: NavController, @Inject('IUserDataControll') public userDataControll: IUserDataControll) {
   }
 
   ionViewDidLoad() {
@@ -54,29 +54,14 @@ export class LoginPage {
                 c = c.substring(1);
               }
               if (c.indexOf(name) == 0) {
-                this.userData.setGLBID(c.substring(name.length, c.length));
-                // this.storage.set('GLBID', this.userData.GLBID);
-                // this.browser.close();
+                var GLBID = c.substring(name.length, c.length);
+                this.userDataControll.setGLBID(GLBID);
+                this.storage.set('GLBID', GLBID);
+                this.browser.close();
               }
             }
           }
         });
     }, 1000);
   }
-
-  // getCartolaData() {
-  //   var headers = new Headers();
-  //   headers.append("X-GLB-Token", this.GLBID);
-
-  //   let options = new RequestOptions({ headers: headers });
-
-  //   this.http.get("https://api.cartolafc.globo.com/auth/time", options)
-  //     .subscribe(data => {
-  //       this.navCtrl.pop();
-  //       this.navCtrl.push(HomePage, { data: data['_body'] });
-  //     }, error => {
-  //       console.log("erro");
-  //       console.log(error);// Error getting the data
-  //     });
-  // }
 }

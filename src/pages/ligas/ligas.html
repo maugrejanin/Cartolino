@@ -14,13 +14,18 @@
       </ion-item>
     </ion-row>
 
-    <ion-row *ngFor="let liga of ligas">
+    <ion-row *ngFor="let liga of ligas.ligasClassicas" (click)="ligaDetail(liga)">
       <ion-item *ngIf="liga.time_dono_id" id="liga-container">
         <ion-avatar item-start>
           <img src="{{liga.url_flamula_svg}}">
         </ion-avatar>
-
         <h3 id="nm-liga">{{liga.nome}}</h3>
+      </ion-item>
+    </ion-row>
+
+    <ion-row *ngIf="!ligas.ligasClassicas">
+      <ion-item id="nm-time-container">
+        <h3 id="nm-time">Nenhuma liga clássica</h3>
       </ion-item>
     </ion-row>
 
@@ -30,16 +35,18 @@
       </ion-item>
     </ion-row>
 
-    <ion-row *ngFor="let liga of ligas">
+    <ion-row *ngFor="let liga of ligas.ligasDoCartola" (click)="ligaDetail(liga)">
       <ion-item *ngIf="!liga.time_dono_id" id="liga-container">
         <ion-avatar item-start>
           <img src="{{liga.url_flamula_svg}}">
         </ion-avatar>
-
         <h3 id="nm-liga">{{liga.nome}}</h3>
       </ion-item>
     </ion-row>
 
-
-
+    <ion-row *ngIf="!ligas.ligasDoCartola">
+      <ion-item id="nm-time-container">
+        <h3 id="nm-time">Nenhuma liga do cartola</h3>
+      </ion-item>
+    </ion-row>
   </ion-content>

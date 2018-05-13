@@ -65,7 +65,8 @@ export function provideSettings(storage: Storage) {
     SplashScreen,
     StatusBar,
     Api,
-    {provide: 'IUserDataControl', useClass: UserDataControllFake},
+    // {provide: 'IUserDataControll', useClass: UserDataControllFake},
+    { provide: 'IUserDataControll', useClass: UserDataControll },
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }

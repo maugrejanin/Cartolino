@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { LigaControll, ILigasControll, LigaControllFake } from '../../models/ligasControll';
-import { UserDataControllFake, UserDataControll } from '../../models/iUserData';
+import { UserDataControllFake, UserDataControll, IUserDataControll } from '../../models/iUserData';
 import * as _ from 'lodash';
 
 @IonicPage()
@@ -10,29 +10,43 @@ import * as _ from 'lodash';
   templateUrl: 'ligas.html',
   providers: [
     // { provide: 'ILigaControll', useClass: LigaControllFake },
-    // { provide: 'IUserDataControll', useClass: UserDataControllFake }
-    { provide: 'ILigaControll', useClass: LigaControll },
-    { provide: 'IUserDataControll', useClass: UserDataControll }
+    { provide: 'ILigaControll', useClass: LigaControll }
   ]
 })
 export class LigasPage {
-  ligas: {};
-  fakeMode = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, @Inject('ILigaControll') private ligaControll: ILigasControll) {
+  ligas = {
+    ligasClassicas : [],
+    ligasDoCartola : [],
+    ligasMataMata : []
+  }
+
+  loading;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    @Inject('IUserDataControll') private userDataControll: IUserDataControll,
+    @Inject('ILigaControll') private ligaControll: ILigasControll,
+    private loadingCtrl: LoadingController) {
+    this.loading = this.loadingCtrl.create({
+      spinner: "bubbles",
+      content: 'Carregando...'
+    });
   }
 
   ionViewDidLoad() {
-    if (this.fakeMode) {
-      this.ligas = _.orderBy(this.ligaControll.getLigas(), 'liga_id', 'desc');
-      console.log("ligas: ", this.ligas);
-
-    } else {
+    if (this.userDataControll.isUserLogged()) {
       this.ligaControll.loadLigas().then(res => {
         if (res) {
-          this.ligas = this.ligaControll.getLigas();
+          let ligas = _.orderBy(this.ligaControll.getLigas(), 'nome', 'asc');
+          this.ligas.ligasClassicas = _.filter(ligas, (liga) => { return liga.time_dono_id });
+          this.ligas.ligasDoCartola = _.filter(ligas, (liga) => { return !liga.time_dono_id });
+          this.loading.dismiss();
         }
       });
     }
   }
 
+  ligaDetail(liga){
+    this.navCtrl.push('LigaDetailPage', {ligaSlug: liga.slug});
+  }
 }

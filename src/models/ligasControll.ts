@@ -1,7 +1,7 @@
 import { Component, Inject } from "@angular/core";
 import { Api } from "../providers";
-import { get_team_info_api, get_ligas_info_api, get_liga_info_api } from "../pages";
-import { UserDataControllFake, IUserDataControll } from "./iUserData";
+import { get_ligas_info_api, get_liga_info_api } from "../pages";
+import { IUserDataControll } from "./userDataControll";
 
 export interface Ligas {
     ligas: any;
@@ -12,8 +12,6 @@ export interface ILigasControll {
     loadLiga(ligaSlug: string);
     getLigas(): Ligas;
     setLigas(ligas: any);
-    getPontuados();
-    loadClube(idTime: string);
 }
 
 @Component({
@@ -49,35 +47,6 @@ export class LigaControll implements ILigasControll {
         });
     }
 
-    loadClube(idTime:string){
-        return new Promise((resolve, reject) => {
-            this.api.getWithAuth("https:////api.cartolafc.globo.com/time/id/" + idTime, { GLBID: this.userDataControll.getGLBID() })
-                .toPromise()
-                .then(
-                    res => {
-                        resolve(res.json());
-
-                        // this.setLigas(res.json());
-                        // resolve(true);
-                    }
-                );
-        });
-    }
-
-    getPontuados(){
-        
-        return new Promise((resolve, reject) => {
-            this.api.getWithAuth("https://api.cartolafc.globo.com/atletas/pontuados", { GLBID: this.userDataControll.getGLBID() })
-                .toPromise()
-                .then(
-                    res => {
-                        console.log(res.json());
-                        // resolve(true);
-                    }
-                );
-        });
-    }
-
     getLigas() { return this.ligas };
 
     setLigas(ligas: any) {
@@ -100,35 +69,6 @@ export class LigaControllFake implements ILigasControll {
             resolve(true);
         });
     };
-
-    loadClube(idTime: string) {
-        return new Promise((resolve, reject) => {
-            this.api.getWithAuth("https:////api.cartolafc.globo.com/time/id/" + idTime, { GLBID: this.userDataControll.getGLBID() })
-                .toPromise()
-                .then(
-                    res => {
-                        console.log(res.json());
-
-                        // this.setLigas(res.json());
-                        // resolve(true);
-                    }
-                );
-        });
-    }
-
-    getPontuados() {
-
-        return new Promise((resolve, reject) => {
-            this.api.get("https://api.cartolafc.globo.com/atletas/pontuados", { GLBID: this.userDataControll.getGLBID() })
-                .toPromise()
-                .then(
-                    res => {
-                        console.log(res.json());
-                        // resolve(true);
-                    }
-                );
-        });
-    }
 
     loadLiga(ligaSlug: string) {
         return new Promise((resolve, reject) => {

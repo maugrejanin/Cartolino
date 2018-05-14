@@ -1,18 +1,22 @@
-<!--
-  Generated template for the LigaDetailPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>liga-detail</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>
+      {{liga.nome}}
+    </ion-title>
   </ion-navbar>
-
 </ion-header>
 
+<ion-content>
+  <ion-row>
+    <ion-item id="nm-time-container">
+      <h3 id="nm-time">Times</h3>
+    </ion-item>
+  </ion-row>
 
-<ion-content padding>
+  <ion-row>
+    <ion-item *ngFor="let time of liga.times" id="liga-container">
+      <h3 id="nm-liga">{{time.nome}}</h3>
+    </ion-item>
 
+  </ion-row>
 </ion-content>

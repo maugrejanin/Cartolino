@@ -1,14 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage, LoadingController } from 'ionic-angular';
-import { UserDataControll, UserDataControllFake, IUserDataControll } from '../../models/iUserData';
+import { IUserDataControll } from '../../models/userDataControll';
 import { Inject } from '@angular/core';
 
 @IonicPage()
 @Component({
   selector: 'home',
-  templateUrl: 'home.html',
-  // providers: [{ provide: 'IUserDataControll', useClass: UserDataControllFake }]
-  // providers: [{ provide: 'IUserDataControll', useClass: UserDataControll }]
+  templateUrl: 'home.html'
 })
 export class HomePage {
   teamInfo = {};
@@ -17,22 +15,33 @@ export class HomePage {
     private navCtrl: NavController,
     private navParams: NavParams,
     @Inject('IUserDataControll') private userDataControll: IUserDataControll,
-    private loadingCtrl: LoadingController) {
+    private loadingCtrl: LoadingController) { }
+
+  ionViewWillEnter() {
+    if (Object.keys(this.teamInfo).length === 0 && this.teamInfo.constructor === Object) {
+      this.showLoadSpinner();
+      this.userDataControll.initUserData().then(res => {
+        if (res) {
+          this.teamInfo = this.userDataControll.getTeamInfo();
+          this.hideLoadSpinner();
+        } else {
+          this.hideLoadSpinner();
+        }
+      });
+    }
+  }
+
+  showLoadSpinner() {
     this.loading = this.loadingCtrl.create({
-      spinner:"bubbles",
+      spinner: "bubbles",
       content: 'Carregando...'
     });
 
     this.loading.present();
   }
 
-  ionViewDidLoad() {
-    this.userDataControll.initUserData().then(res => {
-      if (res) {
-        this.teamInfo = this.userDataControll.getTeamInfo();
-        this.loading.dismiss();
-      }
-    });
+  hideLoadSpinner() {
+    this.loading.dismiss();
   }
 
   openPage(page) {

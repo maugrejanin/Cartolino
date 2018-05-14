@@ -79,7 +79,10 @@ export class UserDataControll implements IUserDataControll {
                             this.setTeamInfo(res.json().time);
                             resolve(true);
                         }
-                    );
+                    ).catch(err => {
+                        console.log("err");
+                        console.log(err);
+                    });
             });
         }
     }

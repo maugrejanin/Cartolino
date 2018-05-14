@@ -1,10 +1,9 @@
 import { Component, Inject } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser';
 import { NavController, IonicPage } from 'ionic-angular';
-import { HomePage } from '../home/home';
-import { UserDataControll, UserDataControllFake, IUserDataControll } from '../../models/iUserData';
+import { IUserDataControll } from '../../models/userDataControll';
 
 @IonicPage()
 @Component({
@@ -14,7 +13,7 @@ import { UserDataControll, UserDataControllFake, IUserDataControll } from '../..
 })
 export class LoginPage {
   browser: any;
-  constructor(private http: Http, private iab: InAppBrowser, private storage: Storage, private navCtrl: NavController, @Inject('IUserDataControll') public userDataControll: IUserDataControll) {
+  constructor(private iab: InAppBrowser, private storage: Storage, private navCtrl: NavController, @Inject('IUserDataControll') public userDataControll: IUserDataControll) {
   }
 
   ionViewDidLoad() {

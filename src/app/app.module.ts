@@ -1,7 +1,6 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Camera } from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule, Storage } from '@ionic/storage';
@@ -9,12 +8,11 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
-import { Items } from '../mocks/providers/items';
-import { Settings, User, Api } from '../providers';
+import { Settings, Api } from '../providers';
 import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
-import { UserDataControll, UserDataControllFake } from '../models/iUserData';
-import { IUserDataControll } from '../models/iUserData';
+import { UserDataControll, UserDataControllFake } from '../models/userDataControll';
+import { JogadoresControll } from '../models/jogadoresControll';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -67,6 +65,7 @@ export function provideSettings(storage: Storage) {
     Api,
     // {provide: 'IUserDataControll', useClass: UserDataControllFake},
     { provide: 'IUserDataControll', useClass: UserDataControll },
+    { provide: 'IJogadoresControll', useClass: JogadoresControll },
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }

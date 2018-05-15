@@ -6,13 +6,15 @@ import { IJogadoresControll } from "./jogadoresControll";
 
 export interface Time {
    atletas:any,
-   pontuados:[{}]
+   parcial:number,
+   capitao_id:number
 }
 
 export interface ITimeControll {
     loadTime(idTime: string);
     setTime(time:Time);
-    loadJogadoresDoTime();
+    loadJogadoresDoTime(time:{});
+    calcularParcialTime(time: {});
 }
 
 @Injectable()
@@ -33,12 +35,13 @@ export class TimeControll implements ITimeControll {
             this.api.getWithAuth(get_time_api + idTime, { GLBID: this.userDataControll.getGLBID() })
                 .toPromise()
                 .then(
-                    res => {            
-                        this.setTime(res.json());
-                        this.loadJogadoresDoTime().then(res => {
-                            if (res) {
-                                resolve(this.time)
-                            }
+                    res => {                                    
+                        // this.setTime(res.json());
+                        this.loadJogadoresDoTime(res.json()).then((time:{atletas}) => {
+                            // if (res) {
+                            this.calcularParcialTime(time);
+                            resolve(time)
+                            // }
                         });
                     }
                 );
@@ -49,12 +52,26 @@ export class TimeControll implements ITimeControll {
         this.time = time;
     }
 
-    loadJogadoresDoTime() { 
+    loadJogadoresDoTime(time:{atletas}) { 
         return new Promise((resolve, reject) => {
-            for (const jogador of this.time.atletas) {
-                this.time.pontuados = this.jogadoresControll.getJogador(jogador.atleta_id);
+            for (const i in time.atletas) {
+                time.atletas[i].parcial = this.jogadoresControll.getParcialJogador(time.atletas[i]['atleta_id']);
             }
-            resolve(true);
+            resolve(time);
         })
+    }
+
+    calcularParcialTime(time:{atletas, parcial, capitao_id}){
+        return new Promise((resolve, reject) => {
+            let parcialTime = 0;
+            let parcialAtleta = 0;
+            for (const i in time.atletas) {
+                parcialAtleta = time.atletas[i].parcial; 
+                parcialTime += time.capitao_id == time.atletas[i].atleta_id?(parcialAtleta*2):parcialAtleta;
+                
+            }            
+            time.parcial = parseFloat((parcialTime).toFixed(2));
+        });
+        
     }
 }

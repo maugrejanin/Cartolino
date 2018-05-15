@@ -15,5 +15,6 @@ export const get_ligas_info_api = "https://api.cartolafc.globo.com/auth/ligas";
 export const get_liga_info_api = "https://api.cartolafc.globo.com/auth/liga/";
 export const get_pontuados_api = "https://api.cartolafc.globo.com/atletas/pontuados"; 
 export const get_time_api = "https:////api.cartolafc.globo.com/time/id/";
+export const get_mercado_info_api = "https:////api.cartolafc.globo.com/time/id/";
 
     

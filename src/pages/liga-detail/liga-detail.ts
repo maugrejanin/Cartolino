@@ -35,13 +35,13 @@ export class LigaDetailPage {
   ionViewDidLoad() {
     this.liga.nome = this.navParams.get('ligaNome');
     this.ligaControll.loadLiga(this.navParams.get('ligaSlug')).then(ligas => {
-      for (const time of ligas.times) {
+      for (const time of ligas.times) {        
         this.timeControll.loadTime(time.time_id).then(timeInfo => {
           this.liga.times.push(timeInfo);
-          console.log(this.liga.times);
         });
       }
       this.loading.dismiss();
+      console.log(this.liga.times);
     });
   }
 }

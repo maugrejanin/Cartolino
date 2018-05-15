@@ -1,18 +1,37 @@
-#nm-time-container .item-inner {
+#nm-lista-container .item-inner {
   border-bottom: 0px !important;
 }
 
-#liga-container .item-inner {
+#time-container .item-inner {
   border-bottom: 0px !important;
 }
 
-#nm-time {
+#nm-lista {
   text-align: center;
   font-weight: bold;
 }
 
-#nm-liga {
+#nm-time-parcial {
   font-weight: bold;
-  font-size: 1.2rem;
+  // font-size: 1.2rem;
 }
 
+.time-item{
+  padding-left: 0px !important;
+}
+
+.time-item .item-inner {
+  border-bottom: 0px !important;
+}
+
+.lbl-nome{
+  font-size: 1.2rem !important;
+}
+
+.lbl-nome-bold{
+  font-weight: bold !important;
+}
+
+#border-bottom-row{
+  border-bottom: 1px solid #dedede;
+}

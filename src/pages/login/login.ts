@@ -1,5 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser';
 import { NavController, IonicPage } from 'ionic-angular';

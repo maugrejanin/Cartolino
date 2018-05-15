@@ -7,16 +7,47 @@
 </ion-header>
 
 <ion-content>
-  <ion-row>
-    <ion-item id="nm-time-container">
-      <h3 id="nm-time">Times</h3>
-    </ion-item>
-  </ion-row>
+  <ion-grid>
+    <ion-row>
+      <ion-item id="nm-lista-container">
+        <h3 id="nm-lista">Times</h3>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-col col-7 text-center>
+        Time
+      </ion-col>
+      <ion-col>
+        Parcial
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-  <ion-row>
-    <ion-item *ngFor="let time of liga.times" id="liga-container">
-      <h3 id="nm-liga">{{time.nome}}</h3>
-    </ion-item>
 
-  </ion-row>
+  <ion-list *ngFor="let time of liga.times">
+    <ion-grid>
+      <ion-row align-items-center id="border-bottom-row">
+        <ion-col col-7>
+          <ion-item class="time-item">
+            <ion-avatar item-start>
+              <img width="64px" src="{{time.time.url_escudo_svg}}">
+            </ion-avatar>
+            <h3 class='lbl-nome lbl-nome-bold'>{{time.time.nome}}</h3>
+            <p class="lbl-nome">{{time.time.nome_cartola}}</p>
+          </ion-item>
+        </ion-col>
+
+        <ion-col>
+          <ion-item class="time-item">
+            <h3></h3>
+            <p class="lbl-nome lbl-nome-bold" [ngStyle]="{'color': time.parcial>0? 'green' : 'red'}">{{time.parcial}}</p>
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+
+    </ion-grid>
+
+
+  </ion-list>
 </ion-content>

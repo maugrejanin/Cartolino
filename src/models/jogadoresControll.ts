@@ -17,6 +17,7 @@ export interface IJogadoresControll {
     getJogadores(): {};
     getJogador(jogador_id: string);
     jogadoresLoaded(): boolean;
+    getParcialJogador(jogador_id: string);
 }
 
 @Injectable()
@@ -36,6 +37,7 @@ export class JogadoresControll implements IJogadoresControll {
                 .toPromise()
                 .then(
                     res => {
+                        console.log("jogadores ok", res.json());                        
                         this.setJogadores(res.json());
                         resolve(true);
                     }
@@ -50,10 +52,15 @@ export class JogadoresControll implements IJogadoresControll {
     getJogadores() { return this.jogadores };
 
     getJogador(jogador_id: string) {
-        // return new Promise((resolve, reject) => {
-        //     resolve(this.jogadores.atletas['jogador_id'])
-        // })
         return this.jogadores.atletas[jogador_id];
+    };
+
+    getParcialJogador(jogador_id: string) {
+        if (!this.jogadores.atletas[jogador_id]) {
+            return 0;
+        } else {
+            return this.jogadores.atletas[jogador_id].pontuacao;
+        }        
     };
 
     jogadoresLoaded() {

@@ -17,9 +17,11 @@ import { TimeControll, ITimeControll } from '../../models/timeControll';
 export class LigaDetailPage {
   liga = {
     times: [],
-    nome:''
+    nome: ''
   };
   loading;
+  orderBy = 'pontos.rodada';
+  order = 'desc';
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -34,40 +36,72 @@ export class LigaDetailPage {
   }
 
   ionViewDidLoad() {
-    this.liga.nome = this.navParams.get('ligaNome');
-    this.ligaControll.loadLiga(this.navParams.get('ligaSlug')).then(liga => {  
-      this.orderTimesByPontos(liga);    
-      // let timesToLoad = liga.times.length;
-      // for (const time of liga.times) {
-      //   this.timeControll.loadTime(time.time_id).then(timeInfo => {
-      //     // Vamos assumir que podemos usar a proprieade pontos tanto com mercado aberto quanto fechado
-      //     // Acho que com o mercado fechado, essa propriedade retorna os pontos da rodada passada
-      //     // Se nao for isso, essa propriedade nem existe, o que me permite cria-la e usa la sem problemas
-      //     timeInfo.pontos = parseFloat((timeInfo.pontos).toFixed(2));
-      //     this.liga.times.push(timeInfo);
-      //     this.liga.times.length==timesToLoad?this.orderTimesByPontos():'';
-          
-      //   });
-      // }
+    new Promise((resolve, reject) => {
+      this.loadLigaDetails().then(res => {
+        res ? this.loading.dismiss() : '';
+      })
     });
   }
 
-  orderTimesByPontos(liga){
-    let timesOrderByPontos = _.orderBy(liga.times, 'pontos.rodada', 'desc');
-    this.liga.times = timesOrderByPontos;
-    this.loading.dismiss();
-    console.log(this.liga);    
+  loadLigaDetails(orderBy = null, order = null) {
+    return new Promise((resolve, reject) => {
+      this.liga.nome = this.navParams.get('ligaNome');
+      this.ligaControll.loadLiga(this.navParams.get('ligaSlug')).then(liga => {
+        this.orderTimesByPontos(liga, orderBy, order);
+        resolve(true);
+        // let timesToLoad = liga.times.length;
+        // for (const time of liga.times) {
+        //   this.timeControll.loadTime(time.time_id).then(timeInfo => {
+        //     // Vamos assumir que podemos usar a proprieade pontos tanto com mercado aberto quanto fechado
+        //     // Acho que com o mercado fechado, essa propriedade retorna os pontos da rodada passada
+        //     // Se nao for isso, essa propriedade nem existe, o que me permite cria-la e usa la sem problemas
+        //     timeInfo.pontos = parseFloat((timeInfo.pontos).toFixed(2));
+        //     this.liga.times.push(timeInfo);
+        //     this.liga.times.length==timesToLoad?this.orderTimesByPontos():'';
+
+        //   });
+        // }
+      });
+    })
   }
 
-  formatPontos(parcial){
+  orderTimesByPontos(liga, orderBy = null, order = null) {
+    orderBy = orderBy ? orderBy : 'pontos.rodada';
+    order = order ? order : 'desc';
+    console.log("order:",orderBy, order);    
+    let timesOrderByPontos = _.orderBy(liga.times, orderBy, order);
+    this.liga.times = timesOrderByPontos;
+    console.log(this.liga);
+  }
+
+  formatPontos(parcial) {
     return parseFloat((parcial).toFixed(2))
   }
 
-  variacaoColor(variacao){
-    if (variacao>0) {
+  variacaoColor(variacao) {
+    if (variacao > 0) {
       return 'green';
-    } else if (variacao<0) {
+    } else if (variacao < 0) {
       return 'red';
+    }
+  }
+
+  doRefresh(refresher) {
+    new Promise((resolve, reject) => {
+      this.loadLigaDetails().then(res => {
+        res ? refresher.complete() : '';
+      })
+    });
+  }
+
+  orderLigaBy(orderBy, order) {
+    if (this.orderBy == orderBy) {
+      this.order = order=='asc'?'desc':'asc';
+      this.orderTimesByPontos(this.liga, this.orderBy, this.order);
+    } else if (this.orderBy != orderBy) {
+      this.orderBy = orderBy;
+      this.order = 'desc' ;
+      this.orderTimesByPontos(this.liga, this.orderBy, this.order);
     }
   }
 }

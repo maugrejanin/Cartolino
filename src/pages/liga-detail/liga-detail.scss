@@ -6,25 +6,60 @@
   border-bottom: 0px !important;
 }
 
-
+.time-item {
+  padding-left: 0px !important;
+}
 
 .time-item .item-inner {
   border-bottom: 0px !important;
 }
 
-.lbl-nome{
-  font-size: 1.2rem !important;
+.lbl-nome {
+  font-size: 1.1rem !important;
 }
 
-.lbl-nome-bold{
+.lbl-nome-bold {
   font-weight: bold !important;
 }
 
-#border-bottom-row{
+#border-bottom-row {
   border-bottom: 1px solid #dedede;
 }
 
-.seta-variacao{
+.seta-variacao {
   vertical-align: middle;
   font-weight: bold;
+}
+
+.time-avatar {
+  margin-right: 4px !important;
+}
+
+.seta-order {
+  margin-right: 5px;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.btn-order-by {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.time-escudo {
+  width: 40px !important;
+  min-width: 40px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  margin-right: 5px !important;
+}
+
+.time-escudo img {
+  width: 40px !important;
+  height: 41px !important;
+}
+
+[col-6]{
+  max-width: 65% !important;
+  width: 180px !important;
 }

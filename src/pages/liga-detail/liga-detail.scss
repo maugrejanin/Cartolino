@@ -6,19 +6,7 @@
   border-bottom: 0px !important;
 }
 
-#nm-lista {
-  text-align: center;
-  font-weight: bold;
-}
 
-#nm-time-parcial {
-  font-weight: bold;
-  // font-size: 1.2rem;
-}
-
-.time-item{
-  padding-left: 0px !important;
-}
 
 .time-item .item-inner {
   border-bottom: 0px !important;
@@ -34,4 +22,9 @@
 
 #border-bottom-row{
   border-bottom: 1px solid #dedede;
+}
+
+.seta-variacao{
+  vertical-align: middle;
+  font-weight: bold;
 }

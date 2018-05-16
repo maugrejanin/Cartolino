@@ -13,6 +13,7 @@ import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
 import { UserDataControll, UserDataControllFake } from '../models/userDataControll';
 import { JogadoresControll } from '../models/jogadoresControll';
+import { MercadoControll } from '../models/mercadoControll';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -65,7 +66,8 @@ export function provideSettings(storage: Storage) {
     Api,
     // {provide: 'IUserDataControll', useClass: UserDataControllFake},
     { provide: 'IUserDataControll', useClass: UserDataControll },
-    { provide: 'IJogadoresControll', useClass: JogadoresControll },
+    { provide: 'IMercadoControll', useClass: MercadoControll },
+    { provide: 'IJogadoresControll', useClass: JogadoresControll },    
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage, LoadingController } from 'ionic-angular';
 import { IUserDataControll } from '../../models/userDataControll';
 import { Inject } from '@angular/core';
+import { IMercadoControll } from '../../models/mercadoControll';
 
 @IonicPage()
 @Component({
@@ -15,6 +16,7 @@ export class HomePage {
     private navCtrl: NavController,
     private navParams: NavParams,
     @Inject('IUserDataControll') private userDataControll: IUserDataControll,
+    @Inject('IMercadoControll') private mercadoControll: IMercadoControll,
     private loadingCtrl: LoadingController) { }
 
   ionViewWillEnter() {

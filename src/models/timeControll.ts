@@ -1,19 +1,20 @@
 import { Injectable, Component, Inject } from "@angular/core";
 import { Api } from "../providers";
 import { IUserDataControll } from "./userDataControll";
-import { get_time_api } from "../pages";
+import { get_time_api, status_mercado_aberto, status_mercado_fechado } from "../pages";
 import { IJogadoresControll } from "./jogadoresControll";
+import { IMercadoControll } from "./mercadoControll";
 
 export interface Time {
     atletas: any,
-    parcial: number,
+    pontos: number,
     capitao_id: number
 }
 
 export interface ITimeControll {
     loadTime(idTime: string);
     setTime(time: Time);
-    loadJogadoresDoTime(time: Time);
+    loadParciaisDosJogadoresDoTime(time: Time);
     calcularParcialTime();
 }
 
@@ -28,7 +29,8 @@ export class TimeControll implements ITimeControll {
     constructor(
         private api: Api,
         @Inject('IUserDataControll') public userDataControll: IUserDataControll,
-        @Inject('IJogadoresControll') public jogadoresControll: IJogadoresControll) { }
+        @Inject('IJogadoresControll') public jogadoresControll: IJogadoresControll,
+        @Inject('IMercadoControll') public mercadoControll: IMercadoControll) { }
 
     loadTime(idTime: string) {
         return new Promise((resolve, reject) => {
@@ -38,13 +40,19 @@ export class TimeControll implements ITimeControll {
                     res => {
                         // this.setTime(res.json());
                         this.time = res.json();
-                        this.loadJogadoresDoTime(this.time).then(res => {
-                            if (res) {
-                                this.calcularParcialTime().then(time => {
-                                    resolve(time)
-                                });
-                            }
-                        });
+                        // quando o mercado esta fechado n ha parcial de jogadores para carregar, a pontuação já
+                        // vem no retorno da requisição acima, dentro do array de cada jogador
+                        if (this.mercadoControll.getMercadoStatus() == status_mercado_fechado) {
+                            this.loadParciaisDosJogadoresDoTime(this.time).then(res => {
+                                if (res) {
+                                    this.calcularParcialTime().then(time => {
+                                        resolve(time)
+                                    });
+                                }
+                            });    
+                        } else {
+                            resolve(this.time);
+                        }
                     }
                 );
         });
@@ -54,10 +62,10 @@ export class TimeControll implements ITimeControll {
         this.time = time;
     }
 
-    loadJogadoresDoTime(time: Time) {
+    loadParciaisDosJogadoresDoTime(time: Time) {
         return new Promise((resolve, reject) => {
             for (const i in this.time.atletas) {
-                this.time.atletas[i].parcial = this.jogadoresControll.getParcialJogador(this.time.atletas[i]['atleta_id']);
+                this.time.atletas[i].pontos_num = this.jogadoresControll.getParcialJogador(this.time.atletas[i]['atleta_id']);
             }
             resolve(true);
         })
@@ -68,11 +76,11 @@ export class TimeControll implements ITimeControll {
             let parcialTime = 0;
             let parcialAtleta = 0;
             for (const i in this.time.atletas) {
-                parcialAtleta = this.time.atletas[i].parcial;
+                parcialAtleta = this.time.atletas[i].pontos_num;
                 parcialTime += this.time.capitao_id == this.time.atletas[i].atleta_id ? (parcialAtleta * 2) : parcialAtleta;
 
             }
-            this.time.parcial = parseFloat((parcialTime).toFixed(2));
+            this.time.pontos = parcialTime;
             resolve(this.time);
         });
 

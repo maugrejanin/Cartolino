@@ -58,6 +58,12 @@ export class LigasPage {
   }
 
   ligaDetail(liga) {
-    this.navCtrl.push('LigaDetailPage', { ligaSlug: liga.slug, ligaNome: liga.nome });
+    this.navCtrl.push('LigaDetailPage',
+      {
+        ligaSlug: liga.slug,
+        ligaNome: liga.nome,
+        ligaFlamulaUrl: liga.url_flamula_svg,
+        ligaDescricao: liga.descricao
+      });
   }
 }

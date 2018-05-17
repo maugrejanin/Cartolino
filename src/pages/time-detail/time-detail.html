@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Detalhes do time
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)" pullMin="60" pullMax="120">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para atualizar..." refreshingSpinner="bubbles" refreshingText="Atualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid>
+    <ion-row class="time-escudo-svg-content">
+      <ion-item>
+        <ion-thumbnail item-start class="time-escudo-svg">
+          <img src="{{time.url_escudo_svg}}">
+        </ion-thumbnail>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <h2 text-center>{{time.nome}}</h2>
+        <p text-center>{{time.nome_cartola}}</p>
+      </ion-item>
+    </ion-row>
+
+    <ion-row>
+      <ion-col text-center align-self-center class="lbl-nome-bold">
+        <ion-item class="time-item">
+          <p class="lbl-nome lbl-nome-bold" text-center>Patrimônio</p>
+          <p class="lbl-nome lbl-nome-bold" text-center>C$ {{time.patrimonio}}</p>
+        </ion-item>
+      </ion-col>
+      <ion-col text-center align-self-center class="lbl-nome-bold">
+        <ion-item class="time-item">
+          <p class="lbl-nome lbl-nome-bold" text-center>Parcial</p>
+          <p class="lbl-nome lbl-nome-bold" text-center [ngStyle]="{'color': time.pontos.rodada>0? 'green' : 'red'}">{{formatPontos(time.pontos.rodada)}}</p>
+        </ion-item>
+      </ion-col>
+      <ion-col text-center align-self-center class="lbl-nome-bold">
+        <ion-item class="time-item">
+          <p class="lbl-nome lbl-nome-bold" text-center>Total</p>
+          <p class="lbl-nome lbl-nome-bold" text-center>{{formatPontos(time.pontos.campeonato)}}</p>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+  <ion-list *ngFor="let atleta of time.atletas">
+    <ion-grid>
+      <ion-row align-items-center id="border-bottom-row">
+        <ion-col col-6>
+          <ion-item class="time-item item-escudo">
+            <ion-thumbnail item-start class="time-escudo">
+              <img src="{{atleta.foto.replace('FORMATO', '140x140')}}">
+            </ion-thumbnail>
+            <!-- <h3 class='lbl-nome lbl-nome-bold' [innerHtml]="(orderBy=='pontos.rodada'?time.ranking.rodada:time.ranking.campeonato)+'°'"></h3>
+            <h3 class='lbl-nome lbl-nome-bold'>{{time.nome}}</h3>
+            <p class="lbl-nome">{{time.nome_cartola}}</p> -->
+          </ion-item>
+        </ion-col>
+
+        <!-- <ion-col>
+          <ion-item class="time-item">
+            <p class="lbl-nome lbl-nome-bold" text-right [ngStyle]="{'color': time.pontos.rodada>0? 'green' : 'red'}">{{formatPontos(time.pontos.rodada)}}</p>
+            <p class="lbl-nome lbl-nome-bold" text-right>C$ {{time.patrimonio}}</p>
+          </ion-item>
+        </ion-col>
+
+        <ion-col>
+          <ion-item class="time-item">
+            <p class="lbl-nome lbl-nome-bold" text-right>{{formatPontos(time.pontos.campeonato)}}</p>
+            <p class="lbl-nome lbl-nome-bold" text-right [ngStyle]="{'color': variacaoColor(time.variacao.campeonato)}">
+              <ion-icon class="seta-variacao" *ngIf='time.variacao.campeonato!=0' name="{{time.variacao.campeonato>0?'ios-arrow-round-up':'ios-arrow-round-down'}}"></ion-icon>
+              {{time.variacao.campeonato}}</p>
+          </ion-item>
+        </ion-col> -->
+
+      </ion-row>
+
+    </ion-grid>
+
+
+  </ion-list>
+</ion-content>

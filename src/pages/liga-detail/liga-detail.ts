@@ -17,7 +17,9 @@ import { TimeControll, ITimeControll } from '../../models/timeControll';
 export class LigaDetailPage {
   liga = {
     times: [],
-    nome: ''
+    nome: '',
+    url_flamula_svg: '',
+    descricao: ''
   };
   loading;
   orderBy = 'pontos.rodada';
@@ -46,6 +48,8 @@ export class LigaDetailPage {
   loadLigaDetails(orderBy = null, order = null) {
     return new Promise((resolve, reject) => {
       this.liga.nome = this.navParams.get('ligaNome');
+      this.liga.url_flamula_svg = this.navParams.get('ligaFlamulaUrl');
+      this.liga.descricao = this.navParams.get('ligaDescricao');
       this.ligaControll.loadLiga(this.navParams.get('ligaSlug')).then(liga => {
         this.orderTimesByPontos(liga, orderBy, order);
         resolve(true);
@@ -102,6 +106,13 @@ export class LigaDetailPage {
       this.orderBy = orderBy;
       this.order = 'desc' ;
       this.orderTimesByPontos(this.liga, this.orderBy, this.order);
-    }
+    } 
+  }
+
+  timeDetail(time) {
+    this.navCtrl.push('TimeDetailPage',
+      {
+        time:time
+      });
   }
 }

@@ -13,16 +13,16 @@
   </ion-refresher>
   <ion-grid>
     <ion-row class="time-escudo-svg-content">
-      <ion-item>
+      <ion-item class="without-padding-left">
         <ion-thumbnail item-start class="time-escudo-svg">
-          <img src="{{time.url_escudo_svg}}">
+          <img src="{{time.time.url_escudo_svg}}">
         </ion-thumbnail>
       </ion-item>
     </ion-row>
     <ion-row>
       <ion-item>
-        <h2 text-center>{{time.nome}}</h2>
-        <p text-center>{{time.nome_cartola}}</p>
+        <h2 text-center>{{time.time.nome}}</h2>
+        <p text-center>{{time.time.nome_cartola}}</p>
       </ion-item>
     </ion-row>
 
@@ -36,13 +36,13 @@
       <ion-col text-center align-self-center class="lbl-nome-bold">
         <ion-item class="time-item">
           <p class="lbl-nome lbl-nome-bold" text-center>Parcial</p>
-          <p class="lbl-nome lbl-nome-bold" text-center [ngStyle]="{'color': time.pontos.rodada>0? 'green' : 'red'}">{{formatPontos(time.pontos.rodada)}}</p>
+          <p class="lbl-nome lbl-nome-bold" text-center [ngStyle]="{'color': time.pontos>0? 'green' : 'red'}">{{time.pontos}}</p>
         </ion-item>
       </ion-col>
       <ion-col text-center align-self-center class="lbl-nome-bold">
         <ion-item class="time-item">
           <p class="lbl-nome lbl-nome-bold" text-center>Total</p>
-          <p class="lbl-nome lbl-nome-bold" text-center>{{formatPontos(time.pontos.campeonato)}}</p>
+          <p class="lbl-nome lbl-nome-bold" text-center>{{getTotalPontos()}}</p>
         </ion-item>
       </ion-col>
 

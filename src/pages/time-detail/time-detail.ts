@@ -1,47 +1,68 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ITimeControll, TimeControll } from '../../models/timeControll';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { ITimeControll, TimeControll, TimeControllFake } from '../../models/timeControll';
+import { IJogadoresControll } from '../../models/jogadoresControll';
 
 @IonicPage()
 @Component({
   selector: 'page-time-detail',
   templateUrl: 'time-detail.html',
   providers: [
+    // { provide: 'ITimeControll', useClass: TimeControllFake }
     { provide: 'ITimeControll', useClass: TimeControll }
   ]
 })
 export class TimeDetailPage {
   time = {
-    time_id: '',
-    nome: '',
-    url_escudo_svg: '',
-    nome_cartola: '',
-    patrimonio: '',
-    pontos: {
-      rodada: 0,
-      campeonato: 0
+    time: {
+      url_escudo_svg: '',
+      time_id: '',
+      nome: '',
+      nome_cartola: '',
     },
+    patrimonio: '',
+    pontos: '',
     atletas: [{
-      foto:''
+      foto: ''
     }]
   };
-  constructor(public navCtrl: NavController, public navParams: NavParams, @Inject('ITimeControll') private timeControll: ITimeControll) {
+  loading;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    @Inject('ITimeControll') private timeControll: ITimeControll,
+    private loadingCtrl: LoadingController,
+    @Inject('IJogadoresControll') public jogadoresControll: IJogadoresControll) {
+    this.loading = this.loadingCtrl.create({
+      spinner: "bubbles",
+      content: 'Carregando...'
+    });
+
+    this.loading.present();
   }
 
   ionViewDidLoad() {
     this.time = this.navParams.get('time');
-    this.loadAtletasTime();
+    console.log("params time: ", this.navParams.get('time'));
+    this.loadTimeParciais();
   }
 
-  loadAtletasTime() {
-    this.timeControll.loadTime(this.time.time_id).then(timeInfo => {
-      this.time.atletas = timeInfo.atletas;
-      console.log(this.time);
-    });
+  loadTimeParciais() {
+    new Promise((resolve, reject) => {
+      this.jogadoresControll.loadJogadores().then(() => {
+        this.timeControll.loadTime(this.time).then(timeInfo => {
+          this.time = timeInfo;
+          this.time.patrimonio = this.navParams.get('time').patrimonio;
+          console.log("loaded time: ", this.time);
+          this.loading.dismiss();
+        });
+      });
+    })
   }
 
   doRefresh(refresher) {
-    console.log("refresh");
+    this.loadTimeParciais();
     setTimeout(() => {
       refresher.complete();
     }, 2000);
@@ -49,6 +70,10 @@ export class TimeDetailPage {
 
   formatPontos(parcial) {
     return parseFloat((parcial).toFixed(2));
+  }
+
+  getTotalPontos() {
+    return this.formatPontos((parseFloat(this.time.pontos) + parseFloat(this.navParams.get('time').pontos.campeonato)));
   }
 
 }

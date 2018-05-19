@@ -41,7 +41,7 @@ export class Api {
   }
 
   post(endpoint: string, body: any, reqOpts?: any) {
-    return this.http.post(this.url + '/' + endpoint, body, reqOpts);
+    return this.http.post(endpoint, body, reqOpts);
   }
 
   put(endpoint: string, body: any, reqOpts?: any) {

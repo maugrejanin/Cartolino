@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import { LigaControll, ILigasControll } from '../../models/ligasControll';
+import { LigaControll, ILigasControll, LigaControllFake } from '../../models/ligasControll';
 import * as _ from 'lodash';
 import { TimeControll, ITimeControll } from '../../models/timeControll';
 

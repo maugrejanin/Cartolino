@@ -1,8 +1,5 @@
 <ion-header>
   <ion-navbar color="primary">
-    <!-- <ion-title>
-      {{liga.nome}}
-    </ion-title> -->
     <ion-title>
       Detalhes da liga
     </ion-title>
@@ -34,13 +31,13 @@
       </ion-col>
       <ion-col col-3 text-center>
         <button class='btn-order-by' ion-button outline small (click)="orderLigaBy('pontos.rodada', order)">
-          <ion-icon class="seta-order" [hidden]='orderBy != "pontos.rodada"' name="{{order=='asc'?'ios-arrow-round-up':'ios-arrow-round-down'}}"></ion-icon>
+          <ion-icon float-right class="seta-order" [hidden]='orderBy != "pontos.rodada"' name="{{order=='asc'?'ios-arrow-round-up':'ios-arrow-round-down'}}"></ion-icon>
           Parcial
         </button>
       </ion-col>
       <ion-col col-3 text-center>
         <button class='btn-order-by' ion-button outline small (click)="orderLigaBy('pontos.campeonato', order)">
-          <ion-icon class="seta-order" [hidden]='orderBy != "pontos.campeonato"' name="{{order=='asc'?'ios-arrow-round-up':'ios-arrow-round-down'}}"></ion-icon>
+          <ion-icon float-right class="seta-order" [hidden]='orderBy != "pontos.campeonato"' name="{{order=='asc'?'ios-arrow-round-up':'ios-arrow-round-down'}}"></ion-icon>
           Total
         </button>
       </ion-col>
@@ -70,7 +67,7 @@
         <ion-col>
           <ion-item class="time-item">
             <p class="lbl-nome lbl-nome-bold" text-right>{{formatPontos(time.pontos.campeonato)}}</p>
-<p class="lbl-nome lbl-nome-bold" text-right [ngStyle]="{'color': variacaoColor(time.variacao.campeonato)}" [innerHtml]='time.variacao.campeonato==0?"-":time.variacao.campeonato'>
+            <p class="lbl-nome lbl-nome-bold" text-right [ngStyle]="{'color': variacaoColor(time.variacao.campeonato)}" [innerHtml]='time.variacao.campeonato==0?"-":time.variacao.campeonato'>
 
               <ion-icon class="seta-variacao" *ngIf='time.variacao.campeonato!=0' name="{{time.variacao.campeonato>0?'ios-arrow-round-up':'ios-arrow-round-down'}}"></ion-icon>
             </p>

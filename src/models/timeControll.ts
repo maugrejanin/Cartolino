@@ -9,14 +9,15 @@ export interface Time {
     atletas: any,
     pontos: string,
     capitao_id: number,
-    time_id: string
+    time_id: string;
+    pontuados: number;
 }
 
 export interface ITimeControll {
     loadTime(time: any);
     setTime(time: Time);
     getParciaisDosJogadoresDoTime(time: Time);
-    calcularParcialTime();
+    calcularParcialTime(time);
 }
 
 @Injectable()
@@ -24,8 +25,6 @@ export interface ITimeControll {
     providers: [Api]
 })
 export class TimeControll implements ITimeControll {
-
-    time: Time;
 
     constructor(
         private api: Api,
@@ -39,46 +38,50 @@ export class TimeControll implements ITimeControll {
                 .toPromise()
                 .then(
                     res => {
-                        this.time = res.json();
-                        if (this.mercadoControll.getMercadoStatus() == status_mercado_fechado) {
-                            this.getParciaisDosJogadoresDoTime(this.time).then(res => {
-                                if (res) {
-                                    this.calcularParcialTime().then(time => {
-                                        resolve(time)
-                                    });
-                                }
-                            });
-                        } else {
-                            resolve(this.time);
-                        }
+                        resolve(res.json());
                     }
                 );
         });
     }
 
     setTime(time: Time) {
-        this.time = time;
+        // this.time = time;
     }
 
-    getParciaisDosJogadoresDoTime(time: Time) {
+    getParciaisDosJogadoresDoTime(time: any) {
         return new Promise((resolve, reject) => {
-            for (const i in this.time.atletas) {
-                this.time.atletas[i].pontos_num = this.jogadoresControll.getParcialJogador(this.time.atletas[i]['atleta_id']);
-            }
-            resolve(true);
+            this.mercadoControll.getMercadoStatus().then(mercadoStatus => {
+                console.log("p s: ", mercadoStatus);
+                
+                if (mercadoStatus == status_mercado_fechado) {
+                    time.pontuados = 0;
+                    for (const i in time.atletas) {
+                        let parcialJogador = this.jogadoresControll.getParcialJogador(time.atletas[i]['atleta_id']);
+                        if (parcialJogador) {
+                            time.atletas[i].pontos_num = parcialJogador;
+                            time.pontuados++;
+                        }
+                    }
+                    this.calcularParcialTime(time).then(time => {
+                        resolve(time)
+                    });
+                } else {
+                    resolve(time);
+                }
+            });
         })
     }
 
-    calcularParcialTime() {
+    calcularParcialTime(time) {
         return new Promise((resolve, reject) => {
             let parcialTime = 0;
             let parcialAtleta = 0;
-            for (const i in this.time.atletas) {
-                parcialAtleta = this.time.atletas[i].pontos_num;
-                parcialTime += this.time.capitao_id == this.time.atletas[i].atleta_id ? (parcialAtleta * 2) : parcialAtleta;
+            for (const i in time.atletas) {
+                parcialAtleta = time.atletas[i].pontos_num;
+                parcialTime += time.capitao_id == time.atletas[i].atleta_id ? (parcialAtleta * 2) : parcialAtleta;
             }
-            this.time.pontos = parcialTime.toFixed(2);
-            resolve(this.time);
+            time.pontos = parcialTime.toFixed(2);
+            resolve(time);
         });
 
     }

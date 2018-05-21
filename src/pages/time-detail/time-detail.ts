@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ITimeControll, TimeControll, TimeControllFake } from '../../models/timeControll';
-import { IJogadoresControll } from '../../models/jogadoresControll';
 
 @IonicPage()
 @Component({
@@ -15,12 +14,12 @@ import { IJogadoresControll } from '../../models/jogadoresControll';
 export class TimeDetailPage {
   time = {
     time: {
-      url_escudo_svg: '',
       time_id: '',
       nome: '',
       nome_cartola: '',
+      url_escudo_svg: '',
     },
-    patrimonio: '',
+    pontuados: 0,
     pontos: '',
     atletas: [{
       foto: ''
@@ -32,8 +31,7 @@ export class TimeDetailPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     @Inject('ITimeControll') private timeControll: ITimeControll,
-    private loadingCtrl: LoadingController,
-    @Inject('IJogadoresControll') public jogadoresControll: IJogadoresControll) {
+    private loadingCtrl: LoadingController) {
     this.loading = this.loadingCtrl.create({
       spinner: "bubbles",
       content: 'Carregando...'
@@ -43,26 +41,29 @@ export class TimeDetailPage {
   }
 
   ionViewDidLoad() {
-    this.time = this.navParams.get('time');
+    // this.time = this.navParams.get('time');
     console.log("params time: ", this.navParams.get('time'));
     this.loadTimeParciais();
   }
 
   loadTimeParciais() {
-    new Promise((resolve, reject) => {
-      this.jogadoresControll.loadJogadores().then(() => {
-        this.timeControll.loadTime(this.time).then(timeInfo => {
-          this.time = timeInfo;
-          this.time.patrimonio = this.navParams.get('time').patrimonio;
-          console.log("loaded time: ", this.time);
-          this.loading.dismiss();
-        });
-      });
+    this.timeControll.loadTime(this.navParams.get('time')).then(timeInfo => {
+      this.getTimeParciais(timeInfo);
+    });
+  }
+
+  getTimeParciais(timeInfo) {
+    console.log("entrei aqui");
+    
+    this.timeControll.getParciaisDosJogadoresDoTime(timeInfo).then(time => {
+      console.log("loaded time: ", time);
+      this.time = time;
+      this.loading.dismiss();
     })
   }
 
   doRefresh(refresher) {
-    this.loadTimeParciais();
+    this.getTimeParciais(this.time);
     setTimeout(() => {
       refresher.complete();
     }, 2000);

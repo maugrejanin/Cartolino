@@ -28,7 +28,6 @@ export class LigaDetailPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     @Inject('ILigaControll') private ligaControll: ILigasControll,
-    @Inject('ITimeControll') private timeControll: ITimeControll,
     private loadingCtrl: LoadingController) {
     this.loading = this.loadingCtrl.create({
       spinner: "bubbles",
@@ -53,18 +52,6 @@ export class LigaDetailPage {
       this.ligaControll.loadLiga(this.navParams.get('ligaSlug')).then(liga => {
         this.orderTimesByPontos(liga, orderBy, order);
         resolve(true);
-        // let timesToLoad = liga.times.length;
-        // for (const time of liga.times) {
-        //   this.timeControll.loadTime(time.time_id).then(timeInfo => {
-        //     // Vamos assumir que podemos usar a proprieade pontos tanto com mercado aberto quanto fechado
-        //     // Acho que com o mercado fechado, essa propriedade retorna os pontos da rodada passada
-        //     // Se nao for isso, essa propriedade nem existe, o que me permite cria-la e usa la sem problemas
-        //     timeInfo.pontos = parseFloat((timeInfo.pontos).toFixed(2));
-        //     this.liga.times.push(timeInfo);
-        //     this.liga.times.length==timesToLoad?this.orderTimesByPontos():'';
-
-        //   });
-        // }
       });
     })
   }
@@ -72,7 +59,7 @@ export class LigaDetailPage {
   orderTimesByPontos(liga, orderBy = null, order = null) {
     orderBy = orderBy ? orderBy : 'pontos.rodada';
     order = order ? order : 'desc';
-    console.log("order:",orderBy, order);    
+    console.log("order:", orderBy, order);
     let timesOrderByPontos = _.orderBy(liga.times, orderBy, order);
     this.liga.times = timesOrderByPontos;
     console.log(this.liga);
@@ -100,19 +87,19 @@ export class LigaDetailPage {
 
   orderLigaBy(orderBy, order) {
     if (this.orderBy == orderBy) {
-      this.order = order=='asc'?'desc':'asc';
+      this.order = order == 'asc' ? 'desc' : 'asc';
       this.orderTimesByPontos(this.liga, this.orderBy, this.order);
     } else if (this.orderBy != orderBy) {
       this.orderBy = orderBy;
-      this.order = 'desc' ;
+      this.order = 'desc';
       this.orderTimesByPontos(this.liga, this.orderBy, this.order);
-    } 
+    }
   }
 
   timeDetail(time) {
     this.navCtrl.push('TimeDetailPage',
       {
-        time:time
+        time: time
       });
   }
 }

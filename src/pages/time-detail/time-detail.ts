@@ -13,12 +13,10 @@ import { ITimeControll, TimeControll, TimeControllFake } from '../../models/time
 })
 export class TimeDetailPage {
   time = {
-    time: {
-      time_id: '',
-      nome: '',
-      nome_cartola: '',
-      url_escudo_svg: '',
-    },
+    url_escudo_svg: '',
+    time_id: '',
+    nome: '',
+    nome_cartola: '',
     pontuados: 0,
     pontos: '',
     atletas: [{
@@ -26,6 +24,7 @@ export class TimeDetailPage {
     }]
   };
   loading;
+  timeLoaded = false;
 
   constructor(
     public navCtrl: NavController,
@@ -41,32 +40,32 @@ export class TimeDetailPage {
   }
 
   ionViewDidLoad() {
-    // this.time = this.navParams.get('time');
-    console.log("params time: ", this.navParams.get('time'));
     this.loadTimeParciais();
   }
 
   loadTimeParciais() {
-    this.timeControll.loadTime(this.navParams.get('time')).then(timeInfo => {
+    this.time = this.navParams.get('time');
+    this.timeControll.loadTime(this.time).then(timeInfo => {
       this.getTimeParciais(timeInfo);
     });
   }
 
-  getTimeParciais(timeInfo) {
-    console.log("entrei aqui");
-    
+  getTimeParciais(timeInfo, refresher = null) { 
     this.timeControll.getParciaisDosJogadoresDoTime(timeInfo).then(time => {
-      console.log("loaded time: ", time);
-      this.time = time;
+      this.time = Object.assign(this.time, time);
+      console.log("time: ", this.time);
+      
+      this.timeLoaded = true;
+      if (refresher) {
+        refresher.complete();
+      }
       this.loading.dismiss();
     })
   }
 
   doRefresh(refresher) {
-    this.getTimeParciais(this.time);
-    setTimeout(() => {
-      refresher.complete();
-    }, 2000);
+    this.timeLoaded = false;
+    this.getTimeParciais(this.time, refresher);
   }
 
   formatPontos(parcial) {
@@ -74,7 +73,7 @@ export class TimeDetailPage {
   }
 
   getTotalPontos() {
-    return this.formatPontos((parseFloat(this.time.pontos) + parseFloat(this.navParams.get('time').pontos.campeonato)));
+    return (parseFloat(this.time.pontos) + parseFloat(this.navParams.get('time').pontos.campeonato));
   }
 
 }

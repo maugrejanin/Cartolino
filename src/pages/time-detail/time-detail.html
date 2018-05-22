@@ -13,16 +13,16 @@
   </ion-refresher>
   <ion-grid>
     <ion-row class="time-escudo-svg-content">
-      <ion-item *ngIf="time.time.url_escudo_svg">
+      <ion-item>
         <ion-thumbnail item-start class="time-escudo-svg">
-          <img src="{{time.time.url_escudo_svg}}">
+          <img height="83px" src="{{time.url_escudo_svg}}">
         </ion-thumbnail>
       </ion-item>
     </ion-row>
     <ion-row>
       <ion-item>
-        <h2 text-center>{{time.time.nome}}</h2>
-        <p text-center>{{time.time.nome_cartola}}</p>
+        <h2 text-center>{{time.nome}}</h2>
+        <p text-center>{{time.nome_cartola}}</p>
       </ion-item>
     </ion-row>
 
@@ -49,7 +49,7 @@
     </ion-row>
   </ion-grid>
   <ion-list *ngFor="let atleta of time.atletas">
-    <ion-grid>
+    <ion-grid *ngIf="timeLoaded">
       <ion-row align-items-center id="border-bottom-row">
         <ion-col col-6>
           <ion-item class="time-item item-escudo">

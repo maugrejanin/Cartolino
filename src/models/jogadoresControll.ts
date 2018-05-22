@@ -14,7 +14,6 @@ export interface Jogadores {
 }
 
 export interface IJogadoresControll {
-    startUpdateInterval();
     loadJogadores();
     setJogadores(jogadores: {});
     getJogadores(): {};
@@ -34,20 +33,6 @@ export class JogadoresControll implements IJogadoresControll {
         private api: Api,
         @Inject('IUserDataControll') private userDataControll: IUserDataControll,
         @Inject('IMercadoControll') private mercadoControll: IMercadoControll) { };
-
-    startUpdateInterval() {
-        this.mercadoControll.getMercadoStatus().then(mercadoStatus => {            
-            if (mercadoStatus == status_mercado_fechado) {
-                var data = new Date();
-                console.log("Mercado fechado, atualizando parciais: ", data.getHours() + ':' + data.getMinutes());
-                
-                setTimeout(() => {
-                    this.loadJogadores();
-                    this.startUpdateInterval();
-                }, 30000);
-            }
-        });
-    }
 
     loadJogadores() {
         return new Promise((resolve, reject) => {
@@ -94,7 +79,7 @@ export class JogadoresControllFake implements IJogadoresControll {
     private jogadores: Jogadores;
 
     constructor(
-        private api: Api, 
+        private api: Api,
         @Inject('IUserDataControll') public userDataControll: IUserDataControll,
         @Inject('IMercadoControll') private mercadoControll: IMercadoControll) {
         this.loadJogadores();

@@ -15,7 +15,6 @@ export interface Time {
 
 export interface ITimeControll {
     loadTime(time: any);
-    setTime(time: Time);
     getParciaisDosJogadoresDoTime(time: Time);
     calcularParcialTime(time);
 }
@@ -44,32 +43,31 @@ export class TimeControll implements ITimeControll {
         });
     }
 
-    setTime(time: Time) {
-        // this.time = time;
-    }
-
     getParciaisDosJogadoresDoTime(time: any) {
         return new Promise((resolve, reject) => {
             this.mercadoControll.getMercadoStatus().then(mercadoStatus => {
-                console.log("p s: ", mercadoStatus);
-                
                 if (mercadoStatus == status_mercado_fechado) {
-                    time.pontuados = 0;
-                    for (const i in time.atletas) {
-                        let parcialJogador = this.jogadoresControll.getParcialJogador(time.atletas[i]['atleta_id']);
-                        if (parcialJogador) {
-                            time.atletas[i].pontos_num = parcialJogador;
-                            time.pontuados++;
+                    this.jogadoresControll.loadJogadores().then(res => {
+                        if (res) {
+                            time.pontuados = 0;
+                            for (const i in time.atletas) {
+                                let parcialJogador = this.jogadoresControll.getParcialJogador(time.atletas[i]['atleta_id']);
+                                if (parcialJogador) {
+                                    time.atletas[i].pontos_num = parcialJogador;
+                                    time.pontuados++;
+                                }
+                            }
+                            this.calcularParcialTime(time).then(time => {
+                                resolve(time)
+                            });
                         }
-                    }
-                    this.calcularParcialTime(time).then(time => {
-                        resolve(time)
-                    });
+                    })
                 } else {
+                    time.pontos = time.pontos.toFixed(2);
                     resolve(time);
                 }
             });
-        })
+        });
     }
 
     calcularParcialTime(time) {

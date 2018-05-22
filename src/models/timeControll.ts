@@ -7,7 +7,10 @@ import { IMercadoControll } from "./mercadoControll";
 
 export interface Time {
     atletas: any,
-    pontos: string,
+    pontos: {
+        rodada: number,
+        campeonato: number
+    },
     capitao_id: number,
     time_id: string;
     pontuados: number;
@@ -32,6 +35,7 @@ export class TimeControll implements ITimeControll {
         @Inject('IMercadoControll') public mercadoControll: IMercadoControll) { }
 
     loadTime(time: any) {
+        // Nao funciona com mercado em manutenção
         return new Promise((resolve, reject) => {
             this.api.getWithAuth(get_time_api + time.time_id, { GLBID: this.userDataControll.getGLBID() })
                 .toPromise()
@@ -43,7 +47,7 @@ export class TimeControll implements ITimeControll {
         });
     }
 
-    getParciaisDosJogadoresDoTime(time: any) {
+    getParciaisDosJogadoresDoTime(time: Time) {
         return new Promise((resolve, reject) => {
             this.mercadoControll.getMercadoStatus().then(mercadoStatus => {
                 if (mercadoStatus == status_mercado_fechado) {
@@ -58,19 +62,18 @@ export class TimeControll implements ITimeControll {
                                 }
                             }
                             this.calcularParcialTime(time).then(time => {
-                                resolve(time)
+                                resolve({ time: time, mercadoStatus: mercadoStatus })
                             });
                         }
                     })
                 } else {
-                    time.pontos = time.pontos.toFixed(2);
-                    resolve(time);
+                    resolve({ time: time, mercadoStatus: mercadoStatus })
                 }
             });
         });
     }
 
-    calcularParcialTime(time) {
+    calcularParcialTime(time: Time) {
         return new Promise((resolve, reject) => {
             let parcialTime = 0;
             let parcialAtleta = 0;
@@ -78,10 +81,9 @@ export class TimeControll implements ITimeControll {
                 parcialAtleta = time.atletas[i].pontos_num;
                 parcialTime += time.capitao_id == time.atletas[i].atleta_id ? (parcialAtleta * 2) : parcialAtleta;
             }
-            time.pontos = parcialTime.toFixed(2);
+            time.pontos.rodada = parcialTime;
             resolve(time);
         });
-
     }
 }
 
@@ -137,7 +139,7 @@ export class TimeControllFake implements ITimeControll {
                 parcialAtleta = this.time.atletas[i].pontos_num;
                 parcialTime += this.time.capitao_id == this.time.atletas[i].atleta_id ? (parcialAtleta * 2) : parcialAtleta;
             }
-            this.time.pontos = parcialTime.toFixed(2);
+            this.time.pontos.rodada = parcialTime;
             resolve(this.time);
         });
 

@@ -15,7 +15,7 @@
     <ion-row class="time-escudo-svg-content">
       <ion-item>
         <ion-thumbnail item-start class="time-escudo-svg">
-          <img height="83px" src="{{time.url_escudo_svg}}">
+          <img src="{{time.url_escudo_svg}}">
         </ion-thumbnail>
       </ion-item>
     </ion-row>
@@ -28,37 +28,38 @@
 
     <ion-row>
       <ion-col text-center align-self-center class="lbl-nome-bold">
-        <ion-item class="time-item">
+        <ion-item class="no-border-bottom">
           <p class="lbl-nome lbl-nome-bold" text-center>Pontuados</p>
           <p class="lbl-nome lbl-nome-bold" text-center>{{time.pontuados}}/12</p>
         </ion-item>
       </ion-col>
       <ion-col text-center align-self-center class="lbl-nome-bold">
-        <ion-item class="time-item">
+        <ion-item class="no-border-bottom">
           <p class="lbl-nome lbl-nome-bold" text-center>Parcial</p>
-          <p class="lbl-nome lbl-nome-bold" text-center [ngStyle]="{'color': time.pontos>0? 'green' : 'red'}">{{time.pontos}}</p>
+          <p class="lbl-nome lbl-nome-bold" text-center [ngStyle]="{'color': time.pontos.rodada>0? 'green' : 'red'}">{{time.pontos.rodada}}</p>
         </ion-item>
       </ion-col>
       <ion-col text-center align-self-center class="lbl-nome-bold">
-        <ion-item class="time-item">
+        <ion-item class="no-border-bottom">
+
           <p class="lbl-nome lbl-nome-bold" text-center>Total</p>
-          <p class="lbl-nome lbl-nome-bold" text-center>{{getTotalPontos()}}</p>
+          <p class="lbl-nome lbl-nome-bold" text-center>{{time.pontos.campeonato}}</p>
         </ion-item>
       </ion-col>
 
     </ion-row>
   </ion-grid>
   <ion-list *ngFor="let atleta of time.atletas">
-    <ion-grid *ngIf="timeLoaded">
+    <ion-grid>
       <ion-row align-items-center id="border-bottom-row">
-        <ion-col col-6>
+        <ion-col>
           <ion-item class="time-item item-escudo">
             <ion-thumbnail item-start class="time-escudo">
               <img src="{{atleta.foto.replace('FORMATO', '140x140')}}">
             </ion-thumbnail>
-            <!-- <h3 class='lbl-nome lbl-nome-bold' [innerHtml]="(orderBy=='pontos.rodada'?time.ranking.rodada:time.ranking.campeonato)+'°'"></h3>
-            <h3 class='lbl-nome lbl-nome-bold'>{{time.nome}}</h3>
-            <p class="lbl-nome">{{time.nome_cartola}}</p> -->
+            <h3 class='lbl-nome lbl-nome-bold'>{{atleta.apelido}}</h3>
+            <h3 class='lbl-nome lbl-nome-bold'>{{atleta.pontos_num}}</h3>
+            <!-- <p class="lbl-nome">{{time.nome_cartola}}</p> -->
           </ion-item>
         </ion-col>
 

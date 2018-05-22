@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ITimeControll, TimeControll, TimeControllFake } from '../../models/timeControll';
+import { status_mercado_fechado } from '..';
+import * as _ from 'lodash';
 
 @IonicPage()
 @Component({
@@ -18,13 +20,17 @@ export class TimeDetailPage {
     nome: '',
     nome_cartola: '',
     pontuados: 0,
-    pontos: '',
+    pontos: {
+      rodada: 0,
+      campeonato: 0
+    },
     atletas: [{
       foto: ''
-    }]
+    }],
+    posicoes:{},
+    clubes:{}
   };
   loading;
-  timeLoaded = false;
 
   constructor(
     public navCtrl: NavController,
@@ -40,22 +46,31 @@ export class TimeDetailPage {
   }
 
   ionViewDidLoad() {
+    this.time = this.navParams.get('time');
     this.loadTimeParciais();
   }
 
   loadTimeParciais() {
-    this.time = this.navParams.get('time');
     this.timeControll.loadTime(this.time).then(timeInfo => {
+      this.time.atletas = _.orderBy(timeInfo.atletas, 'posicao_id', 'asc');
+      this.time.clubes = timeInfo.clubes;
+      this.time.posicoes = timeInfo.posicoes;
+      console.log("atletas: ", this.time.atletas);      
       this.getTimeParciais(timeInfo);
     });
   }
 
-  getTimeParciais(timeInfo, refresher = null) { 
-    this.timeControll.getParciaisDosJogadoresDoTime(timeInfo).then(time => {
-      this.time = Object.assign(this.time, time);
-      console.log("time: ", this.time);
-      
-      this.timeLoaded = true;
+  getTimeParciais(timeInfo, refresher = null) {
+    this.timeControll.getParciaisDosJogadoresDoTime(timeInfo).then(res => {
+      if (res.mercadoStatus == status_mercado_fechado) {
+        this.time.pontuados = res.time.pontuados;
+        this.time.pontos.rodada = res.time.pontos.rodada;
+        this.time.pontos.campeonato = (this.time.pontos.rodada+this.time.pontos.campeonato);
+      } else {
+        this.time.pontuados = 12;
+      }
+      this.time.pontos.rodada = this.formatPontos(this.time.pontos.rodada);
+      this.time.pontos.campeonato = this.formatPontos(this.time.pontos.campeonato);
       if (refresher) {
         refresher.complete();
       }
@@ -63,17 +78,12 @@ export class TimeDetailPage {
     })
   }
 
-  doRefresh(refresher) {
-    this.timeLoaded = false;
-    this.getTimeParciais(this.time, refresher);
-  }
-
   formatPontos(parcial) {
-    return parseFloat((parcial).toFixed(2));
+    return parseFloat((parcial).toFixed(2))
   }
 
-  getTotalPontos() {
-    return (parseFloat(this.time.pontos) + parseFloat(this.navParams.get('time').pontos.campeonato));
+  doRefresh(refresher) {
+    this.getTimeParciais(this.time, refresher);
   }
 
 }

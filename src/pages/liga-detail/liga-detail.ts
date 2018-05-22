@@ -59,7 +59,6 @@ export class LigaDetailPage {
   orderTimesByPontos(liga, orderBy = null, order = null) {
     orderBy = orderBy ? orderBy : 'pontos.rodada';
     order = order ? order : 'desc';
-    console.log("order:", orderBy, order);
     let timesOrderByPontos = _.orderBy(liga.times, orderBy, order);
     this.liga.times = timesOrderByPontos;
     console.log(this.liga);

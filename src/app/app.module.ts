@@ -64,12 +64,12 @@ export function provideSettings(storage: Storage) {
     SplashScreen,
     StatusBar,
     Api,
-    // {provide: 'IUserDataControll', useClass: UserDataControllFake},
-    // { provide: 'IMercadoControll', useClass: MercadoControllFake },
-    // { provide: 'IJogadoresControll', useClass: JogadoresControllFake },
-    { provide: 'IUserDataControll', useClass: UserDataControll },
-    { provide: 'IMercadoControll', useClass: MercadoControll },
-    { provide: 'IJogadoresControll', useClass: JogadoresControll },    
+    {provide: 'IUserDataControll', useClass: UserDataControllFake},
+    { provide: 'IMercadoControll', useClass: MercadoControllFake },
+    { provide: 'IJogadoresControll', useClass: JogadoresControllFake },
+    // { provide: 'IUserDataControll', useClass: UserDataControll },
+    // { provide: 'IMercadoControll', useClass: MercadoControll },
+    // { provide: 'IJogadoresControll', useClass: JogadoresControll },    
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }

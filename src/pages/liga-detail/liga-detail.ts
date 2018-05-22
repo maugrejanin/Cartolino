@@ -2,16 +2,15 @@ import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { LigaControll, ILigasControll, LigaControllFake } from '../../models/ligasControll';
 import * as _ from 'lodash';
-import { TimeControll, ITimeControll } from '../../models/timeControll';
+import { TimeControll, ITimeControll, TimeControllFake } from '../../models/timeControll';
 
 @IonicPage()
 @Component({
   selector: 'page-liga-detail',
   templateUrl: 'liga-detail.html',
   providers: [
-    // { provide: 'ILigaControll', useClass: LigaControllFake },
-    { provide: 'ILigaControll', useClass: LigaControll },
-    { provide: 'ITimeControll', useClass: TimeControll }
+    // { provide: 'ILigaControll', useClass: LigaControll },
+    { provide: 'ILigaControll', useClass: LigaControllFake }
   ]
 })
 export class LigaDetailPage {

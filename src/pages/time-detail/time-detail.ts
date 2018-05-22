@@ -10,7 +10,7 @@ import * as _ from 'lodash';
   templateUrl: 'time-detail.html',
   providers: [
     // { provide: 'ITimeControll', useClass: TimeControllFake }
-    { provide: 'ITimeControll', useClass: TimeControll }
+    { provide: 'ITimeControll', useClass: TimeControllFake }
   ]
 })
 export class TimeDetailPage {

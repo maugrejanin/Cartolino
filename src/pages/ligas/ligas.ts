@@ -9,8 +9,8 @@ import * as _ from 'lodash';
   selector: 'page-ligas',
   templateUrl: 'ligas.html',
   providers: [
-    // { provide: 'ILigaControll', useClass: LigaControllFake },
-    { provide: 'ILigaControll', useClass: LigaControll }
+    { provide: 'ILigaControll', useClass: LigaControllFake },
+    // { provide: 'ILigaControll', useClass: LigaControll }
   ]
 })
 export class LigasPage {

@@ -12,12 +12,11 @@ export const Tab3Root = 'JogosPage';
 export const Tab4Root = 'JogadoresPage';
 export const status_mercado_aberto = 1;
 export const status_mercado_fechado = 2;
+export const status_mercado_em_manutencao = 4;
 const HOST = 'https://api.cartolafc.globo.com/';
-export const get_team_info_api = HOST + "auth/time";
-export const get_ligas_info_api = HOST + "auth/ligas";
-export const get_liga_info_api = HOST + "auth/liga/";
-export const get_pontuados_api = HOST + "atletas/pontuados"; 
-export const get_time_api = HOST + "time/id/";
+export const get_team_info_api = HOST + "auth/time"; // nao funciona com mercado = 4
+export const get_ligas_info_api = HOST + "auth/ligas"; // nao funciona com mercado = 4
+export const get_liga_info_api = HOST + "auth/liga/"; // nao funciona com mercado = 4
+export const get_pontuados_api = HOST + "atletas/pontuados";  // funciona com mercado = 4
+export const get_time_api = HOST + "time/id/"; // nao funciona com mercado = 4
 export const get_mercado_info_api = HOST + "mercado/status";
-
-    

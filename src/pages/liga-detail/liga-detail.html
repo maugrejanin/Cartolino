@@ -67,9 +67,9 @@
         <ion-col>
           <ion-item class="time-item">
             <p class="lbl-nome lbl-nome-bold" text-right>{{formatPontos(time.pontos.campeonato)}}</p>
-            <p class="lbl-nome lbl-nome-bold" text-right [ngStyle]="{'color': variacaoColor(time.variacao.campeonato)}" [innerHtml]='time.variacao.campeonato==0?"-":time.variacao.campeonato'>
-
+            <p class="lbl-nome lbl-nome-bold" text-right [ngStyle]="{'color': variacaoColor(time.variacao.campeonato)}">
               <ion-icon class="seta-variacao" *ngIf='time.variacao.campeonato!=0' name="{{time.variacao.campeonato>0?'ios-arrow-round-up':'ios-arrow-round-down'}}"></ion-icon>
+              {{time.variacao.campeonato==0?'-':time.variacao.campeonato}}
             </p>
           </ion-item>
         </ion-col>

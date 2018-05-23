@@ -88,7 +88,7 @@ export class TimeDetailPage {
   }
 
   getPosicao(posicao_id) {
-    return this.time.posicoes[posicao_id].abreviacao;
+    return this.time.posicoes[posicao_id].nome;
   }
 
   getTime(clube_id) {
@@ -99,12 +99,7 @@ export class TimeDetailPage {
     console.log(txt);
   }
 
-  viewTimes(event) {
-    console.log(event);
-
-    let listElement = document.getElementById('times-com-jogador');
-    listElement.style.left = event.pageX + 'px';
-    listElement.style.top = event.pageY + 'px';
-    listElement.style.display = 'block';
+  viewTimes(atleta) {
+    this.navCtrl.push('JogadorDetailsPage', {atleta: atleta, clube:this.time.clubes[atleta.clube_id]});
   }
 }

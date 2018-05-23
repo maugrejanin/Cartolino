@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Detalhes do jogador
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row class="jogador-foto-row">
+      <ion-item class="no-border-bottom">
+        <ion-thumbnail text-center>
+          <img src="{{atleta.foto.replace('FORMATO', '140x140')}}">
+          <img class="jogador-details-escudo-time no-radius" src="{{clube.escudos['60x60']}}">
+        </ion-thumbnail>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <h2 text-uppercase>{{atleta.apelido}}</h2>
+      </ion-item>
+    </ion-row>
+  </ion-grid>
+</ion-content>

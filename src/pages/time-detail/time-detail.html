@@ -62,21 +62,16 @@
   </ion-grid>
   <ion-list *ngFor="let atleta of time.atletas">
     <ion-grid>
-      <ion-row align-items-center id="border-bottom-row" (click)="viewTimes($event)">
-
+      <ion-row align-items-center id="border-bottom-row" (click)="viewTimes(atleta)">
         <ion-col class="jogador-container" col-9>
           <ion-item>
             <ion-avatar item-start class="foto-jogador-container">
               <img class="foto-jogador no-radius" src="{{atleta.foto.replace('FORMATO', '140x140')}}">
               <img class="jogador-escudo-time no-radius" src="{{time.clubes[atleta.clube_id].escudos['60x60']}}">
             </ion-avatar>
-
             <h3 text-left class='font-13px lbl-nome-bold'>{{atleta.apelido}}</h3>
-            <p text-left class='lbl-nome lbl-nome-bold' text-uppercase (click)="click('search')">
-
-              <span>{{getPosicao(atleta.posicao_id)}}</span> -
-              <ion-icon id='search-icon' name="search"></ion-icon>
-              Em 2 times
+            <p text-left class='lbl-nome lbl-nome-bold' text-uppercase>
+              <span>{{getPosicao(atleta.posicao_id)}}</span> 
             </p>
           </ion-item>
         </ion-col>
@@ -86,9 +81,4 @@
       </ion-row>
     </ion-grid>
   </ion-list>
-
-  <div id="times-com-jogador" style="display: none; width: 100px; height: 100px; position: absolute; background-color: black">
-    sfdsdfsd
-  </div>
-
 </ion-content>

@@ -52,15 +52,24 @@
   <ion-list *ngFor="let atleta of time.atletas">
     <ion-grid>
       <ion-row align-items-center id="border-bottom-row">
-        <ion-col>
-          <ion-item class="time-item item-escudo">
-            <ion-thumbnail item-start class="time-escudo">
-              <img src="{{atleta.foto.replace('FORMATO', '140x140')}}">
-            </ion-thumbnail>
-            <h3 class='lbl-nome lbl-nome-bold'>{{atleta.apelido}}</h3>
-            <h3 class='lbl-nome lbl-nome-bold'>{{atleta.pontos_num}}</h3>
-            <!-- <p class="lbl-nome">{{time.nome_cartola}}</p> -->
+        <ion-col class="jogador-container" col-10>
+          <ion-item class="">
+            <ion-avatar item-start class="foto-jogador-container">
+              <img class="foto-jogador" src="{{atleta.foto.replace('FORMATO', '140x140')}}">
+            </ion-avatar>
+            <h2 text-left class='lbl-nome lbl-nome-bold'>{{atleta.apelido}}</h2>
+            <p text-left class='lbl-nome' text-uppercase>
+              <span class="lbl-nome-bold">{{getPosicao(atleta.posicao_id)}}</span> - 
+              <span class="lbl-nome-bold">{{getTime(atleta.clube_id)}}</span>
+            </p>
+
           </ion-item>
+        </ion-col>
+
+        <ion-col>
+          <h3 text-center class='lbl-nome lbl-nome-bold' [ngStyle]="{'color': atleta.pontos_num>0? 'green' : 'red'}">{{atleta.pontos_num}}</h3>
+
+
         </ion-col>
 
         <!-- <ion-col>

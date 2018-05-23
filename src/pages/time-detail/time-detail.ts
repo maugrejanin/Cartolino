@@ -24,9 +24,7 @@ export class TimeDetailPage {
       rodada: 0,
       campeonato: 0
     },
-    atletas: [{
-      foto: ''
-    }],
+    atletas: [],
     posicoes:{},
     clubes:{}
   };
@@ -52,10 +50,8 @@ export class TimeDetailPage {
 
   loadTimeParciais() {
     this.timeControll.loadTime(this.time).then(timeInfo => {
-      this.time.atletas = _.orderBy(timeInfo.atletas, 'posicao_id', 'asc');
       this.time.clubes = timeInfo.clubes;
-      this.time.posicoes = timeInfo.posicoes;
-      console.log("atletas: ", this.time.atletas);      
+      this.time.posicoes = timeInfo.posicoes;  
       this.getTimeParciais(timeInfo);
     });
   }
@@ -71,6 +67,8 @@ export class TimeDetailPage {
       }
       this.time.pontos.rodada = this.formatPontos(this.time.pontos.rodada);
       this.time.pontos.campeonato = this.formatPontos(this.time.pontos.campeonato);
+      this.time.atletas = _.orderBy(timeInfo.atletas, 'posicao_id', 'asc');
+      console.log("time: ", this.time);
       if (refresher) {
         refresher.complete();
       }
@@ -84,6 +82,14 @@ export class TimeDetailPage {
 
   doRefresh(refresher) {
     this.getTimeParciais(this.time, refresher);
+  }
+
+  getPosicao(posicao_id){
+    return this.time.posicoes[posicao_id].abreviacao;
+  }
+
+  getTime(clube_id) {
+    return this.time.clubes[clube_id].nome;
   }
 
 }

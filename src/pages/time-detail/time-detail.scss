@@ -7,7 +7,7 @@
   margin-bottom: 0px !important;
 }
 
-.time-escudo-svg img {
+.time-escudo-svg #escudo {
   width: 85px;
   height: 87px !important;
 }
@@ -29,6 +29,36 @@
   border-bottom: 0px !important;
 }
 
+.height-60px{
+  height: 60px !important;
+}
 
+.font-13px{
+  font-size:13px !important;
+}
 
-.time-escudo {}
+.jogador-escudo-time{
+  width: 18px !important;
+  height:18px !important;
+  position: absolute;
+  left:10px;
+  top: 5px;
+}
+
+#search-icon{
+  font-size: 11px !important;
+}
+
+.no-radius{
+  border-radius: 0% !important;
+}
+
+.time-perfil-foto-icon {
+  width: 30px !important;
+  height: 30px !important;
+  position: absolute;
+  left: 60px;
+  top: 65px;
+  border-radius: 50% !important;
+}
+

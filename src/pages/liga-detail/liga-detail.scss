@@ -55,7 +55,7 @@
   margin-right: 5px !important;
 }
 
-.time-escudo img {
+.time-escudo #escudo {
   width: 40px !important;
   height: 41px !important;
 }
@@ -77,3 +77,11 @@
   margin-right: 0px !important; 
 }
 
+.time-perfil-foto {
+  width: 20px !important;
+  height: 20px !important;
+  position: absolute;
+  left: 22px;
+  top: 30px;
+  border-radius: 50% !important;
+}

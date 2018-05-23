@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
 import { ITimeControll, TimeControll, TimeControllFake } from '../../models/timeControll';
 import { status_mercado_fechado } from '..';
 import * as _ from 'lodash';
@@ -20,13 +20,14 @@ export class TimeDetailPage {
     nome: '',
     nome_cartola: '',
     pontuados: 0,
+    capitao_id: '',
     pontos: {
       rodada: 0,
       campeonato: 0
     },
     atletas: [],
-    posicoes:{},
-    clubes:{}
+    posicoes: {},
+    clubes: {}
   };
   loading;
 
@@ -34,7 +35,8 @@ export class TimeDetailPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     @Inject('ITimeControll') private timeControll: ITimeControll,
-    private loadingCtrl: LoadingController) {
+    private loadingCtrl: LoadingController,
+    public modalCtrl: ModalController) {
     this.loading = this.loadingCtrl.create({
       spinner: "bubbles",
       content: 'Carregando...'
@@ -51,7 +53,7 @@ export class TimeDetailPage {
   loadTimeParciais() {
     this.timeControll.loadTime(this.time).then(timeInfo => {
       this.time.clubes = timeInfo.clubes;
-      this.time.posicoes = timeInfo.posicoes;  
+      this.time.posicoes = timeInfo.posicoes;
       this.getTimeParciais(timeInfo);
     });
   }
@@ -61,10 +63,11 @@ export class TimeDetailPage {
       if (res.mercadoStatus == status_mercado_fechado) {
         this.time.pontuados = res.time.pontuados;
         this.time.pontos.rodada = res.time.pontos.rodada;
-        this.time.pontos.campeonato = (this.time.pontos.rodada+this.time.pontos.campeonato);
+        this.time.pontos.campeonato = (this.time.pontos.rodada + this.time.pontos.campeonato);
       } else {
         this.time.pontuados = 12;
       }
+      this.time.capitao_id = res.time.capitao_id;
       this.time.pontos.rodada = this.formatPontos(this.time.pontos.rodada);
       this.time.pontos.campeonato = this.formatPontos(this.time.pontos.campeonato);
       this.time.atletas = _.orderBy(timeInfo.atletas, 'posicao_id', 'asc');
@@ -84,7 +87,7 @@ export class TimeDetailPage {
     this.getTimeParciais(this.time, refresher);
   }
 
-  getPosicao(posicao_id){
+  getPosicao(posicao_id) {
     return this.time.posicoes[posicao_id].abreviacao;
   }
 
@@ -92,4 +95,16 @@ export class TimeDetailPage {
     return this.time.clubes[clube_id].nome;
   }
 
+  click(txt) {
+    console.log(txt);
+  }
+
+  viewTimes(event) {
+    console.log(event);
+
+    let listElement = document.getElementById('times-com-jogador');
+    listElement.style.left = event.pageX + 'px';
+    listElement.style.top = event.pageY + 'px';
+    listElement.style.display = 'block';
+  }
 }

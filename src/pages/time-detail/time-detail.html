@@ -15,7 +15,8 @@
     <ion-row class="time-escudo-svg-content">
       <ion-item>
         <ion-thumbnail item-start class="time-escudo-svg">
-          <img src="{{time.url_escudo_svg}}">
+          <img id="escudo" src="{{time.url_escudo_svg}}">
+          <img class="time-perfil-foto-icon" src="{{time.foto_perfil}}">
         </ion-thumbnail>
       </ion-item>
     </ion-row>
@@ -26,72 +27,68 @@
       </ion-item>
     </ion-row>
 
-    <ion-row>
-      <ion-col text-center align-self-center class="lbl-nome-bold">
-        <ion-item class="no-border-bottom">
-          <p class="lbl-nome lbl-nome-bold" text-center>Pontuados</p>
-          <p class="lbl-nome lbl-nome-bold" text-center>{{time.pontuados}}/12</p>
-        </ion-item>
-      </ion-col>
-      <ion-col text-center align-self-center class="lbl-nome-bold">
-        <ion-item class="no-border-bottom">
-          <p class="lbl-nome lbl-nome-bold" text-center>Parcial</p>
-          <p class="lbl-nome lbl-nome-bold" text-center [ngStyle]="{'color': time.pontos.rodada>0? 'green' : 'red'}">{{time.pontos.rodada}}</p>
-        </ion-item>
-      </ion-col>
-      <ion-col text-center align-self-center class="lbl-nome-bold">
-        <ion-item class="no-border-bottom">
+    <ion-item class="height-60px">
+      <ion-row>
+        <ion-col text-center align-self-center class="lbl-nome-bold">
+          <ion-item class="no-border-bottom">
+            <p class="lbl-nome lbl-nome-bold" text-center>Pontuados</p>
+            <p class="lbl-nome lbl-nome-bold" text-center>{{time.pontuados}}/12</p>
+          </ion-item>
+        </ion-col>
+        <ion-col text-center align-self-center class="lbl-nome-bold">
+          <ion-item class="no-border-bottom">
+            <p class="lbl-nome lbl-nome-bold" text-center>Parcial</p>
+            <p class="lbl-nome lbl-nome-bold" text-center [ngStyle]="{'color': time.pontos.rodada>0? 'green' : 'red'}">{{time.pontos.rodada}}</p>
+          </ion-item>
+        </ion-col>
+        <ion-col text-center align-self-center class="lbl-nome-bold">
+          <ion-item class="no-border-bottom">
+            <p class="lbl-nome lbl-nome-bold" text-center>Total</p>
+            <p class="lbl-nome lbl-nome-bold" text-center>{{time.pontos.campeonato}}</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-item>
 
-          <p class="lbl-nome lbl-nome-bold" text-center>Total</p>
-          <p class="lbl-nome lbl-nome-bold" text-center>{{time.pontos.campeonato}}</p>
-        </ion-item>
+    <ion-row margin-top>
+      <ion-col col-9 text-center align-self-center class="lbl-nome-bold">
+        Jogador
       </ion-col>
-
+      <ion-col col-2 text-center align-self-center class="lbl-nome-bold">
+        Parcial
+      </ion-col>
     </ion-row>
+
   </ion-grid>
   <ion-list *ngFor="let atleta of time.atletas">
     <ion-grid>
-      <ion-row align-items-center id="border-bottom-row">
-        <ion-col class="jogador-container" col-10>
-          <ion-item class="">
+      <ion-row align-items-center id="border-bottom-row" (click)="viewTimes($event)">
+
+        <ion-col class="jogador-container" col-9>
+          <ion-item>
             <ion-avatar item-start class="foto-jogador-container">
-              <img class="foto-jogador" src="{{atleta.foto.replace('FORMATO', '140x140')}}">
+              <img class="foto-jogador no-radius" src="{{atleta.foto.replace('FORMATO', '140x140')}}">
+              <img class="jogador-escudo-time no-radius" src="{{time.clubes[atleta.clube_id].escudos['60x60']}}">
             </ion-avatar>
-            <h2 text-left class='lbl-nome lbl-nome-bold'>{{atleta.apelido}}</h2>
-            <p text-left class='lbl-nome' text-uppercase>
-              <span class="lbl-nome-bold">{{getPosicao(atleta.posicao_id)}}</span> - 
-              <span class="lbl-nome-bold">{{getTime(atleta.clube_id)}}</span>
+
+            <h3 text-left class='font-13px lbl-nome-bold'>{{atleta.apelido}}</h3>
+            <p text-left class='lbl-nome lbl-nome-bold' text-uppercase (click)="click('search')">
+
+              <span>{{getPosicao(atleta.posicao_id)}}</span> -
+              <ion-icon id='search-icon' name="search"></ion-icon>
+              Em 2 times
             </p>
-
           </ion-item>
         </ion-col>
-
-        <ion-col>
-          <h3 text-center class='lbl-nome lbl-nome-bold' [ngStyle]="{'color': atleta.pontos_num>0? 'green' : 'red'}">{{atleta.pontos_num}}</h3>
-
-
+        <ion-col col-2>
+          <h3 text-center class='lbl-nome-bold font-13px' [ngStyle]="{'color': atleta.pontos_num>0? 'green' : 'red'}">{{atleta.atleta_id==time.capitao_id?(atleta.pontos_num*2):atleta.pontos_num}}</h3>
         </ion-col>
-
-        <!-- <ion-col>
-          <ion-item class="time-item">
-            <p class="lbl-nome lbl-nome-bold" text-right [ngStyle]="{'color': time.pontos.rodada>0? 'green' : 'red'}">{{formatPontos(time.pontos.rodada)}}</p>
-            <p class="lbl-nome lbl-nome-bold" text-right>C$ {{time.patrimonio}}</p>
-          </ion-item>
-        </ion-col>
-
-        <ion-col>
-          <ion-item class="time-item">
-            <p class="lbl-nome lbl-nome-bold" text-right>{{formatPontos(time.pontos.campeonato)}}</p>
-            <p class="lbl-nome lbl-nome-bold" text-right [ngStyle]="{'color': variacaoColor(time.variacao.campeonato)}">
-              <ion-icon class="seta-variacao" *ngIf='time.variacao.campeonato!=0' name="{{time.variacao.campeonato>0?'ios-arrow-round-up':'ios-arrow-round-down'}}"></ion-icon>
-              {{time.variacao.campeonato}}</p>
-          </ion-item>
-        </ion-col> -->
-
       </ion-row>
-
     </ion-grid>
-
-
   </ion-list>
+
+  <div id="times-com-jogador" style="display: none; width: 100px; height: 100px; position: absolute; background-color: black">
+    sfdsdfsd
+  </div>
+
 </ion-content>

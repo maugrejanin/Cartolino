@@ -20,7 +20,32 @@
     <ion-row>
       <ion-item>
         <h2 text-uppercase>{{atleta.apelido}}</h2>
+        <p text-center>{{posicao.nome}}</p>
       </ion-item>
     </ion-row>
+    <ion-row>
+      <ion-item class="no-border-bottom">
+        <h2 class="lbl-nome-bold">Scout</h2>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-col col-8 text-left align-self-center class="lbl-nome-bold">
+        Ação
+      </ion-col>
+      <ion-col col-3 text-center align-self-center class="lbl-nome-bold">
+        Pontos
+      </ion-col>
+    </ion-row>
+    <ion-list *ngFor="let scout of getAtletaScout()">
+
+      <ion-row>
+        <ion-col col-8>
+          {{scout.quantidade}} {{scout.acao}}
+        </ion-col>
+        <ion-col col-3 text-center>
+          <span [ngStyle]="{'color': scout.pontos>0? 'green' : 'red'}">{{scout.pontos}}</span>
+        </ion-col>
+      </ion-row>
+    </ion-list>
   </ion-grid>
 </ion-content>

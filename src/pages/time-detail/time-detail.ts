@@ -100,6 +100,9 @@ export class TimeDetailPage {
   }
 
   viewTimes(atleta) {
-    this.navCtrl.push('JogadorDetailsPage', {atleta: atleta, clube:this.time.clubes[atleta.clube_id]});
+    this.navCtrl.push('JogadorDetailsPage', {
+      atleta: atleta, 
+      clube:this.time.clubes[atleta.clube_id],
+      posicao: this.time.posicoes[atleta.posicao_id]});
   }
 }

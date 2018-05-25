@@ -43,9 +43,10 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-list *ngFor="let time of liga.times">
+  <ion-list>
     <ion-grid>
-      <ion-row align-items-center id="border-bottom-row" (click)="timeDetail(time)">
+      <ion-row align-items-center id="border-bottom-row" *ngFor="let time of liga.times" (click)="timeDetail(time)">
+
         <ion-col col-6>
           <ion-item class="time-item item-escudo">
             <ion-thumbnail item-start class="time-escudo">

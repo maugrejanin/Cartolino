@@ -7,11 +7,7 @@ import { TimeControll, ITimeControll, TimeControllFake } from '../../models/time
 @IonicPage()
 @Component({
   selector: 'page-liga-detail',
-  templateUrl: 'liga-detail.html',
-  providers: [
-    // { provide: 'ILigaControll', useClass: LigaControll },
-    { provide: 'ILigaControll', useClass: LigaControllFake }
-  ]
+  templateUrl: 'liga-detail.html'
 })
 export class LigaDetailPage {
   liga = {
@@ -26,7 +22,7 @@ export class LigaDetailPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    @Inject('ILigaControll') private ligaControll: ILigasControll,
+    @Inject('ILigasControll') private ligaControll: ILigasControll,
     private loadingCtrl: LoadingController) {
     this.loading = this.loadingCtrl.create({
       spinner: "bubbles",
@@ -60,7 +56,7 @@ export class LigaDetailPage {
     order = order ? order : 'desc';
     let timesOrderByPontos = _.orderBy(liga.times, orderBy, order);
     this.liga.times = timesOrderByPontos;
-    console.log(this.liga);
+    console.log("liga: ", this.liga);
   }
 
   formatPontos(parcial) {

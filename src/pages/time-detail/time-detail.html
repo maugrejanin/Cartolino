@@ -58,11 +58,10 @@
         Parcial
       </ion-col>
     </ion-row>
-
   </ion-grid>
-  <ion-list *ngFor="let atleta of time.atletas">
+  <ion-list>
     <ion-grid>
-      <ion-row align-items-center id="border-bottom-row" (click)="viewTimes(atleta)">
+      <ion-row align-items-center id="border-bottom-row" *ngFor="let atleta of time.atletas" (click)="viewTimes(atleta)">
         <ion-col class="jogador-container" col-9>
           <ion-item>
             <ion-avatar item-start class="foto-jogador-container">
@@ -71,7 +70,7 @@
             </ion-avatar>
             <h3 text-left class='font-13px lbl-nome-bold'>{{atleta.apelido}}</h3>
             <p text-left class='lbl-nome lbl-nome-bold' text-uppercase>
-              <span>{{getPosicao(atleta.posicao_id)}}</span> 
+              <span>{{getPosicao(atleta.posicao_id)}}</span>
             </p>
           </ion-item>
         </ion-col>

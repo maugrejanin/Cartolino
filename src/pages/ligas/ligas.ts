@@ -7,11 +7,7 @@ import * as _ from 'lodash';
 @IonicPage()
 @Component({
   selector: 'page-ligas',
-  templateUrl: 'ligas.html',
-  providers: [
-    { provide: 'ILigaControll', useClass: LigaControllFake },
-    // { provide: 'ILigaControll', useClass: LigaControll }
-  ]
+  templateUrl: 'ligas.html'
 })
 export class LigasPage {
   ligas = {
@@ -26,7 +22,7 @@ export class LigasPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     @Inject('IUserDataControll') private userDataControll: IUserDataControll,
-    @Inject('ILigaControll') private ligaControll: ILigasControll,
+    @Inject('ILigasControll') private ligaControll: ILigasControll,
     private loadingCtrl: LoadingController) { }
 
   ionViewWillEnter() {

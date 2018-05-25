@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ILigasControll, LigaControllFake } from '../../models/ligasControll';
+import * as _ from 'lodash';
 
 @IonicPage()
 @Component({
   selector: 'page-jogador-details',
-  templateUrl: 'jogador-details.html',
+  templateUrl: 'jogador-details.html'
 })
 export class JogadorDetailsPage {
 
@@ -36,7 +38,11 @@ export class JogadorDetailsPage {
 
   posicao: string = '';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    @Inject('ILigasControll') public ligaController: ILigasControll) {
+
   }
 
   ionViewDidLoad() {
@@ -45,17 +51,32 @@ export class JogadorDetailsPage {
     this.posicao = this.navParams.get('posicao');
     this.getAtletaScout();
     console.log("atleta: ", this.atleta);
+    this.getTimesComJogador();
   }
 
   getAtletaScout() {
     var treatedScout = [];
     for (let i in this.atleta.scout) {
-      treatedScout.push({ 
-        acao: this.scout[i].acao, 
+      treatedScout.push({
+        acao: this.scout[i].acao,
         quantidade: this.atleta.scout[i],
-        pontos:(this.scout[i].pontos*this.atleta.scout[i])});
+        pontos: (this.scout[i].pontos * this.atleta.scout[i])
+      });
     }
-    return(treatedScout);    
+    return (treatedScout);
+  }
+
+  getTimesComJogador() {
+    console.log("sptc: ", this.atleta.atleta_id);
+
+    console.log("times: ",
+      _.filter(
+        this.ligaController.getLiga().times,
+        function (atleta) {
+          return atleta;
+        }
+      )
+    );
   }
 
   //       "FC" => array(

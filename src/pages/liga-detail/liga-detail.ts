@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { LigaControll, ILigasControll, LigaControllFake } from '../../models/ligasControll';
 import * as _ from 'lodash';
 import { TimeControll, ITimeControll, TimeControllFake } from '../../models/timeControll';
+import { status_mercado_fechado } from '..';
 
 @IonicPage()
 @Component({
@@ -19,6 +20,7 @@ export class LigaDetailPage {
   loading;
   orderBy = 'pontos.rodada';
   order = 'desc';
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -32,31 +34,32 @@ export class LigaDetailPage {
   }
 
   ionViewDidLoad() {
-    new Promise((resolve, reject) => {
-      this.loadLigaDetails().then(res => {
-        res ? this.loading.dismiss() : '';
-      })
+    this.liga.nome = this.navParams.get('ligaNome');
+    this.liga.url_flamula_svg = this.navParams.get('ligaFlamulaUrl');
+    this.liga.descricao = this.navParams.get('ligaDescricao');
+    this.loadLigaDetails();
+  }
+
+  loadLigaDetails(refresher = null) {
+    this.ligaControll.loadLiga(this.navParams.get('ligaSlug')).then(liga => {
+      if (liga) {
+        console.log("Liga: ", liga);
+        liga.times = _.orderBy(liga.times, this.orderBy, this.order);
+        this.liga.times = liga.times;
+        this.loading.dismiss();
+      }
+      refresher?refresher.complete():'';
     });
   }
 
-  loadLigaDetails(orderBy = null, order = null) {
-    return new Promise((resolve, reject) => {
-      this.liga.nome = this.navParams.get('ligaNome');
-      this.liga.url_flamula_svg = this.navParams.get('ligaFlamulaUrl');
-      this.liga.descricao = this.navParams.get('ligaDescricao');
-      this.ligaControll.loadLiga(this.navParams.get('ligaSlug')).then(liga => {
-        this.orderTimesByPontos(liga, orderBy, order);
-        resolve(true);
-      });
-    })
-  }
-
-  orderTimesByPontos(liga, orderBy = null, order = null) {
-    orderBy = orderBy ? orderBy : 'pontos.rodada';
-    order = order ? order : 'desc';
-    let timesOrderByPontos = _.orderBy(liga.times, orderBy, order);
-    this.liga.times = timesOrderByPontos;
-    console.log("liga: ", this.liga);
+  orderLigaBy(orderBy, order) {
+    if (this.orderBy == orderBy) {
+      this.order = order == 'asc' ? 'desc' : 'asc';
+    } else if (this.orderBy != orderBy) {
+      this.orderBy = orderBy;
+      this.order = 'desc';
+    }
+    this.liga.times = _.orderBy(this.liga.times, this.orderBy, this.order);
   }
 
   formatPontos(parcial) {
@@ -72,22 +75,7 @@ export class LigaDetailPage {
   }
 
   doRefresh(refresher) {
-    new Promise((resolve, reject) => {
-      this.loadLigaDetails().then(res => {
-        res ? refresher.complete() : '';
-      })
-    });
-  }
-
-  orderLigaBy(orderBy, order) {
-    if (this.orderBy == orderBy) {
-      this.order = order == 'asc' ? 'desc' : 'asc';
-      this.orderTimesByPontos(this.liga, this.orderBy, this.order);
-    } else if (this.orderBy != orderBy) {
-      this.orderBy = orderBy;
-      this.order = 'desc';
-      this.orderTimesByPontos(this.liga, this.orderBy, this.order);
-    }
+    this.loadLigaDetails(refresher);
   }
 
   timeDetail(time) {

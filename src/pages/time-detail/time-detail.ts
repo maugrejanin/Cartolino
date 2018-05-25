@@ -51,11 +51,8 @@ export class TimeDetailPage {
   }
 
   loadTimeParciais() {
-    this.timeControll.loadTime(this.time).then(timeInfo => {
-      this.time.clubes = timeInfo.clubes;
-      this.time.posicoes = timeInfo.posicoes;
-      this.getTimeParciais(timeInfo);
-    });
+      this.getTimeParciais(this.time);
+    
   }
 
   getTimeParciais(timeInfo, refresher = null) {
@@ -67,7 +64,6 @@ export class TimeDetailPage {
       } else {
         this.time.pontuados = 12;
       }
-      this.time.capitao_id = res.time.capitao_id;
       this.time.pontos.rodada = this.formatPontos(this.time.pontos.rodada);
       this.time.pontos.campeonato = this.formatPontos(this.time.pontos.campeonato);
       this.time.atletas = _.orderBy(timeInfo.atletas, 'posicao_id', 'asc');

@@ -25,19 +25,14 @@ export class LigasPage {
     @Inject('ILigasControll') private ligaControll: ILigasControll,
     private loadingCtrl: LoadingController) { }
 
-  ionViewWillEnter() {
-    if (this.userDataControll.isUserLogged() && !this.ligasLoaded) {
-      this.showLoadSpinner();
-      this.ligaControll.loadLigas().then(res => {
-        if (res) {
-          this.ligasLoaded = true;
-          let ligas = _.orderBy(this.ligaControll.getLigas(), 'nome', 'asc');
-          this.ligas.ligasClassicas = _.filter(ligas, (liga) => { return liga.time_dono_id });
-          this.ligas.ligasDoCartola = _.filter(ligas, (liga) => { return !liga.time_dono_id });
-          this.hideLoadSpinner();
-        }
-      });
-    }
+  ionViewDidLoad() {
+    this.showLoadSpinner();
+    this.ligaControll.loadLigas().then(ligas => {      
+      this.ligas.ligasClassicas = _.filter(ligas, (liga) => { return liga.time_dono_id });
+      this.ligas.ligasDoCartola = _.filter(ligas, (liga) => { return !liga.time_dono_id });
+      this.ligasLoaded = true;
+      this.hideLoadSpinner();
+    })
   }
 
   showLoadSpinner() {

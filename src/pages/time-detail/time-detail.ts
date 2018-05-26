@@ -7,11 +7,7 @@ import * as _ from 'lodash';
 @IonicPage()
 @Component({
   selector: 'page-time-detail',
-  templateUrl: 'time-detail.html',
-  providers: [
-    // { provide: 'ITimeControll', useClass: TimeControllFake }
-    { provide: 'ITimeControll', useClass: TimeControllFake }
-  ]
+  templateUrl: 'time-detail.html'
 })
 export class TimeDetailPage {
   time = {
@@ -37,50 +33,23 @@ export class TimeDetailPage {
     @Inject('ITimeControll') private timeControll: ITimeControll,
     private loadingCtrl: LoadingController,
     public modalCtrl: ModalController) {
-    this.loading = this.loadingCtrl.create({
-      spinner: "bubbles",
-      content: 'Carregando...'
-    });
-
-    this.loading.present();
   }
 
   ionViewDidLoad() {
     this.time = this.navParams.get('time');
-    this.loadTimeParciais();
-  }
-
-  loadTimeParciais() {
-      this.getTimeParciais(this.time);
-    
-  }
-
-  getTimeParciais(timeInfo, refresher = null) {
-    this.timeControll.getParciaisDosJogadoresDoTime(timeInfo).then(res => {
-      if (res.mercadoStatus == status_mercado_fechado) {
-        this.time.pontuados = res.time.pontuados;
-        this.time.pontos.rodada = res.time.pontos.rodada;
-        this.time.pontos.campeonato = (this.time.pontos.rodada + this.time.pontos.campeonato);
-      } else {
-        this.time.pontuados = 12;
-      }
-      this.time.pontos.rodada = this.formatPontos(this.time.pontos.rodada);
-      this.time.pontos.campeonato = this.formatPontos(this.time.pontos.campeonato);
-      this.time.atletas = _.orderBy(timeInfo.atletas, 'posicao_id', 'asc');
-      console.log("time: ", this.time);
-      if (refresher) {
-        refresher.complete();
-      }
-      this.loading.dismiss();
-    })
+    this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
   }
 
   formatPontos(parcial) {
     return parseFloat((parcial).toFixed(2))
   }
 
-  doRefresh(refresher) {
-    this.getTimeParciais(this.time, refresher);
+  doRefresh(refresher) {    
+    this.timeControll.loadTimesInfo([this.time]).then(times => {
+      this.time = times[0];
+      this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
+      refresher.complete();
+    });
   }
 
   getPosicao(posicao_id) {
@@ -91,14 +60,12 @@ export class TimeDetailPage {
     return this.time.clubes[clube_id].nome;
   }
 
-  click(txt) {
-    console.log(txt);
-  }
-
   viewTimes(atleta) {
     this.navCtrl.push('JogadorDetailsPage', {
       atleta: atleta, 
       clube:this.time.clubes[atleta.clube_id],
-      posicao: this.time.posicoes[atleta.posicao_id]});
+      posicao: this.time.posicoes[atleta.posicao_id],
+      time_id:this.time.time_id
+    });
   }
 }

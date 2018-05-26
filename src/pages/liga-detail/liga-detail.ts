@@ -66,14 +66,6 @@ export class LigaDetailPage {
     return parseFloat((parcial).toFixed(2))
   }
 
-  variacaoColor(variacao) {
-    if (variacao > 0) {
-      return 'green';
-    } else if (variacao < 0) {
-      return 'red';
-    }
-  }
-
   doRefresh(refresher) {
     this.loadLigaDetails(refresher);
   }

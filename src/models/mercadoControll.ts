@@ -31,7 +31,6 @@ export class MercadoControll implements IMercadoControll {
             .toPromise()
             .then(
                 res => {
-                    console.log("mercado ok", res.json());
                     this.mercado = res.json();
                 }
             ).catch(err => {

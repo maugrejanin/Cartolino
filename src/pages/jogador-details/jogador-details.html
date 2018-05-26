@@ -28,36 +28,41 @@
       </ion-item>
     </ion-row>
     <ion-row margin-bottom>
-      <ion-col col-6 offset-1 text-center align-self-center class="lbl-nome-bold">
+      <ion-col col-5 offset-1 text-center align-self-center class="lbl-nome-bold">
         Ação
       </ion-col>
-      <ion-col col-3 text-center align-self-center class="lbl-nome-bold">
+      <ion-col col-4 offset-1 text-center align-self-center class="lbl-nome-bold">
         Pontos
       </ion-col>
     </ion-row>
     <ion-list class="border-bottom">
-      <ion-row align-items-center *ngFor="let scout of getAtletaScout()">
-        <ion-col col-5 offset-2 text-left>
+      <ion-row align-items-center *ngFor="let scout of atleta.scout">
+        <ion-col col-6 offset-1 text-left>
           <h3 class="lbl-nome-bold scout-name">{{scout.quantidade}} {{scout.acao}}</h3>
         </ion-col>
-        <ion-col col-3 text-center>
+        <ion-col col-4 text-center>
           <h3 class="lbl-nome-bold scout-name" [ngStyle]="{'color': scout.pontos>0? 'green' : 'red'}">{{scout.pontos}}</h3>
         </ion-col>
       </ion-row>
     </ion-list>
     <ion-row>
       <ion-item class="no-border-bottom">
-        <h2 class="lbl-nome-bold">Time com esse jogador</h2>
+        <h2 class="lbl-nome-bold">Times com esse jogador</h2>
       </ion-item>
     </ion-row>
     <ion-list class="border-bottom">
-      <ion-row align-items-center>
-        <ion-col col-5 offset-2 text-left>
-          <h3 class="lbl-nome-bold scout-name">{{scout.quantidade}} {{scout.acao}}</h3>
+      <ion-row align-items-center *ngFor="time of timesComAtleta">
+        <ion-col col-6>
+          <ion-item class="time-item item-escudo">
+            <ion-thumbnail item-start class="time-escudo">
+              <img id="escudo" src="{{time.url_escudo_svg}}">
+              <img class="time-perfil-foto" src="{{time.foto_perfil}}">
+            </ion-thumbnail>
+            <h3 class='lbl-nome lbl-nome-bold'>{{time.nome}}</h3>
+            <p class="lbl-nome">{{time.nome_cartola}}</p>
+          </ion-item>
         </ion-col>
-        <ion-col col-3 text-center>
-          <h3 class="lbl-nome-bold scout-name" [ngStyle]="{'color': scout.pontos>0? 'green' : 'red'}">{{scout.pontos}}</h3>
-        </ion-col>
+
       </ion-row>
     </ion-list>
 

@@ -14,7 +14,7 @@ import { HttpModule } from '@angular/http';
 import { UserDataControll, UserDataControllFake } from '../models/userDataControll';
 import { JogadoresControll, JogadoresControllFake } from '../models/jogadoresControll';
 import { MercadoControll, MercadoControllFake } from '../models/mercadoControll';
-import { LigaControllFake } from '../models/ligasControll';
+import { LigaControllFake, LigaControll } from '../models/ligasControll';
 import { TimeControll, TimeControllFake } from '../models/timeControll';
 
 // The translate loader needs to know where to load i18n files
@@ -66,16 +66,16 @@ export function provideSettings(storage: Storage) {
     SplashScreen,
     StatusBar,
     Api,
-    {provide: 'IUserDataControll', useClass: UserDataControllFake},
-    { provide: 'IMercadoControll', useClass: MercadoControllFake },
-    { provide: 'IJogadoresControll', useClass: JogadoresControllFake },
-    { provide: 'ILigasControll', useClass: LigaControllFake },
-    { provide: 'ITimeControll', useClass: TimeControllFake },
-    // { provide: 'ITimeControll', useClass: TimeControll },
-    // { provide: 'ILigasControll', useClass: LigaControll },
-    // { provide: 'IUserDataControll', useClass: UserDataControll },
-    // { provide: 'IMercadoControll', useClass: MercadoControll },
-    // { provide: 'IJogadoresControll', useClass: JogadoresControll },    
+    // {provide: 'IUserDataControll', useClass: UserDataControllFake},
+    // { provide: 'IMercadoControll', useClass: MercadoControllFake },
+    // { provide: 'IJogadoresControll', useClass: JogadoresControllFake },
+    // { provide: 'ILigasControll', useClass: LigaControllFake },
+    // { provide: 'ITimeControll', useClass: TimeControllFake },
+    { provide: 'ITimeControll', useClass: TimeControll },
+    { provide: 'ILigasControll', useClass: LigaControll },
+    { provide: 'IUserDataControll', useClass: UserDataControll },
+    { provide: 'IMercadoControll', useClass: MercadoControll },
+    { provide: 'IJogadoresControll', useClass: JogadoresControll },    
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }

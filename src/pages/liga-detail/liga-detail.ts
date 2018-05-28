@@ -70,6 +70,10 @@ export class LigaDetailPage {
     this.loadLigaDetails(refresher);
   }
 
+  getTimePos(time, index){
+    return (this.order == 'desc' ? index + 1 : Object.keys(this.liga.times).length-index)+'°';
+  }
+
   timeDetail(time) {
     this.navCtrl.push('TimeDetailPage',
       {

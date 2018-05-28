@@ -75,7 +75,8 @@
           </ion-item>
         </ion-col>
         <ion-col col-2>
-          <h3 text-center class='lbl-nome-bold font-13px' [ngStyle]="{'color': atleta.pontos_num>0? 'green' : 'red'}">{{atleta.atleta_id==time.capitao_id?(atleta.pontos_num*2):atleta.pontos_num}}</h3>
+<h3 text-center class='lbl-nome-bold font-13px' [ngStyle]="{'color': (atleta.pontos_num>0? 'green' : (atleta.pontos_num<0?'red':''))}">{{atleta.atleta_id==time.capitao_id?(atleta.pontos_num*2):atleta.pontos_num}}</h3>
+
         </ion-col>
       </ion-row>
     </ion-grid>

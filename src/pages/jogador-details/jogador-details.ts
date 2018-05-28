@@ -58,4 +58,11 @@ export class JogadorDetailsPage {
     }
   }
 
+  timeDetail(time) {
+    this.navCtrl.push('TimeDetailPage',
+      {
+        time: time
+      });
+  }
+
 }

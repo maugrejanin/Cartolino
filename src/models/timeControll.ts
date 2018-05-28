@@ -39,8 +39,6 @@ export class TimeControll implements ITimeControll {
 
 
     loadTimesInfo(times) {
-        console.log("timesToLoad: ", times);
-        
         return new Promise((resolve, reject) => {
             let timesOk = [];
             let timeInfo;
@@ -48,8 +46,9 @@ export class TimeControll implements ITimeControll {
                 for (let time of times) {
                     if (mercadoStatus == status_mercado_fechado) {
                         this.loadTimeComMercadoFechado(time).then(timeData => {
-                            time.pontos.rodada = timeInfo.pontos.rodada
-                            time.pontos.campeonato = time.pontos.rodada + time.pontos.campeonato;
+                            time.pontos.rodada = timeData['pontos'].rodada;
+                            time.pontos.campeonato_pre_rodada = this.savePontosCampeonatoPreRodada(time);
+                            time.pontos.campeonato = time.pontos.rodada + time.pontos.campeonato_pre_rodada;
                             time.pontuados = timeData['pontuados'];
                             time = this.setTimeInfo(time, timeData);
                             timesOk.push(time);
@@ -66,6 +65,14 @@ export class TimeControll implements ITimeControll {
             });
         });
     }
+
+    savePontosCampeonatoPreRodada(time){
+        if (time.pontos.campeonato_pre_rodada) {
+            return time.pontos.campeonato_pre_rodada;
+        } else {
+            return time.pontos.campeonato;
+        }
+    };
 
     loadTimeComMercadoFechado(time: any) {
         // Nao funciona com mercado em manutenção
@@ -117,6 +124,10 @@ export class TimeControll implements ITimeControll {
                             time.atletas[i].pontos_num = parcialJogador;
                             time.pontuados++;
                         }
+                        let scoutJogador = this.jogadoresControll.getScoutJogador(time.atletas[i]['atleta_id']);
+                        if (scoutJogador) {
+                            time.atletas[i].scout = scoutJogador;
+                        }                        
                     }
                     this.calcularParcialTime(time).then(time => {
                         resolve(time)
@@ -136,10 +147,9 @@ export class TimeControll implements ITimeControll {
             }
             delete time.pontos;
             time.pontos = {
-                rodada: 0,
+                rodada: parcialTime,
                 campeonato: 0
             };
-            time.pontos.rodada = parcialTime;
             resolve(time);
         });
     }

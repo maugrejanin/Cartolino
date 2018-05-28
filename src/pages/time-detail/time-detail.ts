@@ -37,6 +37,8 @@ export class TimeDetailPage {
 
   ionViewDidLoad() {
     this.time = this.navParams.get('time');
+    console.log(this.time.atletas);
+    
     this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
   }
 

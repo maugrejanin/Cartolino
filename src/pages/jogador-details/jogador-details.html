@@ -45,21 +45,21 @@
         </ion-col>
       </ion-row>
     </ion-list>
-    <ion-row>
+    <ion-row *ngIf='timesComAtleta.length>0'>
       <ion-item class="no-border-bottom">
         <h2 class="lbl-nome-bold">Times com esse jogador</h2>
       </ion-item>
     </ion-row>
     <ion-list>
       <ion-grid>
-        <ion-row align-items-center id="border-bottom-row" *ngFor="let time of timesComAtleta">
+        <ion-row align-items-center id="border-bottom-row" *ngFor="let time of timesComAtleta" (click)="timeDetail(time)">
           <ion-col col-6>
             <ion-item class="time-item item-escudo">
               <ion-thumbnail item-start class="time-escudo">
                 <img id="escudo" src="{{time.url_escudo_svg}}">
                 <img class="time-perfil-foto" src="{{time.foto_perfil}}">
               </ion-thumbnail>
-              <h3 class='lbl-nome lbl-nome-bold'>{{time.nome}}</h3>
+              <h3 class='lbl-nome lbl-nome-bold' id="nomeTime">{{time.nome}}</h3>
               <p class="lbl-nome">{{time.nome_cartola}}</p>
             </ion-item>
           </ion-col>

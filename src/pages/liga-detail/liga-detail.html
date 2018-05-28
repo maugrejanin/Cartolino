@@ -45,7 +45,7 @@
   </ion-grid>
   <ion-list>
     <ion-grid>
-      <ion-row align-items-center id="border-bottom-row" *ngFor="let time of liga.times" (click)="timeDetail(time)">
+      <ion-row align-items-center id="border-bottom-row" *ngFor="let time of liga.times; let i = index;" (click)="timeDetail(time)">
 
         <ion-col col-6>
           <ion-item class="time-item item-escudo">
@@ -53,7 +53,7 @@
               <img id="escudo" src="{{time.url_escudo_svg}}">
               <img class="time-perfil-foto" src="{{time.foto_perfil}}">
             </ion-thumbnail>
-            <h3 class='lbl-nome lbl-nome-bold' [innerHtml]="(orderBy=='pontos.rodada'?time.ranking.rodada:time.ranking.campeonato)+'°'"></h3>
+            <h3 class='lbl-nome lbl-nome-bold' [innerHtml]="getTimePos(time, i)"></h3>
             <h3 class='lbl-nome lbl-nome-bold'>{{time.nome}}</h3>
             <p class="lbl-nome">{{time.nome_cartola}}</p>
           </ion-item>
@@ -69,7 +69,7 @@
         <ion-col>
           <ion-item class="time-item">
             <p class="lbl-nome lbl-nome-bold" text-right>{{time.pontos.campeonato}}</p>
-<p class="lbl-nome lbl-nome-bold" text-right [ngStyle]="{'color': (time.variacao.campeonato>0?'green':(time.variacao.campeonato<0?'red':''))}">
+            <p class="lbl-nome lbl-nome-bold" text-right [ngStyle]="{'color': (time.variacao.campeonato>0?'green':(time.variacao.campeonato<0?'red':''))}">
 
               <ion-icon class="seta-variacao" *ngIf='time.variacao.campeonato!=0' name="{{time.variacao.campeonato>0?'ios-arrow-round-up':'ios-arrow-round-down'}}"></ion-icon>
               {{time.variacao.campeonato==0?'-':time.variacao.campeonato}}

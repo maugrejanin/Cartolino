@@ -99,11 +99,12 @@ export class Scout {
             var treatedScout = [];
             let scout;
             let scoutSize = Object.keys(atletaScout);
-            for (let i in atletaScout) {
+            for (let i in atletaScout) {                
                 scout = {
                     acao: (atletaScout[i] == 1 ? this.scout[i].acao : this.scout[i].acao_plural),
+                    abreviacao: i,
                     quantidade: atletaScout[i],
-                    pontos: (this.scout[i].pontos * atletaScout[i])
+                    pontos: (this.scout[i].pontos * atletaScout[i]).toFixed(2)
                 };
                 treatedScout.push(scout);
                 treatedScout.length == scoutSize.length?resolve(treatedScout):'';

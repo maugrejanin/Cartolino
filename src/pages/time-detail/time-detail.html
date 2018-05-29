@@ -51,10 +51,10 @@
     </ion-item>
 
     <ion-row margin-top>
-      <ion-col col-7 text-center align-self-center class="lbl-nome-bold">
+      <ion-col col-9 text-center align-self-center class="lbl-nome-bold">
         Jogador
       </ion-col>
-      <ion-col col-5 text-center align-self-center class="lbl-nome-bold">
+      <ion-col col-2 text-center align-self-center class="lbl-nome-bold">
         Parcial
       </ion-col>
     </ion-row>
@@ -62,7 +62,7 @@
   <ion-list>
     <ion-grid>
       <ion-row align-items-center id="border-bottom-row" *ngFor="let atleta of time.atletas" (click)="viewTimes(atleta)">
-        <ion-col class="jogador-container" col-7>
+        <ion-col class="jogador-container" col-9>
           <ion-item>
             <ion-avatar item-start class="foto-jogador-container">
               <img class="foto-jogador no-radius" src="{{atleta.foto.replace('FORMATO', '140x140')}}">
@@ -74,15 +74,9 @@
             </p>
           </ion-item>
         </ion-col>
-        <ion-col col-5>
-          <ion-item class="time-item">
-            <p text-center class='lbl-nome-bold font-13px' [ngStyle]="{'color': (atleta.pontos_num>0? 'green' : (atleta.pontos_num<0?'red':''))}">
-              <ion-icon [ngStyle]="{'color': 'black'}" name="football"></ion-icon> {{atleta.atleta_id==time.capitao_id?(atleta.pontos_num*2):atleta.pontos_num}}
-            </p>
-            <p text-center class="lbl-nome lbl-nome-bold" *ngIf="scoutOk && atleta.posicao_id != 6">
-              <span *ngFor="let scout of atleta.scout" [innerHtml]="formatScout(scout)"></span>
-            </p>
-          </ion-item>
+        <ion-col col-2>
+<h3 text-center class='lbl-nome-bold font-13px' [ngStyle]="{'color': (atleta.pontos_num>0? 'green' : (atleta.pontos_num<0?'red':''))}">{{atleta.atleta_id==time.capitao_id?(atleta.pontos_num*2):atleta.pontos_num}}</h3>
+
         </ion-col>
       </ion-row>
     </ion-grid>

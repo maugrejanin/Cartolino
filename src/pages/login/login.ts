@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser';
-import { NavController, IonicPage } from 'ionic-angular';
+import { NavController, IonicPage, LoadingController } from 'ionic-angular';
 import { IUserDataControll } from '../../models/userDataControll';
 
 @IonicPage()
@@ -12,11 +12,30 @@ import { IUserDataControll } from '../../models/userDataControll';
 })
 export class LoginPage {
   browser: any;
-  constructor(private iab: InAppBrowser, private storage: Storage, private navCtrl: NavController, @Inject('IUserDataControll') public userDataControll: IUserDataControll) {
-  }
+  loading;
+  constructor(
+    private iab: InAppBrowser, 
+    private storage: Storage, 
+    private navCtrl: NavController, 
+    @Inject('IUserDataControll') public userDataControll: IUserDataControll,
+    private loadingCtrl: LoadingController) {}
 
   ionViewDidLoad() {
     this.startLoginGlobo();
+    this.showLoadSpinner();
+  }
+
+  showLoadSpinner() {
+    this.loading = this.loadingCtrl.create({
+      spinner: "bubbles",
+      content: 'Carregando...'
+    });
+
+    this.loading.present();
+  }
+
+  hideLoadSpinner() {
+    this.loading.dismiss();
   }
 
   startLoginGlobo() {
@@ -27,7 +46,7 @@ export class LoginPage {
   }
 
   private handleOnExit(event: InAppBrowserEvent) {
-    // this.getCartolaData();
+    this.hideLoadSpinner();
     this.navCtrl.pop();
   }
 

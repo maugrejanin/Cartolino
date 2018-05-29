@@ -13,3 +13,11 @@
 #nm-time .item-inner{
     border-bottom: 0px !important;
 }
+
+.vertical-align-content>* {
+  display: grid !important;
+  align-content: center !important;
+  align-items: center !important;
+  margin-bottom: 64px;
+}
+

@@ -9,8 +9,8 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding *ngIf="teamInfo">
-  <ion-row justify-content-center>
+<ion-content padding class="vertical-align-content" *ngIf="teamInfo">
+  <ion-row justify-content-center >
     <ion-img id="escudo_svg" src="{{teamInfo.url_escudo_svg}}"></ion-img>
   </ion-row>
 
@@ -19,8 +19,14 @@
       <h2>{{teamInfo.nome}}</h2>
     </ion-item>
   </ion-row>
-
 </ion-content>
+
+<ion-content padding class="vertical-align-content" *ngIf='!userLogged'>
+  <ion-row justify-content-center *ngIf='!userLogged'>
+    <button ion-button outline large text-uppercase (click)="openPage('LoginPage')">Login</button>
+  </ion-row>
+</ion-content>
+
 
 <ion-menu [content]="content">
   <ion-header>
@@ -30,7 +36,7 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <button  ion-item (click)="openPage('LoginPage')">
+      <button ion-item (click)="openPage('LoginPage')">
         Login
       </button>
     </ion-list>

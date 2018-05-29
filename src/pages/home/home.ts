@@ -12,6 +12,7 @@ import { IMercadoControll } from '../../models/mercadoControll';
 export class HomePage {
   teamInfo = {};
   loading;
+  userLogged = false;
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
@@ -24,6 +25,7 @@ export class HomePage {
       this.showLoadSpinner();
       this.userDataControll.initUserData().then(res => {
         if (res) {
+          this.userLogged = true;
           this.teamInfo = this.userDataControll.getTeamInfo();
           this.hideLoadSpinner();
         } else {

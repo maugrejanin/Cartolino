@@ -51,10 +51,10 @@
     </ion-item>
 
     <ion-row margin-top>
-      <ion-col col-9 text-center align-self-center class="lbl-nome-bold">
+      <ion-col col-7 text-center align-self-center class="lbl-nome-bold">
         Jogador
       </ion-col>
-      <ion-col col-2 text-center align-self-center class="lbl-nome-bold">
+      <ion-col col-5 text-center align-self-center class="lbl-nome-bold">
         Parcial
       </ion-col>
     </ion-row>
@@ -62,21 +62,23 @@
   <ion-list>
     <ion-grid>
       <ion-row align-items-center id="border-bottom-row" *ngFor="let atleta of time.atletas" (click)="viewTimes(atleta)">
-        <ion-col class="jogador-container" col-9>
+        <ion-col class="jogador-container" col-7>
           <ion-item>
             <ion-avatar item-start class="foto-jogador-container">
               <img class="foto-jogador no-radius" src="{{atleta.foto.replace('FORMATO', '140x140')}}">
               <img class="jogador-escudo-time no-radius" src="{{time.clubes[atleta.clube_id].escudos['60x60']}}">
             </ion-avatar>
             <h3 text-left class='font-13px lbl-nome-bold'>{{atleta.apelido}}</h3>
-            <p text-left class='lbl-nome lbl-nome-bold' text-uppercase>
-              <span>{{getPosicao(atleta.posicao_id)}}</span>
-            </p>
+            <p text-left class='lbl-nome-09-rem lbl-nome-bold' text-uppercase>{{getPosicao(atleta.posicao_id)}}</p>
           </ion-item>
         </ion-col>
-        <ion-col col-2>
-<h3 text-center class='lbl-nome-bold font-13px' [ngStyle]="{'color': (atleta.pontos_num>0? 'green' : (atleta.pontos_num<0?'red':''))}">{{atleta.atleta_id==time.capitao_id?(atleta.pontos_num*2):atleta.pontos_num}}</h3>
-
+        <ion-col class="jogador-container" col-5>
+          <ion-item>
+            <h3 text-center class='lbl-nome-bold font-13px' [ngStyle]="{'color': (atleta.pontos_num>0? 'green' : (atleta.pontos_num<0?'red':''))}">{{atleta.atleta_id==time.capitao_id?(atleta.pontos_num*2):atleta.pontos_num}}</h3>
+            <p text-center class='lbl-nome-09-rem' *ngIf='atleta.posicao_id != 6'>
+              <!-- <span *ngFor="let scout of atleta.scoutAbreviado" [ngStyle]="{'color': scout.color}"></span>{{atleta.scoutAbreviado.length>0}} -->
+            </p>
+          </ion-item>
         </ion-col>
       </ion-row>
     </ion-grid>

@@ -2,13 +2,11 @@ import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ILigasControll, LigaControllFake } from '../../models/ligasControll';
 import * as _ from 'lodash';
-import { Scout } from './scout';
 
 @IonicPage()
 @Component({
   selector: 'page-jogador-details',
-  templateUrl: 'jogador-details.html',
-  providers: [Scout]
+  templateUrl: 'jogador-details.html'
 })
 export class JogadorDetailsPage {
 
@@ -29,8 +27,7 @@ export class JogadorDetailsPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    @Inject('ILigasControll') public ligaController: ILigasControll,
-    public scoutGetter: Scout) {
+    @Inject('ILigasControll') public ligaController: ILigasControll) {
 
   }
 
@@ -38,15 +35,15 @@ export class JogadorDetailsPage {
     this.atleta = this.navParams.get('atleta');
     this.clube = this.navParams.get('clube');
     this.posicao = this.navParams.get('posicao');
-    this.getAtletaScout();
+    // this.getAtletaScout();
     this.getTimesComJogador();
   }
 
-  getAtletaScout() {
-    this.scoutGetter.getScout(this.atleta.scout).then(scout => {
-      this.atleta.scout = scout;
-    });
-  }
+  // getAtletaScout() {
+  //   this.scoutGetter.getScout(this.atleta.scout).then(scout => {
+  //     this.atleta.scout = scout;
+  //   });
+  // }
 
   getTimesComJogador() {
     let temJogador;

@@ -10,6 +10,10 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)" pullMin="60" pullMax="120">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para atualizar..." refreshingSpinner="bubbles" refreshingText="Atualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-grid *ngIf='partidasLoaded'>
     <ion-list>
       <ion-item *ngFor='let partida of partidas' class="partida-item">

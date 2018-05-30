@@ -53,6 +53,7 @@ export class TimeDetailPage {
     this.timeControll.loadTimesInfo([this.time]).then(times => {
       this.time = times[0];
       this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
+      this.getAtletaScout();
       refresher.complete();
     });
   }
@@ -69,10 +70,10 @@ export class TimeDetailPage {
     for (let i in this.time.atletas) {
       if (this.time.atletas[i].scout != null && Object.keys(this.time.atletas[i].scout).length && this.time.atletas[i].posicao_id != 6) {
         if (typeof this.time.atletas[i].scout[0] == 'undefined') {
-          this.scoutGetter.getScout(this.time.atletas[i].scout).then(scout => {
+          this.scoutGetter.getScout(this.time.atletas[i].scout).then(scout => {            
             this.time.atletas[i].scout = scout['treatedScout'];
             this.time.atletas[i].scoutAbreviado = scout['scoutAbreviado'];
-            this.scoutOk = (parseInt(i) + 2) == Object.keys(this.time.atletas).length ? true : false;
+            this.scoutOk = (parseInt(i) + 2) == Object.keys(this.time.atletas).length ? true : false;            
           });
         } else {
           this.scoutOk = true;

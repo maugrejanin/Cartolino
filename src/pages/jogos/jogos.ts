@@ -32,4 +32,11 @@ export class JogosPage {
     })
   }
 
+  doRefresh(refresher) {
+    this.partidasCtrl.getPartidas().then(res => {
+      this.partidas = _.orderBy(res.partidas, 'partida_data', 'asc');
+      refresher.complete();
+    })
+  }
+
 }

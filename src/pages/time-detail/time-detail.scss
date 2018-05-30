@@ -23,6 +23,7 @@
 
 .foto-jogador-container {
   margin-bottom: 0px !important;
+  margin-right: 8px !important;
 }
 
 .jogador-container .item-inner{
@@ -44,6 +45,20 @@
   left:10px;
   top: 5px;
 }
+
+// .jogador-capitao-icon {
+//   width: 18px !important;
+//   height: 18px !important;
+//   position: absolute;
+//   left: 55px;
+// }
+.jogador-capitao-icon {
+  width: 13px;
+  height: 13px;
+  vertical-align: middle;
+}
+
+
 
 #search-icon{
   font-size: 11px !important;

@@ -9,8 +9,29 @@
   </ion-navbar>
 </ion-header>
 
-
-
-<ion-content padding>
-
+<ion-content *ngIf='partidasLoaded'>
+  
+    <ion-row id="border-bottom-row" *ngFor='let partida of partidas' justify-content-center>
+      <ion-col col-5>
+        <ion-item class="clube-item clube-escudo">
+          <!-- <ion-thumbnail item-end>
+            <img id="escudo" src="{{clubes[partida.clube_casa_id].escudos['60x60']}}">
+          </ion-thumbnail> -->
+          <p text-right>{{clubes[partida.clube_casa_id].nome}}</p>
+        </ion-item>
+      </ion-col>
+      <ion-col col-2>
+        <ion-item>
+          <p text-center>X</p>
+        </ion-item>
+      </ion-col>
+      <ion-col col-5>
+        <ion-item class="clube-item clube-escudo">
+          <!-- <ion-thumbnail item-start>
+            <img id="escudo" src="{{clubes[partida.clube_visitante_id].escudos['60x60']}}">
+          </ion-thumbnail> -->
+          <p text-left>{{clubes[partida.clube_visitante_id].nome}}</p>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 </ion-content>

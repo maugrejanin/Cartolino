@@ -43,8 +43,6 @@ export class TimeDetailPage {
     this.time = this.navParams.get('time');
     this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
     this.getAtletaScout();
-    console.log(this.time.atletas);
-    
   }
 
   formatPontos(parcial) {
@@ -76,6 +74,8 @@ export class TimeDetailPage {
             this.time.atletas[i].scoutAbreviado = scout['scoutAbreviado'];
             this.scoutOk = (parseInt(i) + 2) == Object.keys(this.time.atletas).length ? true : false;
           });
+        } else {
+          this.scoutOk = true;
         }
       } else {
         this.time.atletas[i].scout = false;

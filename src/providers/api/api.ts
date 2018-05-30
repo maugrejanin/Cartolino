@@ -25,10 +25,7 @@ export class Api {
       for (let k in params) {
         reqOpts.params = reqOpts.params.set(k, params[k]);
       }
-    }
-
-    console.log("reqOpts: ", reqOpts);
-    
+    }    
 
     return this.http.get(endpoint, reqOpts);
   }

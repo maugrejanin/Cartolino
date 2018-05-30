@@ -20,3 +20,4 @@ export const get_liga_info_api = HOST + "auth/liga/"; // nao funciona com mercad
 export const get_pontuados_api = HOST + "atletas/pontuados";  // funciona com mercado = 4
 export const get_time_api = HOST + "time/id/"; // nao funciona com mercado = 4
 export const get_mercado_info_api = HOST + "mercado/status";
+export const get_promixas_partidas_api = HOST + "partidas";

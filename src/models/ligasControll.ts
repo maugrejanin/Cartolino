@@ -34,7 +34,7 @@ export class LigaControll implements ILigasControll {
 
     loadLigas() {
         return new Promise((resolve, reject) => {
-            if (this.userDataControll.isUserLogged()) {
+            if (this.userDataControll.isUserLogged) {
                 this.api.getWithAuth(get_ligas_info_api, { GLBID: this.userDataControll.getGLBID() })
                     .toPromise()
                     .then(

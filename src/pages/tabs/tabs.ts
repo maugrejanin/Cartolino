@@ -32,9 +32,11 @@ export class TabsPage {
     });
   }
 
-  ionViewWillEnter(){
-    this.userLogged = this.userDataControll.isUserLogged();
-    console.log(this.userDataControll.isUserLogged());
-    
-  }
+  // ionViewWillEnter(){
+  //   this.userDataControll.isUserLogged.then(res => {
+  //     console.log("Tab: ", res);
+      
+  //     this.userLogged = res;
+  //   }); 
+  // }
 }

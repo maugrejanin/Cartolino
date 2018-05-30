@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage, LoadingController } from 'ionic-angular';
 import { IUserDataControll } from '../../models/userDataControll';
 import { Inject } from '@angular/core';
-import { IMercadoControll } from '../../models/mercadoControll';
 
 @IonicPage()
 @Component({
@@ -12,12 +11,10 @@ import { IMercadoControll } from '../../models/mercadoControll';
 export class HomePage {
   teamInfo = {};
   loading;
-  userLogged = false;
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
     @Inject('IUserDataControll') private userDataControll: IUserDataControll,
-    @Inject('IMercadoControll') private mercadoControll: IMercadoControll,
     private loadingCtrl: LoadingController) { }
 
   ionViewWillEnter() {
@@ -25,7 +22,6 @@ export class HomePage {
       this.showLoadSpinner();
       this.userDataControll.initUserData().then(res => {
         if (res) {
-          this.userLogged = true;
           this.teamInfo = this.userDataControll.getTeamInfo();
           this.hideLoadSpinner();
         } else {

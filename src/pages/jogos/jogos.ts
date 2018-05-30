@@ -1,12 +1,15 @@
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PartidasControll, IPartidasControll } from '../../models/partidasControll';
+import { PartidasControll, IPartidasControll, PartidasControllFake } from '../../models/partidasControll';
 
 @IonicPage()
 @Component({
   selector: 'page-jogos',
   templateUrl: 'jogos.html',
-  providers:[{provide: 'IPartidasControll', useClass: PartidasControll}]
+  providers: [
+    {provide: 'IPartidasControll', useClass: PartidasControll}
+    // { provide: 'IPartidasControll', useClass: PartidasControllFake }
+  ]
 })
 export class JogosPage {
   partidas = {};
@@ -20,7 +23,7 @@ export class JogosPage {
     this.getPartidas();
   }
 
-  getPartidas(){
+  getPartidas() {
     this.partidasCtrl.getPartidas().then(res => {
       this.partidas = res.partidas;
       this.clubes = res.clubes;

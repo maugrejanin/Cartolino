@@ -1,21 +1,27 @@
-// .clube-escudo {
-//   width: 40px !important;
-//   min-width: 40px !important;
-//   height: 40px !important;
-//   min-height: 40px !important;
-// //   margin-right: 5px !important;
-// }
 
-// .clube-escudo #escudo {
-//   width: 40px !important;
-//   height: 41px !important;
-// }
+.clube-escudo{
+    width: 40px !important;
+    height: 40px !important;
+}
 
-// .clube-item {
-// //   padding-left: 0px !important;
-// }
+.height-80 {
+  height: 80px !important;
+  border-bottom: 1px solid #dedede;
+}
 
-// .clube-item .item-inner {
-//   border-bottom: 0px !important;
-// }
+#clube-casa-escudo{
+    justify-self: center;
+}
 
+#clube-visitante-escudo {
+  justify-self: center;
+}
+
+.display-grid{
+    display: grid;
+    justify-content: center;
+}
+
+.partida-item .label-md{
+    margin-bottom: 0px;
+}

@@ -67,7 +67,7 @@ export class TimeDetailPage {
 
   getAtletaScout() {
     for (let i in this.time.atletas) {
-      if (Object.keys(this.time.atletas[i].scout).length && this.time.atletas[i].posicao_id != 6) {
+      if (this.time.atletas[i].scout != null && Object.keys(this.time.atletas[i].scout).length && this.time.atletas[i].posicao_id != 6) {
         if (typeof this.time.atletas[i].scout[0] == 'undefined') {
           this.scoutGetter.getScout(this.time.atletas[i].scout).then(scout => {
             this.time.atletas[i].scout = scout['treatedScout'];

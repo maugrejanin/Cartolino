@@ -38,7 +38,7 @@
         <ion-col text-center align-self-center class="lbl-nome-bold">
           <ion-item class="no-border-bottom">
             <p class="lbl-nome lbl-nome-bold" text-center>Parcial</p>
-            <p class="lbl-nome lbl-nome-bold" text-center [ngStyle]="{'color': time.pontos.rodada>0? 'green' : 'red'}">{{time.pontos.rodada}}</p>
+            <p class="lbl-nome lbl-nome-bold" text-center [ngStyle]="{'color': time.pontos.rodada>=0? 'green' : 'red'}">{{time.pontos.rodada}}</p>
           </ion-item>
         </ion-col>
         <ion-col text-center align-self-center class="lbl-nome-bold">

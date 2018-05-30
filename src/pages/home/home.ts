@@ -18,17 +18,17 @@ export class HomePage {
     private loadingCtrl: LoadingController) { }
 
   ionViewWillEnter() {
-    // if (Object.keys(this.teamInfo).length === 0 && this.teamInfo.constructor === Object) {
-    //   this.showLoadSpinner();
-    //   this.userDataControll.initUserData().then(res => {
-    //     if (res) {
-    //       this.teamInfo = this.userDataControll.getTeamInfo();
-    //       this.hideLoadSpinner();
-    //     } else {
-    //       this.hideLoadSpinner();
-    //     }
-    //   });
-    // }
+    if (Object.keys(this.teamInfo).length === 0 && this.teamInfo.constructor === Object) {
+      this.showLoadSpinner();
+      this.userDataControll.initUserData().then(res => {
+        if (res) {
+          this.teamInfo = this.userDataControll.getTeamInfo();
+          this.hideLoadSpinner();
+        } else {
+          this.hideLoadSpinner();
+        }
+      });
+    }
   }
 
   showLoadSpinner() {

@@ -1,13 +1,14 @@
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PartidasControll, IPartidasControll, PartidasControllFake } from '../../models/partidasControll';
+import * as _ from "lodash";
 
 @IonicPage()
 @Component({
   selector: 'page-jogos',
   templateUrl: 'jogos.html',
   providers: [
-    {provide: 'IPartidasControll', useClass: PartidasControll}
+    { provide: 'IPartidasControll', useClass: PartidasControll }
     // { provide: 'IPartidasControll', useClass: PartidasControllFake }
   ]
 })
@@ -25,7 +26,7 @@ export class JogosPage {
 
   getPartidas() {
     this.partidasCtrl.getPartidas().then(res => {
-      this.partidas = res.partidas;
+      this.partidas = _.orderBy(res.partidas, 'partida_data', 'asc');
       this.clubes = res.clubes;
       this.partidasLoaded = true;
     })

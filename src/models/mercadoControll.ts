@@ -40,9 +40,13 @@ export class MercadoControll implements IMercadoControll {
 
     getMercadoStatus() {
         return new Promise((resolve, reject) => {
-            this.getMercadoInfo().then(() => {
+            if (!this.mercado.status_mercado) {
+                this.getMercadoInfo().then(() => {
+                    resolve(this.mercado.status_mercado);
+                });
+            } else {
                 resolve(this.mercado.status_mercado);
-            });
+            }
         });
     }
 

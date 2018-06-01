@@ -61,8 +61,8 @@
         <ion-col>
           <ion-item class="time-item">
             <p class="lbl-nome lbl-nome-bold" text-right [ngStyle]="{'color': time.pontos.rodada>=0? 'green' : 'red'}">{{time.pontos.rodada}}</p>
-            <!-- <p class="lbl-nome lbl-nome-bold" text-right>C$ {{time.patrimonio}}</p> -->
-            <p class="lbl-nome lbl-nome-bold" text-right>{{time.pontuados}}/12</p>
+            <p *ngIf='mercadoCtrl.getMercadoStatus() != status_mercado_fechado' class="lbl-nome lbl-nome-bold" text-right>C$ {{time.patrimonio}}</p>
+            <p *ngIf='mercadoCtrl.getMercadoStatus() == status_mercado_fechado' class="lbl-nome lbl-nome-bold" text-right>{{time.pontuados}}/12</p>
           </ion-item>
         </ion-col>
 

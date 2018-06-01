@@ -4,6 +4,7 @@ import { LigaControll, ILigasControll, LigaControllFake } from '../../models/lig
 import * as _ from 'lodash';
 import { TimeControll, ITimeControll, TimeControllFake } from '../../models/timeControll';
 import { status_mercado_fechado } from '..';
+import { IMercadoControll } from '../../models/mercadoControll';
 
 @IonicPage()
 @Component({
@@ -24,7 +25,8 @@ export class LigaDetailPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    @Inject('ILigasControll') private ligaControll: ILigasControll,
+    @Inject('ILigasControll') private ligaCtrl: ILigasControll,
+    @Inject('IMercadoControll') private mercadoCtrl: IMercadoControll,
     private loadingCtrl: LoadingController) {
     this.loading = this.loadingCtrl.create({
       spinner: "bubbles",
@@ -41,7 +43,7 @@ export class LigaDetailPage {
   }
 
   loadLigaDetails(refresher = null) {
-    this.ligaControll.loadLiga(this.navParams.get('ligaSlug')).then(liga => {
+    this.ligaCtrl.loadLiga(this.navParams.get('ligaSlug')).then(liga => {
       if (liga) {
         console.log("Liga: ", liga);
         liga.times = _.orderBy(liga.times, this.orderBy, this.order);

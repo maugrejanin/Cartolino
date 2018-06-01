@@ -13,7 +13,7 @@
   </ion-refresher>
   <ion-grid>
     <ion-row class="time-escudo-svg-content">
-      <ion-item>
+      <ion-item class="no-border-bottom">
         <ion-thumbnail item-start class="time-escudo-svg">
           <img id="escudo" src="{{time.url_escudo_svg}}">
           <img class="time-perfil-foto-icon" src="{{time.foto_perfil}}">
@@ -30,9 +30,13 @@
     <ion-item class="height-60px">
       <ion-row>
         <ion-col text-center align-self-center class="lbl-nome-bold">
-          <ion-item class="no-border-bottom">
+          <ion-item *ngIf='mercadoCtrl.getMercadoStatus() == status_mercado_fechado' class="no-border-bottom">
             <p class="lbl-nome lbl-nome-bold" text-center>Pontuados</p>
             <p class="lbl-nome lbl-nome-bold" text-center>{{time.pontuados}}/12</p>
+          </ion-item>
+           <ion-item *ngIf='mercadoCtrl.getMercadoStatus() != status_mercado_fechado' class="no-border-bottom">
+            <p class="lbl-nome lbl-nome-bold" text-center>Patrimônio</p>
+            <p class="lbl-nome lbl-nome-bold" text-center>C$ {{time.patrimonio}}</p>
           </ion-item>
         </ion-col>
         <ion-col text-center align-self-center class="lbl-nome-bold">
@@ -61,7 +65,7 @@
   </ion-grid>
   <ion-list>
     <ion-grid>
-      <ion-row align-items-center id="border-bottom-row" *ngFor="let atleta of time.atletas" (click)="viewTimes(atleta)" [ngStyle]="{'opacity': (!atleta.scoutAbreviado? '0.5' : '1')}">
+      <ion-row align-items-center id="border-bottom-row" *ngFor="let atleta of time.atletas" (click)="viewTimes(atleta)" [ngStyle]="{'opacity': (!atleta.scoutAbreviado && atleta.posicao_id != 6? '0.5' : '1')}">
         <ion-col class="jogador-container" col-7>
           <ion-item>
             <ion-avatar item-start class="foto-jogador-container">

@@ -4,6 +4,7 @@ import { ITimeControll, TimeControll, TimeControllFake } from '../../models/time
 import { status_mercado_fechado } from '..';
 import * as _ from 'lodash';
 import { Scout } from '../scout';
+import { IMercadoControll } from '../../models/mercadoControll';
 
 @IonicPage()
 @Component({
@@ -33,7 +34,8 @@ export class TimeDetailPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    @Inject('ITimeControll') private timeControll: ITimeControll,
+    @Inject('ITimeControll') private timeCtrl: ITimeControll,
+    @Inject('IMercadoControll') private mercadoCtrl: IMercadoControll,
     private loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     public scoutGetter: Scout) {
@@ -50,7 +52,7 @@ export class TimeDetailPage {
   }
 
   doRefresh(refresher) {
-    this.timeControll.loadTimesInfo([this.time]).then(times => {
+    this.timeCtrl.loadTimesInfo([this.time]).then(times => {
       this.time = times[0];
       this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
       this.getAtletaScout();

@@ -21,6 +21,8 @@ export class LigaDetailPage {
   loading;
   orderBy = 'pontos.rodada';
   order = 'desc';
+  status_mercado;
+  status_mercado_fechado = status_mercado_fechado;
 
   constructor(
     public navCtrl: NavController,
@@ -40,6 +42,12 @@ export class LigaDetailPage {
     this.liga.url_flamula_svg = this.navParams.get('ligaFlamulaUrl');
     this.liga.descricao = this.navParams.get('ligaDescricao');
     this.loadLigaDetails();
+  }
+
+  ionViewWillEnter() {
+    this.mercadoCtrl.getMercadoStatus().then(status_mercado => {
+      this.status_mercado = status_mercado;
+    });
   }
 
   loadLigaDetails(refresher = null) {

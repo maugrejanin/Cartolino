@@ -120,7 +120,9 @@ export class TimeControll implements ITimeControll {
                     time.pontuados = 0;
                     for (const i in time.atletas) {
                         let parcialJogador = this.jogadoresControll.getParcialJogador(time.atletas[i]['atleta_id']);
-                        if (typeof parcialJogador != 'undefined') {
+                        console.log("parcialJogador: ", parcialJogador);
+                        
+                        if (parcialJogador !== false) {
                             time.atletas[i].pontos_num = parcialJogador;
                             time.pontuados++;
                         }

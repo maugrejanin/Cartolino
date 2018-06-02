@@ -18,6 +18,8 @@ export class PartidasControll implements IPartidasControll {
             this.api.get(get_promixas_partidas_api)
                 .toPromise()
                 .then(res => {
+                    console.log("partidas: ", res.json());
+                    
                     resolve(res.json());
                 })
         });

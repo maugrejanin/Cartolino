@@ -1,12 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the JogadoresPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Component, Inject } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IJogadoresControll } from '../../models/jogadoresControll';
 
 @IonicPage()
 @Component({
@@ -14,12 +8,45 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'jogadores.html',
 })
 export class JogadoresPage {
+  loading;
+  atletas = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    @Inject('IJogadoresControll') public jogadoresCtrl: IJogadoresControll,
+    public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad JogadoresPage');
+    this.showLoadSpinner();
+    this.loadJogadores();
   }
 
+  loadJogadores(refresher = null) {
+    this.jogadoresCtrl.getJogadores().then(res => {
+      this.hideLoadSpinner();
+      this.atletas = res;
+      if (refresher) {
+        refresher.complete();
+      }
+    });
+  }
+
+  doRefresh(refresh) {
+    this.loadJogadores(refresh);
+  }
+
+  showLoadSpinner() {
+    this.loading = this.loadingCtrl.create({
+      spinner: "bubbles",
+      content: 'Carregando...'
+    });
+
+    this.loading.present();
+  }
+
+  hideLoadSpinner() {
+    this.loading.dismiss();
+  }
 }

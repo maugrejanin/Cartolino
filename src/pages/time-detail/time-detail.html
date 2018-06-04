@@ -34,7 +34,7 @@
             <p class="lbl-nome lbl-nome-bold" text-center>Pontuados</p>
             <p class="lbl-nome lbl-nome-bold" text-center>{{time.pontuados}}/12</p>
           </ion-item>
-           <ion-item *ngIf='status_mercado != status_mercado_fechado' class="no-border-bottom">
+          <ion-item *ngIf='status_mercado != status_mercado_fechado' class="no-border-bottom">
             <p class="lbl-nome lbl-nome-bold" text-center>Patrimônio</p>
             <p class="lbl-nome lbl-nome-bold" text-center>C$ {{time.patrimonio}}</p>
           </ion-item>
@@ -86,7 +86,11 @@
         <ion-col class="jogador-container" col-5>
           <ion-item>
             <h3 text-center class='lbl-nome-bold font-13px' [ngStyle]="{'color': (atleta.pontos_num>0? 'green' : (atleta.pontos_num<0?'red':''))}">{{atleta.atleta_id==time.capitao_id?(atleta.pontos_num*2):atleta.pontos_num}}</h3>
-            <p text-center class='lbl-nome-09-rem lbl-nome-bold' *ngIf='atleta.posicao_id != 6'><span *ngFor="let scout of atleta.scoutAbreviado; let i = index" [ngStyle]="{'color': scout.color}">{{scout.acao}}<span [ngStyle]="{'color': '#666'}" [innerHtml]="(i+1)<atleta.scoutAbreviado.length?', ':''"></span></span></p>
+            <p text-center class='lbl-nome-09-rem lbl-nome-bold' *ngIf='atleta.posicao_id != 6'>
+              <span *ngFor="let scout of atleta.scoutAbreviado; let i = index" [ngStyle]="{'color': scout.color}">{{scout.acao}}
+                <span [ngStyle]="{'color': '#666'}" [innerHtml]="(i+1)<atleta.scoutAbreviado.length?', ':''"></span>
+              </span>
+            </p>
           </ion-item>
         </ion-col>
       </ion-row>

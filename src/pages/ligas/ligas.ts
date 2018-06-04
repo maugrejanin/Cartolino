@@ -15,7 +15,6 @@ export class LigasPage {
     ligasDoCartola: [],
     ligasMataMata: []
   };
-  ligasLoaded = false;
   loading;
 
   constructor(
@@ -27,10 +26,10 @@ export class LigasPage {
 
   ionViewDidLoad() {
     this.showLoadSpinner();
-    this.ligaControll.loadLigas().then(ligas => {      
+    this.ligaControll.getLigas().then(ligas => {
       this.ligas.ligasClassicas = _.filter(ligas, (liga) => { return liga.time_dono_id });
       this.ligas.ligasDoCartola = _.filter(ligas, (liga) => { return !liga.time_dono_id });
-      this.ligasLoaded = true;
+      this.ligas.ligasMataMata = _.filter(ligas, (liga) => { return liga.mata_mata });
       this.hideLoadSpinner();
     })
   }

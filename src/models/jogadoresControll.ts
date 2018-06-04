@@ -4,13 +4,18 @@ import { IUserDataControll } from "./userDataControll";
 import { Inject, Injectable, Component } from "@angular/core";
 import { IMercadoControll } from "./mercadoControll";
 import { getLocaleDateTimeFormat, FormatWidth } from "@angular/common";
+import * as _ from 'lodash';
 
-export interface Jogadores {
-    rodada: string;
-    atletas: [{}];
-    clubes: [{}];
-    posicoes: [{}];
-    total_atletas: '';
+export interface Atleta {
+    scoutAbreviado: [{}],
+    scout: [{}],
+    posicao_id: '',
+    foto: '',
+    atleta_id: '',
+    apelido: '',
+    pontos_num: '',
+    clube_id: ''
+
 }
 
 export interface IJogadoresControll {
@@ -27,18 +32,18 @@ export interface IJogadoresControll {
     providers: [Api]
 })
 export class JogadoresControll implements IJogadoresControll {
-    private jogadores: Jogadores;
+    private atletas: Atleta[];
     private lastUpdateTimestamp;
 
     constructor(
         private api: Api,
         @Inject('IUserDataControll') private userDataControll: IUserDataControll,
-        @Inject('IMercadoControll') private mercadoControll: IMercadoControll) { 
-            this.loadJogadores();
-        };
+        @Inject('IMercadoControll') private mercadoControll: IMercadoControll) {
+        this.loadJogadores();
+    };
 
     loadJogadores() {
-        return new Promise((resolve, reject) => {     
+        return new Promise((resolve, reject) => {
             if (this.needsUpdateAtletas()) {
                 this.api.getWithAuth(get_pontuados_api, { GLBID: this.userDataControll.getGLBID() })
                     .toPromise()
@@ -58,7 +63,7 @@ export class JogadoresControll implements IJogadoresControll {
 
     needsUpdateAtletas() {
         if (!this.lastUpdateTimestamp) {
-            this.lastUpdateTimestamp = Math.round(new Date().getTime() / 1000);            
+            this.lastUpdateTimestamp = Math.round(new Date().getTime() / 1000);
             return true;
         } else if ((this.lastUpdateTimestamp + 30) > Math.round(new Date().getTime() / 1000)) {
             return false;
@@ -68,35 +73,35 @@ export class JogadoresControll implements IJogadoresControll {
         }
     }
 
-    setJogadores(jogadores: Jogadores) {
-        this.jogadores = jogadores;
+    setJogadores(atletas) {
+        this.atletas = atletas.atletas;
     };
 
     getJogadores() {
         return new Promise((resolve, reject) => {
             this.loadJogadores().then(res => {
-                resolve(this.jogadores);
+                resolve(this.atletas);
             });
         })
     };
 
     getJogador(jogador_id: string) {
-        return this.jogadores.atletas[jogador_id];
+        return this.atletas[jogador_id];
     };
 
-    getParcialJogador(jogador_id: string) {
-        if (!this.jogadores.atletas[jogador_id]) {
-            return false;
+    getParcialJogador(atleta_id: string) {
+        if (!this.atletas[atleta_id]) {
+            return 0;
         } else {
-            return this.jogadores.atletas[jogador_id].pontuacao;
+            return this.atletas[atleta_id].pontuacao;
         }
     };
 
     getScoutJogador(jogador_id: string) {
-        if (!this.jogadores.atletas[jogador_id]) {
+        if (!this.atletas[jogador_id]) {
             return false;
         } else {
-            return this.jogadores.atletas[jogador_id].scout;
+            return this.atletas[jogador_id].scout;
         }
     }
 }
@@ -106,7 +111,7 @@ export class JogadoresControll implements IJogadoresControll {
     providers: [Api]
 })
 export class JogadoresControllFake implements IJogadoresControll {
-    private jogadores: Jogadores;
+    private jogadores: Atleta;
 
     constructor(
         private api: Api,
@@ -123,21 +128,21 @@ export class JogadoresControllFake implements IJogadoresControll {
     };
 
 
-    setJogadores(jogadores: Jogadores) {
+    setJogadores(jogadores: Atleta) {
         this.jogadores = jogadores;
     };
 
     getJogadores() { return this.jogadores };
 
     getJogador(jogador_id: string) {
-        return this.jogadores.atletas[jogador_id];
+        return this.jogadores[jogador_id];
     };
 
     getParcialJogador(jogador_id: string) {
-        if (!this.jogadores.atletas[jogador_id]) {
+        if (!this.jogadores[jogador_id]) {
             return 0;
         } else {
-            return this.jogadores.atletas[jogador_id].pontuacao;
+            return this.jogadores[jogador_id].pontuacao;
         }
     };
 }

@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import { TimeControll, ITimeControll, TimeControllFake } from '../../models/timeControll';
 import { status_mercado_fechado } from '..';
 import { IMercadoControll } from '../../models/mercadoControll';
+import { Time } from '@angular/common';
 
 @IonicPage()
 @Component({
@@ -30,18 +31,13 @@ export class LigaDetailPage {
     @Inject('ILigasControll') private ligaCtrl: ILigasControll,
     @Inject('IMercadoControll') private mercadoCtrl: IMercadoControll,
     private loadingCtrl: LoadingController) {
-    this.loading = this.loadingCtrl.create({
-      spinner: "bubbles",
-      content: 'Carregando times...'
-    });
-    this.loading.present();
   }
 
   ionViewDidLoad() {
     this.liga.nome = this.navParams.get('ligaNome');
     this.liga.url_flamula_svg = this.navParams.get('ligaFlamulaUrl');
     this.liga.descricao = this.navParams.get('ligaDescricao');
-    this.loadLigaDetails();
+    this.loadTimesDaLiga();
   }
 
   ionViewWillEnter() {
@@ -50,15 +46,14 @@ export class LigaDetailPage {
     });
   }
 
-  loadLigaDetails(refresher = null) {
-    this.ligaCtrl.loadLiga(this.navParams.get('ligaSlug')).then(liga => {
-      if (liga) {
-        console.log("Liga: ", liga);
-        liga.times = _.orderBy(liga.times, this.orderBy, this.order);
-        this.liga.times = liga.times;
-        this.loading.dismiss();
-      }
-      refresher?refresher.complete():'';
+  loadTimesDaLiga(refresher = null) {
+    this.showLoadSpinner();
+    this.ligaCtrl.loadTimesDaLiga(this.navParams.get('ligaSlug')).then(liga => {      
+      console.log("liga: ", liga);
+      
+      this.liga.times = _.orderBy(liga.times, this.orderBy, this.order);
+      this.hideLoadSpinner();
+      refresher ? refresher.complete() : '';
     });
   }
 
@@ -77,11 +72,11 @@ export class LigaDetailPage {
   }
 
   doRefresh(refresher) {
-    this.loadLigaDetails(refresher);
+    this.loadTimesDaLiga(refresher);
   }
 
-  getTimePos(time, index){
-    return (this.order == 'desc' ? index + 1 : Object.keys(this.liga.times).length-index)+'°';
+  getTimePos(time, index) {
+    return (this.order == 'desc' ? index + 1 : Object.keys(this.liga.times).length - index) + '°';
   }
 
   timeDetail(time) {
@@ -89,5 +84,18 @@ export class LigaDetailPage {
       {
         time: time
       });
+  }
+
+  showLoadSpinner() {
+    this.loading = this.loadingCtrl.create({
+      spinner: "bubbles",
+      content: 'Carregando...'
+    });
+
+    this.loading.present();
+  }
+
+  hideLoadSpinner() {
+    this.loading.dismiss();
   }
 }

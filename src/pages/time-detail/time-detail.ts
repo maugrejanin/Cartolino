@@ -5,7 +5,7 @@ import { status_mercado_fechado } from '..';
 import * as _ from 'lodash';
 import { Scout } from '../scout';
 import { IMercadoControll } from '../../models/mercadoControll';
-import { Jogadores } from '../../models/jogadoresControll';
+import { Atleta } from '../../models/jogadoresControll';
 
 @IonicPage()
 @Component({
@@ -14,7 +14,7 @@ import { Jogadores } from '../../models/jogadoresControll';
   providers: [Scout]
 })
 export class TimeDetailPage {
-  // time: Time;
+  time: Time;
   // time = {
   //   url_escudo_svg: '',
   //   time_id: '',
@@ -70,7 +70,7 @@ export class TimeDetailPage {
   }
 
   doRefresh(refresher) {
-    this.timeCtrl.loadTimesInfo([this.time]).then(times => {
+    this.timeCtrl.loadTimesDaLiga([this.time]).then(times => {
       this.time = times[0];
       this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
       // this.getAtletaScout();
@@ -87,8 +87,8 @@ export class TimeDetailPage {
   }
 
   getAtletaScout() {
-    this.scoutGetter.getScout(this.time.atletas).then((atletas:Atletas) => {
-      this.time.atletas = [atletas];
+    this.scoutGetter.getScout(this.time.atletas).then((atletas) => {
+      // this.time.atletas = [atletas];
       // this.scoutOk = (parseInt(i) + 2) == Object.keys(atletas).length ? true : false;
     });
   }

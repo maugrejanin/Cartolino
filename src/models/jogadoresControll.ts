@@ -6,11 +6,11 @@ import { IMercadoControll } from "./mercadoControll";
 import { getLocaleDateTimeFormat, FormatWidth } from "@angular/common";
 
 export interface Jogadores {
-    rodada: string,
-    atletas: {},
-    clubes: {},
-    posicoes: {},
-    total_atletas: {};
+    rodada: string;
+    atletas: [{}];
+    clubes: [{}];
+    posicoes: [{}];
+    total_atletas: '';
 }
 
 export interface IJogadoresControll {

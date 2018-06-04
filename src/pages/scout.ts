@@ -94,24 +94,32 @@ export class Scout {
         }
     };
 
-    getScout(atletaScout) {
+    getScout(atletas) {
         return new Promise(resolve => {
-            let treatedScout = [];
-            let scoutAbreviado = [];
-            let scout;
-            let scoutSize = Object.keys(atletaScout);
-            for (let i in atletaScout) {
-                scout = {
-                    acao: (atletaScout[i] == 1 ? this.scout[i].acao : this.scout[i].acao_plural),
-                    quantidade: atletaScout[i],
-                    pontos: (this.scout[i].pontos * atletaScout[i]).toFixed(2),
-                    abreviacao: i
-                };
-                treatedScout.push(scout);
-                scoutAbreviado.push({ acao: scout.quantidade + scout.abreviacao, color: scout.pontos < 0 ? 'red' : 'green'});
-                treatedScout.length == scoutSize.length?resolve({treatedScout: treatedScout, scoutAbreviado: scoutAbreviado}):'';
+            let atletasCount = Object.keys(atletas);
+            for (let i in atletas) {
+                if (atletas[i].scout != null && Object.keys(atletas[i].scout).length && atletas[i].posicao_id != 6) {
+                    if (typeof atletas[i].scout[0] == 'undefined') {
+                        let atletaScout = [];
+                        atletas[i].scoutAbreviado = [];
+                        let scout;                        
+                        for (let x in atletas[i].scout) {
+                            scout = {
+                                acao: (atletas[i].scout[x] == 1 ? this.scout[x].acao : this.scout[x].acao_plural),
+                                quantidade: atletas[i].scout[x],
+                                pontos: (this.scout[x].pontos * atletas[i].scout[x]).toFixed(2),
+                                abreviacao: i
+                            };                            
+                            atletaScout.push(scout);
+                            atletaScout.length == Object.keys(atletas[i].scout).length ? (atletas[i].scout = atletaScout) : '';
+                            atletas[i].scoutAbreviado.push({ acao: scout.quantidade + scout.abreviacao, color: scout.pontos < 0 ? 'red' : 'green' });
+                        }
+                    }
+                } else {
+                    atletas[i].scout = false;
+                }
             }
+            resolve(atletas);
         })
-
     }
 }

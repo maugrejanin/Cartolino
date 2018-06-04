@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
-import { ITimeControll, TimeControll, TimeControllFake } from '../../models/timeControll';
+import { ITimeControll, TimeControll, TimeControllFake, Time } from '../../models/timeControll';
 import { status_mercado_fechado } from '..';
 import * as _ from 'lodash';
 import { Scout } from '../scout';
 import { IMercadoControll } from '../../models/mercadoControll';
+import { Jogadores } from '../../models/jogadoresControll';
 
 @IonicPage()
 @Component({
@@ -13,21 +14,30 @@ import { IMercadoControll } from '../../models/mercadoControll';
   providers: [Scout]
 })
 export class TimeDetailPage {
-  time = {
-    url_escudo_svg: '',
-    time_id: '',
-    nome: '',
-    nome_cartola: '',
-    pontuados: 0,
-    capitao_id: '',
-    pontos: {
-      rodada: 0,
-      campeonato: 0
-    },
-    atletas: [],
-    posicoes: {},
-    clubes: {}
-  };
+  // time: Time;
+  // time = {
+  //   url_escudo_svg: '',
+  //   time_id: '',
+  //   nome: '',
+  //   nome_cartola: '',
+  //   pontuados: 0,
+  //   capitao_id: '',
+  //   pontos: {
+  //     rodada: 0,
+  //     campeonato: 0
+  //   },
+  //   atletas: [{
+  //     scoutAbreviado: [{}],
+  //     posicao_id: '',
+  //     foto: '',
+  //     atleta_id: '',
+  //     apelido: '',
+  //     pontos_num: '',
+  //     clube_id: ''
+  //   }],
+  //   posicoes: {},
+  //   clubes: {}
+  // };
   loading;
   scoutOk = false;
   status_mercado;
@@ -63,7 +73,7 @@ export class TimeDetailPage {
     this.timeCtrl.loadTimesInfo([this.time]).then(times => {
       this.time = times[0];
       this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
-      this.getAtletaScout();
+      // this.getAtletaScout();
       refresher.complete();
     });
   }
@@ -77,21 +87,10 @@ export class TimeDetailPage {
   }
 
   getAtletaScout() {
-    for (let i in this.time.atletas) {
-      if (this.time.atletas[i].scout != null && Object.keys(this.time.atletas[i].scout).length && this.time.atletas[i].posicao_id != 6) {
-        if (typeof this.time.atletas[i].scout[0] == 'undefined') {
-          this.scoutGetter.getScout(this.time.atletas[i].scout).then(scout => {
-            this.time.atletas[i].scout = scout['treatedScout'];
-            this.time.atletas[i].scoutAbreviado = scout['scoutAbreviado'];
-            this.scoutOk = (parseInt(i) + 2) == Object.keys(this.time.atletas).length ? true : false;
-          });
-        } else {
-          this.scoutOk = true;
-        }
-      } else {
-        this.time.atletas[i].scout = false;
-      }
-    }
+    this.scoutGetter.getScout(this.time.atletas).then((atletas:Atletas) => {
+      this.time.atletas = [atletas];
+      // this.scoutOk = (parseInt(i) + 2) == Object.keys(atletas).length ? true : false;
+    });
   }
 
   viewTimes(atleta) {

@@ -1,3 +1,2 @@
-Próximo: Carregar jogadores dos times no momento em que o usuario acessar a página de detalhes da liga.
-A parte que carrega a lista de jogadores já está pronta e isso é feito no momento em que o usuário acessa 
-as informações do time. 
+Padronizar times para que quando carregados, ainda na página de detalhes da liga, todos sejam adicionados a um array de times.
+Quando entrar na página de detalhes do time, tem que achar o time pelo id do time atraves de uma função getTimeById do controller de time;

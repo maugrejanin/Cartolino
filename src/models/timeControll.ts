@@ -6,14 +6,27 @@ import { IJogadoresControll } from "./jogadoresControll";
 import { IMercadoControll } from "./mercadoControll";
 
 export interface Time {
-    atletas: any,
+    url_escudo_svg: '',
+    time_id: '',
+    nome: '',
+    nome_cartola: '',
+    pontuados: 0,
+    capitao_id: '',
     pontos: {
-        rodada: number,
-        campeonato: number
+      rodada: 0,
+      campeonato: 0
     },
-    capitao_id: number,
-    time_id: string;
-    pontuados: number;
+    atletas: [{
+      scoutAbreviado: [{}],
+      posicao_id: '',
+      foto: '',
+      atleta_id: '',
+      apelido: '',
+      pontos_num: '',
+      clube_id: ''
+    }],
+    posicoes: {},
+    clubes: {}
 }
 
 export interface ITimeControll {
@@ -29,14 +42,12 @@ export interface ITimeControll {
     providers: [Api]
 })
 export class TimeControll implements ITimeControll {
-
+    times:[Time];
     constructor(
         private api: Api,
         @Inject('IUserDataControll') public userDataControll: IUserDataControll,
         @Inject('IJogadoresControll') public jogadoresControll: IJogadoresControll,
         @Inject('IMercadoControll') public mercadoControll: IMercadoControll) { }
-
-
 
     loadTimesInfo(times) {
         return new Promise((resolve, reject) => {
@@ -107,10 +118,15 @@ export class TimeControll implements ITimeControll {
                 .toPromise()
                 .then(
                     res => {
-                        resolve(res.json());
+                        this.setTime(res.json());
+                        resolve(true);
                     }
                 );
         });
+    }
+
+    setTime(time){
+
     }
 
     getParciaisDosJogadoresDoTime(time: Time) {

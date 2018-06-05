@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { Atleta } from "../models/jogadoresControll";
 
 @Injectable()
 export class Scout {
@@ -94,7 +95,7 @@ export class Scout {
         }
     };
 
-    getScout(atletas) {
+    getScout(atletas:Atleta[]) {
         return new Promise(resolve => {
             let atletasCount = Object.keys(atletas);
             for (let i in atletas) {
@@ -108,7 +109,7 @@ export class Scout {
                                 acao: (atletas[i].scout[x] == 1 ? this.scout[x].acao : this.scout[x].acao_plural),
                                 quantidade: atletas[i].scout[x],
                                 pontos: (this.scout[x].pontos * atletas[i].scout[x]).toFixed(2),
-                                abreviacao: i
+                                abreviacao: x
                             };                            
                             atletaScout.push(scout);
                             atletaScout.length == Object.keys(atletas[i].scout).length ? (atletas[i].scout = atletaScout) : '';

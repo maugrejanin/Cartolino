@@ -14,6 +14,7 @@ import { Atleta } from '../../models/jogadoresControll';
   providers: [Scout]
 })
 export class TimeDetailPage {
+  atletas:Atleta[];
   time = {
     url_escudo_svg: '',
     time_id: '',
@@ -25,15 +26,7 @@ export class TimeDetailPage {
       rodada: 0,
       campeonato: 0
     },
-    atletas: [{
-      scoutAbreviado: [{}],
-      posicao_id: '',
-      foto: '',
-      atleta_id: '',
-      apelido: '',
-      pontos_num: '',
-      clube_id: ''
-    }],
+    atletas: this.atletas,
     posicoes: {},
     clubes: {}
   };
@@ -95,8 +88,8 @@ export class TimeDetailPage {
   }
 
   getAtletaScout() {
-    this.scoutGetter.getScout(this.time.atletas).then((atletas) => {
-      // this.time.atletas = [atletas];
+    this.scoutGetter.getScout(this.time.atletas).then((atletas:Atleta[]) => {      
+      this.time.atletas = atletas;
     });
   }
 

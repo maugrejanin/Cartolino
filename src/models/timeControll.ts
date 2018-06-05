@@ -6,15 +6,15 @@ import { IJogadoresControll, Atleta } from "./jogadoresControll";
 import { IMercadoControll } from "./mercadoControll";
 
 export interface Time {
-    url_escudo_svg: '',
-    time_id: '',
-    nome: '',
-    nome_cartola: '',
-    pontuados: 0,
-    capitao_id: '',
+    url_escudo_svg: string,
+    time_id: number,
+    nome: string,
+    nome_cartola: string,
+    pontuados: number,
+    capitao_id: number,
     pontos: {
-        rodada: 0,
-        campeonato: 0
+        rodada: number,
+        campeonato: number
     },
     atletas: Atleta[],
     posicoes: {},

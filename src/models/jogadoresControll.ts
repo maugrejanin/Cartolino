@@ -7,14 +7,15 @@ import { getLocaleDateTimeFormat, FormatWidth } from "@angular/common";
 import * as _ from 'lodash';
 
 export interface Atleta {
-    scoutAbreviado: [{}],
-    scout: [{}],
-    posicao_id: '',
-    foto: '',
-    atleta_id: '',
-    apelido: '',
-    pontos_num: '',
-    clube_id: ''
+    scoutAbreviado: any,
+    scout: any,
+    posicao_id: number,
+    foto: string,
+    atleta_id: number,
+    apelido: string,
+    pontos_num: number,
+    clube_id: number,
+    pontuacao: number
 
 }
 
@@ -22,9 +23,9 @@ export interface IJogadoresControll {
     loadJogadores();
     setJogadores(jogadores: {});
     getJogadores();
-    getJogador(jogador_id: string);
-    getParcialJogador(jogador_id: string);
-    getScoutJogador(jogador_id: string);
+    getJogador(jogador_id: number);
+    getParcialJogador(jogador_id: number);
+    getScoutJogador(jogador_id: number);
 }
 
 @Injectable()
@@ -89,11 +90,11 @@ export class JogadoresControll implements IJogadoresControll {
         })
     };
 
-    getJogador(jogador_id: string) {
+    getJogador(jogador_id: number) {
         return this.atletas[jogador_id];
     };
 
-    getParcialJogador(atleta_id: string) {
+    getParcialJogador(atleta_id: number) {
         if (!this.atletas[atleta_id]) {
             return 0;
         } else {
@@ -101,7 +102,7 @@ export class JogadoresControll implements IJogadoresControll {
         }
     };
 
-    getScoutJogador(jogador_id: string) {
+    getScoutJogador(jogador_id: number) {
         if (!this.atletas[jogador_id]) {
             return false;
         } else {
@@ -138,11 +139,11 @@ export class JogadoresControllFake implements IJogadoresControll {
 
     getJogadores() { return this.jogadores };
 
-    getJogador(jogador_id: string) {
+    getJogador(jogador_id: number) {
         return this.jogadores[jogador_id];
     };
 
-    getParcialJogador(jogador_id: string) {
+    getParcialJogador(jogador_id: number) {
         if (!this.jogadores[jogador_id]) {
             return 0;
         } else {

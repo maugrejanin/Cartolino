@@ -52,12 +52,12 @@ export class TimeControll implements ITimeControll {
                             liga.times[i].pontos.campeonato = liga.times[i].pontos.rodada + liga.times[i].pontos.campeonato_pre_rodada;
                             liga.times[i].pontuados = timeData['pontuados'];
                             liga.times[i] = this.setTimeInfo(liga.times[i], timeData);                        
-                            i+1 == liga.times.length ? resolve(liga) : '';
+                            parseInt(i)+1 == liga.times.length ? resolve(liga) : '';
                         })
                     } else {
-                        this.loadTime(liga.times[i]).then(timeData => {
-                            liga.times[i].pontuados = 12;
-                            i+1 == liga.times.length ? resolve(liga) : '';
+                        this.loadTime(liga.times[i]).then(timeData => {                            
+                            liga.times[i] = this.setTimeInfo(liga.times[i], timeData);
+                            parseInt(i)+1 == liga.times.length ? resolve(liga) : '';
                         })
                     }
                 }
@@ -106,15 +106,15 @@ export class TimeControll implements ITimeControll {
                 .toPromise()
                 .then(
                     res => {
-                        this.setTime(res.json());
-                        resolve(true);
+                        // this.setTime(res.json());
+                        resolve(res.json());
                     }
                 );
         });
     }
 
     setTime(time) {
-
+        
     }
 
     getParciaisDosJogadoresDoTime(time: Time) {

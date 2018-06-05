@@ -14,30 +14,29 @@ import { Atleta } from '../../models/jogadoresControll';
   providers: [Scout]
 })
 export class TimeDetailPage {
-  time: Time;
-  // time = {
-  //   url_escudo_svg: '',
-  //   time_id: '',
-  //   nome: '',
-  //   nome_cartola: '',
-  //   pontuados: 0,
-  //   capitao_id: '',
-  //   pontos: {
-  //     rodada: 0,
-  //     campeonato: 0
-  //   },
-  //   atletas: [{
-  //     scoutAbreviado: [{}],
-  //     posicao_id: '',
-  //     foto: '',
-  //     atleta_id: '',
-  //     apelido: '',
-  //     pontos_num: '',
-  //     clube_id: ''
-  //   }],
-  //   posicoes: {},
-  //   clubes: {}
-  // };
+  time = {
+    url_escudo_svg: '',
+    time_id: '',
+    nome: '',
+    nome_cartola: '',
+    pontuados: 0,
+    capitao_id: '',
+    pontos: {
+      rodada: 0,
+      campeonato: 0
+    },
+    atletas: [{
+      scoutAbreviado: [{}],
+      posicao_id: '',
+      foto: '',
+      atleta_id: '',
+      apelido: '',
+      pontos_num: '',
+      clube_id: ''
+    }],
+    posicoes: {},
+    clubes: {}
+  };
   loading;
   scoutOk = false;
   status_mercado;
@@ -73,23 +72,31 @@ export class TimeDetailPage {
     this.timeCtrl.loadTimesDaLiga([this.time]).then(times => {
       this.time = times[0];
       this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
-      // this.getAtletaScout();
+      this.getAtletaScout();
       refresher.complete();
     });
   }
 
   getPosicao(posicao_id) {
-    return this.time.posicoes[posicao_id].nome;
+    try {
+      return this.time.posicoes[posicao_id].nome;
+    }
+    catch{
+      console.log("Id de jogador indefinido");
+    }
   }
 
-  getTime(clube_id) {
-    return this.time.clubes[clube_id].nome;
+  getTimeEscudo(clube_id) {
+    try {
+      return this.time.clubes[clube_id].escudos['60x60'];
+    } catch (error) {
+      console.log("Id de clube indefinido");
+    }
   }
 
   getAtletaScout() {
     this.scoutGetter.getScout(this.time.atletas).then((atletas) => {
       // this.time.atletas = [atletas];
-      // this.scoutOk = (parseInt(i) + 2) == Object.keys(atletas).length ? true : false;
     });
   }
 

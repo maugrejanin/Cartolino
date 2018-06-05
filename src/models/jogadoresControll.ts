@@ -39,7 +39,11 @@ export class JogadoresControll implements IJogadoresControll {
         private api: Api,
         @Inject('IUserDataControll') private userDataControll: IUserDataControll,
         @Inject('IMercadoControll') private mercadoControll: IMercadoControll) {
-        this.loadJogadores();
+        this.mercadoControll.getMercadoStatus().then(status_mercado => {
+            if (status_mercado == status_mercado_fechado) {
+                this.loadJogadores();
+            }
+        });
     };
 
     loadJogadores() {

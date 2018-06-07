@@ -51,13 +51,13 @@ export class TimeControll implements ITimeControll {
                             liga.times[i].pontos.campeonato_pre_rodada = this.savePontosCampeonatoPreRodada(liga.times[i]);
                             liga.times[i].pontos.campeonato = liga.times[i].pontos.rodada + liga.times[i].pontos.campeonato_pre_rodada;
                             liga.times[i].pontuados = timeData['pontuados'];
-                            liga.times[i] = this.setTimeInfo(liga.times[i], timeData);                        
-                            parseInt(i)+1 == liga.times.length ? resolve(liga) : '';
+                            liga.times[i] = this.setTimeInfo(liga.times[i], timeData);
+                            parseInt(i) + 1 == liga.times.length ? resolve(liga) : '';
                         })
                     } else {
-                        this.loadTime(liga.times[i]).then(timeData => {                            
+                        this.loadTime(liga.times[i]).then(timeData => {
                             liga.times[i] = this.setTimeInfo(liga.times[i], timeData);
-                            parseInt(i)+1 == liga.times.length ? resolve(liga) : '';
+                            parseInt(i) + 1 == liga.times.length ? resolve(liga) : '';
                         })
                     }
                 }
@@ -73,7 +73,7 @@ export class TimeControll implements ITimeControll {
         }
     };
 
-    loadTimeComMercadoFechado(time: Time) {        
+    loadTimeComMercadoFechado(time: Time) {
         // Nao funciona com mercado em manutenção
         return new Promise((resolve, reject) => {
             this.api.getWithAuth(get_time_api + time.time_id, { GLBID: this.userDataControll.getGLBID() })
@@ -114,7 +114,7 @@ export class TimeControll implements ITimeControll {
     }
 
     setTime(time) {
-        
+
     }
 
     getParciaisDosJogadoresDoTime(time: Time) {
@@ -124,16 +124,18 @@ export class TimeControll implements ITimeControll {
                     time.pontuados = 0;
                     for (const i in time.atletas) {
                         let parcialJogador = this.jogadoresControll.getParcialJogador(time.atletas[i]['atleta_id']);
-                        
                         if (parcialJogador !== false) {
-                            time.atletas[i].pontos_num = parcialJogador;
-                            time.pontuados++;
+                            if (!(parcialJogador == 0 && time.atletas[i].posicao_id == 6)) {
+                                time.atletas[i].pontos_num = parcialJogador;
+                                time.pontuados++;
+                            }
                         }
+
                         let scoutJogador = this.jogadoresControll.getScoutJogador(time.atletas[i]['atleta_id']);
                         if (scoutJogador) {
                             time.atletas[i].scout = scoutJogador;
                         }
-                    }                    
+                    }
                     this.calcularParcialTime(time).then(time => {
                         resolve(time)
                     });
@@ -144,8 +146,8 @@ export class TimeControll implements ITimeControll {
 
     calcularParcialTime(time: Time) {
         return new Promise((resolve, reject) => {
-            let parcialTime;
-            let parcialAtleta;
+            let parcialTime = 0;
+            let parcialAtleta = 0;
             for (const i in time.atletas) {
                 parcialAtleta = time.atletas[i].pontos_num;
                 parcialTime += time.capitao_id == time.atletas[i].atleta_id ? (parcialAtleta * 2) : parcialAtleta;

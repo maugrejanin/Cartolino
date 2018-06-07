@@ -96,7 +96,7 @@ export class JogadoresControll implements IJogadoresControll {
 
     getParcialJogador(atleta_id: number) {
         if (!this.atletas[atleta_id]) {
-            return 0;
+            return false;
         } else {
             return this.atletas[atleta_id].pontuacao;
         }

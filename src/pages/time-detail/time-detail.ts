@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
-import { ITimeControll, TimeControll, TimeControllFake, Time } from '../../models/timeControll';
+import { ITimeControll, TimeControll, Time } from '../../models/timeControll';
 import { status_mercado_fechado } from '..';
 import * as _ from 'lodash';
 import { Scout } from '../scout';
@@ -61,14 +61,14 @@ export class TimeDetailPage {
     return parseFloat((parcial).toFixed(2))
   }
 
-  doRefresh(refresher) {
-    this.timeCtrl.loadTimesDaLiga([this.time]).then(times => {
-      this.time = times[0];
-      this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
-      this.getAtletaScout();
-      refresher.complete();
-    });
-  }
+  // doRefresh(refresher) {
+  //   this.timeCtrl.loadTimesDaLiga([this.time]).then(times => {
+  //     this.time = times[0];
+  //     this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
+  //     this.getAtletaScout();
+  //     refresher.complete();
+  //   });
+  // }
 
   getPosicao(posicao_id) {
     try {

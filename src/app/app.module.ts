@@ -15,7 +15,7 @@ import { UserDataControll, UserDataControllFake } from '../models/userDataContro
 import { JogadoresControll, JogadoresControllFake } from '../models/jogadoresControll';
 import { MercadoControll, MercadoControllFake } from '../models/mercadoControll';
 import { LigaControllFake, LigaControll } from '../models/ligasControll';
-import { TimeControll, TimeControllFake } from '../models/timeControll';
+import { TimeControll } from '../models/timeControll';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -69,8 +69,7 @@ export function provideSettings(storage: Storage) {
     // {provide: 'IUserDataControll', useClass: UserDataControllFake},
     // { provide: 'IMercadoControll', useClass: MercadoControllFake },
     // { provide: 'IJogadoresControll', useClass: JogadoresControllFake },
-    // { provide: 'ILigasControll', useClass: LigaControllFake },
-    // { provide: 'ITimeControll', useClass: TimeControllFake },
+    // { provide: 'ILigasControll', useClass: LigaControllFake }
     { provide: 'ITimeControll', useClass: TimeControll },
     { provide: 'ILigasControll', useClass: LigaControll },
     { provide: 'IUserDataControll', useClass: UserDataControll },

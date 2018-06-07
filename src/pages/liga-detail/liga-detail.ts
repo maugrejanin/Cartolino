@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { LigaControll, ILigasControll, LigaControllFake } from '../../models/ligasControll';
 import * as _ from 'lodash';
-import { TimeControll, ITimeControll, TimeControllFake } from '../../models/timeControll';
+import { TimeControll, ITimeControll } from '../../models/timeControll';
 import { status_mercado_fechado } from '..';
 import { IMercadoControll } from '../../models/mercadoControll';
 import { Time } from '@angular/common';
@@ -30,6 +30,7 @@ export class LigaDetailPage {
     public navParams: NavParams,
     @Inject('ILigasControll') private ligaCtrl: ILigasControll,
     @Inject('IMercadoControll') private mercadoCtrl: IMercadoControll,
+    @Inject('ITimeControll') private timeCtrl: ITimeControll,
     private loadingCtrl: LoadingController) {
   }
 
@@ -37,7 +38,8 @@ export class LigaDetailPage {
     this.liga.nome = this.navParams.get('ligaNome');
     this.liga.url_flamula_svg = this.navParams.get('ligaFlamulaUrl');
     this.liga.descricao = this.navParams.get('ligaDescricao');
-    this.loadTimesDaLiga();
+    this.loadLiga();
+    this.showLoadSpinner();
   }
 
   ionViewWillEnter() {
@@ -46,16 +48,22 @@ export class LigaDetailPage {
     });
   }
 
+  loadLiga() {
+    this.ligaCtrl.loadLiga(this.navParams.get('ligaSlug')).then(res => {
+      if (res) {
+        this.loadTimesDaLiga();
+      }
+    });
+  }
+
   loadTimesDaLiga(refresher = null) {
-    this.showLoadSpinner();
-    this.ligaCtrl.loadTimesDaLiga(this.navParams.get('ligaSlug')).then(liga => {      
-      console.log("liga: ", liga);
-      
+    this.timeCtrl.loadTimesDaLiga(this.ligaCtrl.getLiga()).then(liga => {
       this.liga.times = _.orderBy(liga.times, this.orderBy, this.order);
       this.hideLoadSpinner();
       refresher ? refresher.complete() : '';
     });
   }
+
 
   orderLigaBy(orderBy, order) {
     if (this.orderBy == orderBy) {

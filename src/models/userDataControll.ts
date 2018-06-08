@@ -72,10 +72,10 @@ export class UserDataControll implements IUserDataControll {
         if (Object.keys(this.userData.teamInfo).length === 0 && this.userData.teamInfo.constructor === Object) {
             return new Promise((resolve, reject) => {
                 this.api.getWithAuth(get_team_info_api, { GLBID: this.userData.GLBID })
-                    .toPromise()
+                    // .toPromise()
                     .then(
                         res => {
-                            this.setTeamInfo(res.json().time);
+                            this.setTeamInfo(res.data.time);
                             resolve(true);
                         }
                     ).catch(err => {

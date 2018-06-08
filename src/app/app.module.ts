@@ -16,6 +16,7 @@ import { JogadoresControll, JogadoresControllFake } from '../models/jogadoresCon
 import { MercadoControll, MercadoControllFake } from '../models/mercadoControll';
 import { LigaControllFake, LigaControll } from '../models/ligasControll';
 import { TimeControll } from '../models/timeControll';
+import { HTTP } from '@ionic-native/http';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -66,6 +67,7 @@ export function provideSettings(storage: Storage) {
     SplashScreen,
     StatusBar,
     Api,
+    HTTP,
     // {provide: 'IUserDataControll', useClass: UserDataControllFake},
     // { provide: 'IMercadoControll', useClass: MercadoControllFake },
     // { provide: 'IJogadoresControll', useClass: JogadoresControllFake },

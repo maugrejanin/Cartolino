@@ -28,10 +28,12 @@ export class MercadoControll implements IMercadoControll {
 
     getMercadoInfo() {
         return this.api.getWithAuth(get_mercado_info_api, {})
-            .toPromise()
+            // .toPromise()
             .then(
                 res => {
-                    this.mercado = res.json();
+                    console.log("mercado: ", res);
+                    
+                    // this.mercado = res;
                 }
             ).catch(err => {
                 console.log("Erro ao carregar status do mercado", err);

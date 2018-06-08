@@ -53,11 +53,11 @@ export class JogadoresControll implements IJogadoresControll {
         return new Promise((resolve, reject) => {
             if (this.needsUpdateAtletas()) {
                 this.api.getWithAuth(get_pontuados_api, { GLBID: this.userDataControll.getGLBID() })
-                    .toPromise()
+                    // .toPromise()
                     .then(
                         res => {
-                            console.log("jogadores ok", res.json());
-                            this.setJogadores(res.json());
+                            console.log("jogadores ok", res);
+                            this.setJogadores(res);
                             resolve(true);
                         }
                     );
@@ -70,12 +70,11 @@ export class JogadoresControll implements IJogadoresControll {
 
     loadJogadoresDoMercado() {
         return new Promise((resolve, reject) => {
-            this.api.get(get_atletas_api)
-                .toPromise()
+            this.api.getWithAuth(get_atletas_api)
                 .then(
                     res => {
-                        console.log("jogadores do mercado ok", res.json());
-                        this.atletasDoMercado = res.json();
+                        console.log("jogadores do mercado ok", res);
+                        // this.atletasDoMercado = res;
                         resolve(true);
                     }
                 );

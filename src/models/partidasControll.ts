@@ -15,11 +15,11 @@ export class PartidasControll implements IPartidasControll {
 
     getPartidas() {
         return new Promise((resolve, reject) => {
-            this.api.get(get_promixas_partidas_api)
-                .toPromise()
+            this.api.getWithAuth(get_promixas_partidas_api)
+                // .toPromise()
                 .then(res => {
-                    console.log("partidas: ", res.json());
-                    resolve(res.json());
+                    console.log("partidas: ", res.data);
+                    resolve(res.data);
                 })
         });
     }

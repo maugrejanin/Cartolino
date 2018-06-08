@@ -77,10 +77,10 @@ export class TimeControll implements ITimeControll {
         // Nao funciona com mercado em manutenção
         return new Promise((resolve, reject) => {
             this.api.getWithAuth(get_time_api + time.time_id, { GLBID: this.userDataControll.getGLBID() })
-                .toPromise()
+                // .toPromise()
                 .then(
                     res => {
-                        let time = res.json();
+                        let time = res.data;
                         this.getParciaisDosJogadoresDoTime(time).then(timeComParciais => {
                             resolve(timeComParciais);
                         });
@@ -103,11 +103,11 @@ export class TimeControll implements ITimeControll {
         // Nao funciona com mercado em manutenção
         return new Promise((resolve, reject) => {
             this.api.getWithAuth(get_time_api + time.time_id, { GLBID: this.userDataControll.getGLBID() })
-                .toPromise()
+                // .toPromise()
                 .then(
                     res => {
-                        // this.setTime(res.json());
-                        resolve(res.json());
+                        // this.setTime(res.data);
+                        resolve(res.data);
                     }
                 );
         });
@@ -189,10 +189,10 @@ export class TimeControllFake implements ITimeControll {
         // Nao funciona com mercado em manutenção
         return new Promise((resolve, reject) => {
             this.api.getWithAuth(get_time_api + time.time_id, { GLBID: this.userDataControll.getGLBID() })
-                .toPromise()
+                // .toPromise()
                 .then(
                     res => {
-                        resolve(res.json());
+                        resolve(res.data);
                     }
                 );
         });

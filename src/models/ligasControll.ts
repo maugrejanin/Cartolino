@@ -37,10 +37,10 @@ export class LigaControll implements ILigasControll {
         return new Promise((resolve, reject) => {
             if (this.userDataControll.isUserLogged) {
                 this.api.getWithAuth(get_ligas_info_api, { GLBID: this.userDataControll.getGLBID() })
-                    // .toPromise()
+                    .toPromise()
                     .then(
                         res => {
-                            this.setLigas(res);
+                            this.setLigas(res.json());
                             resolve(true);
                         }
                     );
@@ -51,10 +51,10 @@ export class LigaControll implements ILigasControll {
     loadLiga(ligaSlug: string) {
         return new Promise((resolve, reject) => {
             this.api.getWithAuth(get_liga_info_api + ligaSlug, { GLBID: this.userDataControll.getGLBID() })
-                // .toPromise()
+                .toPromise()
                 .then(
                     res => {
-                        let liga =res.data;
+                        let liga = res.json();
                         this.setLiga(liga);
                         resolve(true);
                     }

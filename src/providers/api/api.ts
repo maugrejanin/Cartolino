@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 
 /**
  * Api is a generic REST Api handler. Set your API url first.
@@ -9,7 +9,7 @@ import { HttpParams } from '@angular/common/http';
 export class Api {
   url: string = 'https://example.com/api/v1';
 
-  constructor(public http: Http) {
+  constructor(public http: HttpClient) {
   }
 
   get(endpoint: string, params?: any, reqOpts?: any) {
@@ -25,16 +25,18 @@ export class Api {
       for (let k in params) {
         reqOpts.params = reqOpts.params.set(k, params[k]);
       }
-    }    
+    }
 
     return this.http.get(endpoint, reqOpts);
   }
 
   getWithAuth(endpoint: string, params?: any) {
-    var headers = new Headers();
-    headers.append("X-GLB-Token", params.GLBID);
-    let options = new RequestOptions({ headers: headers });
-    return this.http.get(endpoint, options);
+    let headers = new HttpHeaders();
+    headers.set("X-GLB-Token", params.GLBID);
+    // let options = new RequestOptions({ headers: headers });
+    return this.http.get(endpoint, {
+      headers: { "X-GLB-Token": params.GLBID, 'Content-Type': 'application/json'}
+    });
   }
 
   post(endpoint: string, body: any, reqOpts?: any) {

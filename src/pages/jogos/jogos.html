@@ -16,14 +16,35 @@
   </ion-refresher>
   <ion-grid *ngIf='partidasLoaded'>
     <ion-list>
-      <ion-item *ngFor='let partida of partidas' class="partida-item">
+      <ion-item>
+        <ion-row>
+          <ion-col>
+            <h2 text-center text-uppercase>Rodada {{rodada}}
+              <!-- <button id="icon-open-list-rodadas" ion-button icon-only small outline>
+                <ion-icon name="arrow-down"></ion-icon>
+              </button> -->
+            </h2>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      <!-- <ion-item [hidden]="true">
+        <ion-label>Selecione uma rodada</ion-label>1
+        <ion-select [(ngModel)]="rodada">
+          <ion-option value="1">1</ion-option>
+          <ion-option value="2">2</ion-option>
+        </ion-select>
+      </ion-item> -->
+      <ion-item (click)="filterJogadoresDosClubes(partida)" *ngFor='let partida of partidas' class="partida-item">
         <ion-row align-items-end>
           <ion-col col-12>
             <h3 class="lbl-nome-bold" text-center>{{partida.partida_data | date :'dd/MM/yyyy HH:mm'}}</h3>
           </ion-col>
         </ion-row>
         <ion-row justify-content-center align-items-center>
-          <ion-col class="display-grid" col-4>
+          <ion-col class="display-grid" col-1>
+            <p text-center class="lbl-nome-bold">{{partida.clube_casa_posicao}}º</p>
+          </ion-col>
+          <ion-col class="display-grid" col-3>
             <img class="clube-escudo" id="clube-casa-escudo" src="{{clubes[partida.clube_casa_id].escudos['60x60']}}">
             <p text-center class="lbl-nome-bold">{{clubes[partida.clube_casa_id].nome}}</p>
           </ion-col>
@@ -36,9 +57,12 @@
           <ion-col col-1>
             <p text-center class="lbl-nome-bold">{{partida.placar_oficial_visitante||0}}</p>
           </ion-col>
-          <ion-col class="display-grid" col-4>
+          <ion-col class="display-grid" col-3>
             <img class="clube-escudo" id="clube-visitante-escudo" src="{{clubes[partida.clube_visitante_id].escudos['60x60']}}">
             <p text-center class="lbl-nome-bold">{{clubes[partida.clube_visitante_id].nome}}</p>
+          </ion-col>
+          <ion-col class="display-grid" col-1>
+            <p text-center class="lbl-nome-bold">{{partida.clube_visitante_posicao}}º</p>
           </ion-col>
         </ion-row>
         <ion-row align-items-end>

@@ -19,7 +19,6 @@ export class PartidasControll implements IPartidasControll {
                 .toPromise()
                 .then(res => {
                     console.log("partidas: ", res.json());
-                    
                     resolve(res.json());
                 })
         });

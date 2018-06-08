@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-refresher *ngIf="status_mercado == status_mercado_fechado" (ionRefresh)="doRefresh($event)" pullMin="60" pullMax="120">
+  <ion-refresher (ionRefresh)="doRefresh($event)" pullMin="60" pullMax="120">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para atualizar..." refreshingSpinner="bubbles" refreshingText="Atualizando...">
     </ion-refresher-content>
   </ion-refresher>

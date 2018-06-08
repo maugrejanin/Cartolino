@@ -14,7 +14,7 @@ import { Atleta } from '../../models/jogadoresControll';
   providers: [Scout]
 })
 export class TimeDetailPage {
-  atletas:Atleta[];
+  atletas: Atleta[];
   time: Time = {
     url_escudo_svg: '',
     time_id: 0,
@@ -62,12 +62,18 @@ export class TimeDetailPage {
   }
 
   doRefresh(refresher) {
-    this.timeCtrl.getParciaisDosJogadoresDoTime(this.time).then(time => {
-      this.time = time;
-      this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
-      this.getAtletaScout();
-      refresher.complete();
-    });
+    if (this.status_mercado == this.status_mercado_fechado) {
+      this.timeCtrl.getParciaisDosJogadoresDoTime(this.time).then(time => {
+        this.time = time;
+        this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
+        this.getAtletaScout();
+        refresher.complete();
+      });
+    } else {
+      setTimeout(() => {
+        refresher.complete();
+      }, 2000);
+    }
   }
 
   getPosicao(posicao_id) {
@@ -88,7 +94,7 @@ export class TimeDetailPage {
   }
 
   getAtletaScout() {
-    this.scoutGetter.getScout(this.time.atletas).then((atletas:Atleta[]) => {      
+    this.scoutGetter.getScout(this.time.atletas).then((atletas: Atleta[]) => {
       this.time.atletas = atletas;
     });
   }

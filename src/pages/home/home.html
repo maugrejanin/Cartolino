@@ -9,7 +9,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding class="vertical-align-content" *ngIf="teamInfo">
+<ion-content padding class="vertical-align-content" *ngIf="userDataControll.isUserLogged">
   <ion-row justify-content-center>
     <ion-img id="escudo_svg" src="{{teamInfo.url_escudo_svg}}"></ion-img>
   </ion-row>

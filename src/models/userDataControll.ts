@@ -16,7 +16,7 @@ export interface IUserDataControll {
     getGLBID(): string;
     setTeamInfo(teamInfo: {});
     getTeamInfo(): {};
-    isUserLogged:boolean;
+    isUserLogged: boolean;
 }
 
 @Injectable()
@@ -26,7 +26,7 @@ export interface IUserDataControll {
 export class UserDataControll implements IUserDataControll {
     private userData: UserData = {
         GLBID: '',
-        teamInfo: {}
+        teamInfo: ''
     };
 
     public isUserLogged = false;
@@ -69,21 +69,22 @@ export class UserDataControll implements IUserDataControll {
     };
 
     loadUserData() {
-        if (Object.keys(this.userData.teamInfo).length === 0 && this.userData.teamInfo.constructor === Object) {
-            return new Promise((resolve, reject) => {
-                this.api.getWithAuth(get_team_info_api, { GLBID: this.userData.GLBID })
-                    // .toPromise()
-                    .then(
-                        res => {
-                            this.setTeamInfo(res.data.time);
-                            resolve(true);
-                        }
-                    ).catch(err => {
-                        console.log("err");
-                        console.log(err);
-                    });
-            });
-        }
+        //if (Object.keys(this.userData.teamInfo).length === 0 && this.userData.teamInfo.constructor === Object) {
+
+        return new Promise((resolve, reject) => {
+            this.api.getWithAuth(get_team_info_api, { GLBID: this.userData.GLBID })
+                // .toPromise()
+                .then(
+                    res => {
+                        this.setTeamInfo(res.data.time);
+                        resolve(true);
+                    }
+                ).catch(err => {
+                    console.log("err");
+                    console.log(err);
+                });
+        });
+
     }
 
     getUserData(): UserData {

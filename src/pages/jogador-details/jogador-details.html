@@ -27,13 +27,18 @@
         <h2 class="lbl-nome-bold">Scout</h2>
       </ion-item>
     </ion-row>
-    <ion-row margin-bottom>
+    <ion-row margin-bottom *ngIf="atleta.scout">
       <ion-col col-5 offset-1 text-center align-self-center class="lbl-nome-bold">
         Ação
       </ion-col>
       <ion-col col-4 offset-1 text-center align-self-center class="lbl-nome-bold">
         Pontos
       </ion-col>
+    </ion-row>
+    <ion-row *ngIf="!atleta.scout">
+      <ion-item>
+        <p text-center>Jogador não pontuou na rodada</p>
+      </ion-item>
     </ion-row>
     <ion-list class="border-bottom">
       <ion-row align-items-center *ngFor="let scout of atleta.scout">
@@ -45,15 +50,20 @@
         </ion-col>
       </ion-row>
     </ion-list>
-    <ion-row *ngIf='timesComAtleta.length>0'>
+    <ion-row>
       <ion-item class="no-border-bottom">
         <h2 class="lbl-nome-bold">Times com esse jogador</h2>
+      </ion-item>
+    </ion-row>
+    <ion-row *ngIf='timesComAtleta.length==0'>
+      <ion-item>
+        <p text-center>Nenhum time escalou este jogador</p>
       </ion-item>
     </ion-row>
     <ion-list>
       <ion-grid>
         <ion-row align-items-center id="border-bottom-row" *ngFor="let time of timesComAtleta" (click)="timeDetail(time)">
-          <ion-col col-6>
+          <ion-col col-8>
             <ion-item class="time-item item-escudo">
               <ion-thumbnail item-start class="time-escudo">
                 <img id="escudo" src="{{time.url_escudo_svg}}">
@@ -62,6 +72,9 @@
               <h3 class='lbl-nome lbl-nome-bold' id="nomeTime">{{time.nome}}</h3>
               <p class="lbl-nome">{{time.nome_cartola}}</p>
             </ion-item>
+          </ion-col>
+          <ion-col col-2>
+            <p class="lbl-nome lbl-nome-bold" text-right [ngStyle]="{'color': time.pontos.rodada>=0? 'green' : 'red'}">{{time.pontos.rodada}}</p>
           </ion-col>
         </ion-row>
       </ion-grid>

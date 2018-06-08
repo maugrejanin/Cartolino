@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-refresher (ionRefresh)="doRefresh($event)" pullMin="60" pullMax="120">
+  <ion-refresher *ngIf="status_mercado == status_mercado_fechado" (ionRefresh)="doRefresh($event)" pullMin="60" pullMax="120">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para atualizar..." refreshingSpinner="bubbles" refreshingText="Atualizando...">
     </ion-refresher-content>
   </ion-refresher>
@@ -84,13 +84,9 @@
           </ion-item>
         </ion-col>
         <ion-col class="jogador-container" col-5>
-          <ion-item>
+          <ion-item text-wrap>
             <h3 text-center class='lbl-nome-bold font-13px' [ngStyle]="{'color': (atleta.pontos_num>0? 'green' : (atleta.pontos_num<0?'red':''))}">{{atleta.atleta_id==time.capitao_id?(atleta.pontos_num*2):atleta.pontos_num}}</h3>
-            <p text-center class='lbl-nome-09-rem lbl-nome-bold' *ngIf='atleta.posicao_id != 6'>
-              <span *ngFor="let scout of atleta.scoutAbreviado; let i = index;" [ngStyle]="{'color': scout.color}">{{scout.acao}}
-                <span [ngStyle]="{'color': '#666'}" [innerHtml]="(i+1)<atleta.scoutAbreviado.length?', ':''"></span>
-              </span>
-            </p>
+            <p text-center class='lbl-nome-09-rem lbl-nome-bold' *ngIf='atleta.posicao_id != 6'><span *ngFor="let scout of atleta.scoutAbreviado; let i = index;" [ngStyle]="{'color': scout.color}">{{scout.acao}}<span [ngStyle]="{'color': '#666'}" [innerHtml]="(i+1)<atleta.scoutAbreviado.length?', ':''"></span></span></p>
           </ion-item>
         </ion-col>
       </ion-row>

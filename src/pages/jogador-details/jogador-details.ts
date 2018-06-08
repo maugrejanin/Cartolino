@@ -19,31 +19,20 @@ export class JogadorDetailsPage {
       '60x60': ''
     }
   }
-
   timesComAtleta = [];
-
   posicao: string = '';
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    @Inject('ILigasControll') public ligaController: ILigasControll) {
-
-  }
+    @Inject('ILigasControll') public ligaController: ILigasControll) {}
 
   ionViewDidLoad() {
     this.atleta = this.navParams.get('atleta');
     this.clube = this.navParams.get('clube');
     this.posicao = this.navParams.get('posicao');
-    // this.getAtletaScout();
     this.getTimesComJogador();
   }
-
-  // getAtletaScout() {
-  //   this.scoutGetter.getScout(this.atleta.scout).then(scout => {
-  //     this.atleta.scout = scout;
-  //   });
-  // }
 
   getTimesComJogador() {
     let temJogador;

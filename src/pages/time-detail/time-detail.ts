@@ -15,13 +15,13 @@ import { Atleta } from '../../models/jogadoresControll';
 })
 export class TimeDetailPage {
   atletas:Atleta[];
-  time = {
+  time: Time = {
     url_escudo_svg: '',
-    time_id: '',
+    time_id: 0,
     nome: '',
     nome_cartola: '',
     pontuados: 0,
-    capitao_id: '',
+    capitao_id: 0,
     pontos: {
       rodada: 0,
       campeonato: 0
@@ -61,14 +61,14 @@ export class TimeDetailPage {
     return parseFloat((parcial).toFixed(2))
   }
 
-  // doRefresh(refresher) {
-  //   this.timeCtrl.loadTimesDaLiga([this.time]).then(times => {
-  //     this.time = times[0];
-  //     this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
-  //     this.getAtletaScout();
-  //     refresher.complete();
-  //   });
-  // }
+  doRefresh(refresher) {
+    this.timeCtrl.getParciaisDosJogadoresDoTime(this.time).then(time => {
+      this.time = time;
+      this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
+      this.getAtletaScout();
+      refresher.complete();
+    });
+  }
 
   getPosicao(posicao_id) {
     try {

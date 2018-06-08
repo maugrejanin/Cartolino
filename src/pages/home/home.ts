@@ -9,7 +9,7 @@ import { Inject } from '@angular/core';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  teamInfo;
+  teamInfo = {};
   loading;
   constructor(
     private navCtrl: NavController,
@@ -18,10 +18,7 @@ export class HomePage {
     private loadingCtrl: LoadingController) { }
 
   ionViewWillEnter() {
-    console.log('aat', this.userDataControll.isUserLogged);
-
-    //if (!this.teamInfo  Object.keys(this.teamInfo).length === 0 && this.teamInfo.constructor === Object) {
-    if (!this.teamInfo) {
+    if (Object.keys(this.teamInfo).length === 0 && this.teamInfo.constructor === Object) {
       this.showLoadSpinner();
       this.userDataControll.initUserData().then(res => {
         if (res) {

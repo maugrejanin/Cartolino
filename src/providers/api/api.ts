@@ -36,13 +36,9 @@ export class Api {
 
   getWithAuth(endpoint: string, params?: any) {
     var headers = new Headers();
-    let header = {};
-    if(params.GLBID)
-      header = {'X-GLB-Token': params.GLBID};
-
     headers.append("X-GLB-Token", params.GLBID);
     let options = new RequestOptions({ headers: headers });
-    return this.http.get(endpoint, {}, header);
+    return this.http.get(endpoint, {}, {'X-GLB-Token': params.GLBID});
   }
 
   post(endpoint: string, body: any, reqOpts?: any) {

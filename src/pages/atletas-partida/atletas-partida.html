@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-navbar color="primary" no-border-bottom>
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Jogadores da partida
+    </ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top no-border-bottom>
+    <ion-segment [(ngModel)]="clube">
+      <ion-segment-button value="mandante_nome">
+        {{mandante_nome}}
+      </ion-segment-button>
+      <ion-segment-button value="visitante_nome">
+        {{visitante_nome}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div [ngSwitch]="clube">
+    <ion-list *ngSwitchCase="'mandante_nome'">
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/img/thumbnail-puppy-1.jpg">
+        </ion-thumbnail>
+        <h2>Ruby</h2>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/img/thumbnail-puppy-2.jpg">
+        </ion-thumbnail>
+        <h2>Oscar</h2>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/img/thumbnail-puppy-4.jpg">
+        </ion-thumbnail>
+        <h2>Zoey</h2>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/img/thumbnail-puppy-3.jpg">
+        </ion-thumbnail>
+        <h2>Otto</h2>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'visitante_nome'">
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/img/thumbnail-kitten-1.jpg">
+        </ion-thumbnail>
+        <h2>Luna</h2>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/img/thumbnail-kitten-3.jpg">
+        </ion-thumbnail>
+        <h2>Milo</h2>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/img/thumbnail-kitten-4.jpg">
+        </ion-thumbnail>
+        <h2>Bandit</h2>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/img/thumbnail-kitten-2.jpg">
+        </ion-thumbnail>
+        <h2>Nala</h2>
+      </ion-item>
+    </ion-list>    
+  </div>
+</ion-content>

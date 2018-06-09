@@ -2,6 +2,23 @@ import { Injectable, Component } from "@angular/core";
 import { Api } from "../providers";
 import { get_promixas_partidas_api } from "../pages";
 
+export interface Partida{
+    partida_id: number,
+    clube_casa_id: number,
+    clube_casa_posicao: number,
+    clube_visitante_id: number,
+    aproveitamento_mandante: string[],
+    aproveitamento_visitante: string[],
+    clube_visitante_posicao: number,
+    partida_data: string,
+    local: string,
+    valida: boolean,
+    placar_oficial_mandante: number,
+    placar_oficial_visitante: number,
+    url_confronto: string,
+    url_transmissao: string
+}
+
 export interface IPartidasControll {
     getPartidas();
 }
@@ -18,7 +35,6 @@ export class PartidasControll implements IPartidasControll {
             this.api.get(get_promixas_partidas_api)
                 .toPromise()
                 .then(res => {
-                    console.log("partidas: ", res.json());
                     resolve(res.json());
                 })
         });

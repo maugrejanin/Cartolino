@@ -34,7 +34,7 @@
           <ion-option value="2">2</ion-option>
         </ion-select>
       </ion-item> -->
-      <ion-item (click)="filterJogadoresDosClubes(partida)" *ngFor='let partida of partidas' class="partida-item">
+      <ion-item (click)="atletatasDaPartida(partida)" *ngFor='let partida of partidas' class="partida-item">
         <ion-row align-items-end>
           <ion-col col-12>
             <h3 class="lbl-nome-bold" text-center>{{partida.partida_data | date :'dd/MM/yyyy HH:mm'}}</h3>

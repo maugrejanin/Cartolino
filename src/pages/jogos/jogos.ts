@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PartidasControll, IPartidasControll, PartidasControllFake } from '../../models/partidasControll';
+import { PartidasControll, IPartidasControll } from '../../models/partidasControll';
 import * as _ from "lodash";
 import { IJogadoresControll } from '../../models/jogadoresControll';
 
@@ -10,7 +10,6 @@ import { IJogadoresControll } from '../../models/jogadoresControll';
   templateUrl: 'jogos.html',
   providers: [
     { provide: 'IPartidasControll', useClass: PartidasControll }
-    // { provide: 'IPartidasControll', useClass: PartidasControllFake }
   ]
 })
 export class JogosPage {
@@ -20,8 +19,8 @@ export class JogosPage {
   rodada;
 
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
+    public navCtrl: NavController,
+    public navParams: NavParams,
     @Inject('IPartidasControll') private partidasCtrl: IPartidasControll,
     @Inject('IJogadoresControll') private jogadoresCtrl: IJogadoresControll) {
   }
@@ -46,15 +45,8 @@ export class JogosPage {
     })
   }
 
-  openSelect(){
-    console.log("open");
-    
-  }
-
-  filterJogadoresDosClubes(partida){
-    this.jogadoresCtrl.getJogadoresDoMercado().then(atletas => {
-      console.log("atletas: ", atletas);      
-    });
+  atletatasDaPartida(partida) {
+    this.navCtrl.push('AtletasPartidaPage', { partidas: this.partidas, partida: partida, clubes: this.clubes });
   }
 
 }

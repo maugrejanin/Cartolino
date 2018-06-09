@@ -74,7 +74,6 @@ export class JogadoresControll implements IJogadoresControll {
                 .toPromise()
                 .then(
                     res => {
-                        console.log("jogadores do mercado ok", res.json());
                         this.atletasDoMercado = res.json();
                         resolve(true);
                     }

@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import { Scout } from '../scout';
 import { IMercadoControll } from '../../models/mercadoControll';
 import { Atleta } from '../../models/jogadoresControll';
+import { ILigasControll } from '../../models/ligasControll';
 
 @IonicPage()
 @Component({
@@ -40,6 +41,7 @@ export class TimeDetailPage {
     public navParams: NavParams,
     @Inject('ITimeControll') private timeCtrl: ITimeControll,
     @Inject('IMercadoControll') private mercadoCtrl: IMercadoControll,
+    @Inject('ILigasControll') private ligasCtrl: ILigasControll,
     private loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     public scoutGetter: Scout) {
@@ -47,7 +49,7 @@ export class TimeDetailPage {
 
   ionViewDidLoad() {
     this.time = this.navParams.get('time');
-    this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
+    // this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
     this.getAtletaScout();
   }
 
@@ -63,12 +65,14 @@ export class TimeDetailPage {
 
   doRefresh(refresher) {
     if (this.status_mercado == this.status_mercado_fechado) {
-      this.timeCtrl.getParciaisDosJogadoresDoTime(this.time).then(time => {
-        this.time = time;
-        this.time.atletas = _.orderBy(this.time.atletas, 'posicao_id', 'asc');
+      this.timeCtrl.loadTimesDaLiga(this.ligasCtrl.getLiga()).then(liga => {
+        let time = _.find(liga.times, (time) => { return (time.time_id == this.time.time_id) });
+        this.time.atletas = time.atletas;
+        this.time.pontos = time['pontos'];
+        this.time.pontuados = time['pontuados'];
         this.getAtletaScout();
         refresher.complete();
-      });
+      })
     } else {
       setTimeout(() => {
         refresher.complete();

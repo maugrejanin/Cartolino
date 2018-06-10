@@ -58,6 +58,8 @@ export class LigaDetailPage {
 
   loadTimesDaLiga(refresher = null) {
     this.timeCtrl.loadTimesDaLiga(this.ligaCtrl.getLiga()).then(liga => {
+      console.log("liga: ", liga);
+      
       this.liga.times = _.orderBy(liga.times, this.orderBy, this.order);
       this.hideLoadSpinner();
       refresher ? refresher.complete() : '';

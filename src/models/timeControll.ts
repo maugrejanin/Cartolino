@@ -4,6 +4,7 @@ import { IUserDataControll } from "./userDataControll";
 import { get_time_api, status_mercado_aberto, status_mercado_fechado } from "../pages";
 import { IJogadoresControll, Atleta } from "./jogadoresControll";
 import { IMercadoControll } from "./mercadoControll";
+import * as _ from 'lodash';
 
 export interface Time {
     url_escudo_svg: string,
@@ -52,6 +53,7 @@ export class TimeControll implements ITimeControll {
                             liga.times[i].pontos.campeonato = liga.times[i].pontos.rodada + liga.times[i].pontos.campeonato_pre_rodada;
                             liga.times[i].pontuados = timeData['pontuados'];
                             liga.times[i] = this.setTimeInfo(liga.times[i], timeData);
+                            liga.times[i].atletas = _.orderBy(liga.times[i].atletas, 'posicao_id', 'asc');
                             parseInt(i) + 1 == liga.times.length ? resolve(liga) : '';
                         })
                     } else {
